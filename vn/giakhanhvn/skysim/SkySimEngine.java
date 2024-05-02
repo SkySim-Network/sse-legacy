@@ -238,22 +238,8 @@ BungeeChannel.ForwardConsumer {
             this.getServer().getMessenger().registerIncomingPluginChannel((Plugin)this, "BungeeCord", (PluginMessageListener)this);
             this.bc = new BungeeChannel((Plugin)this);
             this.setupEconomy();
-            if (Bukkit.getPluginManager().getPlugin("SputnikSkySim") == null) {
-                SLog.severe("===================================");
-                SLog.severe("SKYSIM ENGINE - MADE BY GIAKHANHVN");
-                SLog.severe(" ");
-                SLog.severe("SputnikSkySim not found, disabling this plugin");
-                SLog.severe("for safety!");
-                SLog.severe("===================================");
-                Bukkit.getPluginManager().disablePlugin((Plugin)this);
-                break block21;
-            }
             SLog.info("===================================");
             SLog.info("SKYSIM ENGINE - MADE BY GIAKHANHVN");
-            SLog.info(" ");
-            SLog.info("SputnikSkySim found! Hooking into...");
-            SLog.info("If it's take more than 5s to execute this");
-            SLog.info("contact developers!");
             SLog.info("===================================");
             plugin = this;
             SLog.info("Hooked successfully into SputnikSkySim!");
@@ -372,11 +358,6 @@ BungeeChannel.ForwardConsumer {
             SLog.info("===================================");
             SLog.info("SKYSIM ENGINE - MADE BY GIAKHANHVN");
             SLog.info("PLUGIN ENABLED! HOOKED INTO SSS!");
-            SLog.info(" ");
-            SLog.info("This plugin provide SkySim most functions!");
-            SLog.info("Originally made by super (Slayers code used)");
-            SLog.info("Made by GiaKhanhVN (C) 2021");
-            SLog.info("Any illegal usage will be suppressed! DO NOT LEAK IT!");
             SLog.info("===================================");
             this.sq = new SummoningSequence(Bukkit.getWorld((String)"arena"));
             Bukkit.getWorld((String)"arena").setAutoSave(false);
