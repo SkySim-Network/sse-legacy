@@ -151,7 +151,7 @@ extends BaseZombie {
                 entity.getWorld().playEffect(entity.getLocation().add(0.0, 1.0, 0.0), Effect.WITCH_MAGIC, 10);
             }
         }.runTaskTimer((Plugin)SkySimEngine.getPlugin(), 0L, 70L);
-        new /* Unavailable Anonymous Inner Class!! */.runTaskTimer((Plugin)SkySimEngine.getPlugin(), 0L, 2L);
+
     }
 
     @Override

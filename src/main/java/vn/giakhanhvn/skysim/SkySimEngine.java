@@ -1,37 +1,3 @@
-/*
- * Decompiled with CFR 0.152.
- * 
- * Could not load the following classes:
- *  com.comphenix.protocol.ProtocolLibrary
- *  com.comphenix.protocol.ProtocolManager
- *  com.google.common.io.Files
- *  com.onarandombox.MultiverseCore.MultiverseCore
- *  de.slikey.effectlib.EffectManager
- *  net.milkbowl.vault.economy.Economy
- *  org.bukkit.Bukkit
- *  org.bukkit.Material
- *  org.bukkit.World
- *  org.bukkit.block.Block
- *  org.bukkit.command.CommandMap
- *  org.bukkit.configuration.serialization.ConfigurationSerialization
- *  org.bukkit.entity.Entity
- *  org.bukkit.entity.HumanEntity
- *  org.bukkit.entity.Player
- *  org.bukkit.event.Event
- *  org.bukkit.event.Listener
- *  org.bukkit.inventory.ItemStack
- *  org.bukkit.inventory.Recipe
- *  org.bukkit.inventory.ShapedRecipe
- *  org.bukkit.inventory.ShapelessRecipe
- *  org.bukkit.plugin.Plugin
- *  org.bukkit.plugin.RegisteredServiceProvider
- *  org.bukkit.plugin.java.JavaPlugin
- *  org.bukkit.plugin.messaging.PluginMessageListener
- *  org.bukkit.potion.PotionEffect
- *  org.bukkit.potion.PotionEffectType
- *  org.bukkit.scheduler.BukkitRunnable
- *  org.bukkit.scheduler.BukkitTask
- */
 package vn.giakhanhvn.skysim;
 
 import com.comphenix.protocol.ProtocolLibrary;

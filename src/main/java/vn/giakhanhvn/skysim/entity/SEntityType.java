@@ -313,7 +313,7 @@ public enum SEntityType {
         this.clazz = clazz;
         this.specific = specific;
         if (EntityInsentient.class.isAssignableFrom(clazz)) {
-            SEntityType.registerEntity(this.name(), craftType.getTypeId(), clazz);
+            SEntityType.registerEntity(this.name(), craftType.getTypeId(), (Class<? extends EntityInsentient>) clazz);
         }
     }
 

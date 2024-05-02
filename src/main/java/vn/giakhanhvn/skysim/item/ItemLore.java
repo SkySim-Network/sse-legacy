@@ -144,17 +144,17 @@ public class ItemLore {
         if (enchantments != null && enchantments.size() != 0) {
             ArrayList<Enchantment> filteredList_ultimate;
             int amount = enchantments.size();
-            ArrayList<String> stringEnchantments = new ArrayList<String>();
-            ArrayList<Enchantment> filteredList_ultimate_a = new ArrayList<Enchantment>();
-            Iterator<String> filteredList_normal_a = new ArrayList<Enchantment>();
+            List<String> stringEnchantments = new ArrayList<String>();
+            List<Enchantment> filteredList_ultimate_a = new ArrayList<>();
+            List<Enchantment> filteredList_normal_a = new ArrayList<>();
             for (Enchantment enchantment : enchantments) {
                 if (enchantment.getDisplayName().contains(ChatColor.LIGHT_PURPLE.toString())) {
                     filteredList_ultimate_a.add(enchantment);
                     continue;
                 }
-                filteredList_normal_a.add((String)((Object)enchantment));
+                filteredList_normal_a.add(enchantment);
             }
-            filteredList_ultimate_a.addAll((Collection<Enchantment>)((Object)filteredList_normal_a));
+            filteredList_ultimate_a.addAll(filteredList_normal_a);
             for (Enchantment enchantment : filteredList_ultimate_a) {
                 stringEnchantments.add(enchantment.getDisplayName());
             }
@@ -413,12 +413,11 @@ public class ItemLore {
         }
         SpecificItemType type = statistics.getSpecificType();
         if (statistics.displayRarity()) {
-            void var16_78;
             String string = "";
             if (this.parent.getDataBoolean("dungeons_item")) {
                 String string2 = "DUNGEON ";
             }
-            lore.add((this.parent.isRecombobulated() ? this.parent.getRarity().getBoldedColor() + ChatColor.MAGIC + "D" + ChatColor.RESET + " " : "") + this.parent.getRarity().getDisplay() + (type != SpecificItemType.NONE ? " " + (String)var16_78 + type.getName() : "") + (this.parent.isRecombobulated() ? this.parent.getRarity().getBoldedColor() + " " + ChatColor.MAGIC + "D" + ChatColor.RESET : ""));
+            lore.add((this.parent.isRecombobulated() ? this.parent.getRarity().getBoldedColor() + ChatColor.MAGIC + "D" + ChatColor.RESET + " " : "") + this.parent.getRarity().getDisplay() + (type != SpecificItemType.NONE ? " " + type.getName() : "") + (this.parent.isRecombobulated() ? this.parent.getRarity().getBoldedColor() + " " + ChatColor.MAGIC + "D" + ChatColor.RESET : ""));
         }
         return lore;
     }
