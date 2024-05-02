@@ -1,5 +1,6 @@
 ## Source Code for Legacy SkySim Engine
 Public release of SkySim's legacy core plugin: `SkySimEngine`
+(Personal Note: this shit sucks ass, just grab super's core)
 
 **DISCLAIMER** No claim of suitability, guarantee, or any warranty whatsoever is provided. The software is provided "as-is".
 
