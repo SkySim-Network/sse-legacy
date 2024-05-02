@@ -1,0 +1,9 @@
+name: SkySimEngine
+version: 1.0-SNAPSHOT
+main: vn.giakhanhvn.skysim.SkySimEngine
+authors: [ GiaKhanhVN ]
+description: this is a description, what do you want from me
+
+softdepend: [PlaceholderAPI]
+depend: [LibsDisguises, Multiverse-Core, SputnikSkySim, ProtocolLib]
+
