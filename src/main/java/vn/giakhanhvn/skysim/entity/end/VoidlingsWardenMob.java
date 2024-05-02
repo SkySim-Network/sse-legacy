@@ -274,17 +274,17 @@ extends BaseZombie {
             float cout;
             final /* synthetic */ org.bukkit.entity.Entity val$e;
             {
-                this.val$e = entity;
-                this.cout = this.val$e.getLocation().getYaw();
+                e = entity;
+                this.cout = e.getLocation().getYaw();
             }
 
             public void run() {
-                if (this.val$e.isDead()) {
+                if (e.isDead()) {
                     VoidlingsWardenMob.this.tb.remove();
                     this.cancel();
                     return;
                 }
-                Location loc = this.val$e.getLocation();
+                Location loc = e.getLocation();
                 loc.setYaw(this.cout);
                 loc.setPitch(0.0f);
                 loc.add(loc.getDirection().normalize().multiply(0.6));
@@ -298,13 +298,13 @@ extends BaseZombie {
                 } else if (hitshield == 1) {
                     stage = 1;
                 }
-                this.val$e.getWorld().spigot().playEffect(loc, Effect.WITCH_MAGIC, 0, 1, 1.0f, 1.0f, 1.0f, 0.0f, 0, 64);
-                this.val$e.getWorld().spigot().playEffect(loc.clone().add(0.0, 0.6, 0.0), Effect.WITCH_MAGIC, 0, 1, 1.0f, 1.0f, 1.0f, 0.0f, 0, 64);
+                e.getWorld().spigot().playEffect(loc, Effect.WITCH_MAGIC, 0, 1, 1.0f, 1.0f, 1.0f, 0.0f, 0, 64);
+                e.getWorld().spigot().playEffect(loc.clone().add(0.0, 0.6, 0.0), Effect.WITCH_MAGIC, 0, 1, 1.0f, 1.0f, 1.0f, 0.0f, 0, 64);
                 if (stage >= 2) {
-                    this.val$e.getWorld().spigot().playEffect(loc.clone().add(0.0, 1.2, 0.0), Effect.WITCH_MAGIC, 0, 1, 1.0f, 1.0f, 1.0f, 0.0f, 0, 64);
+                    e.getWorld().spigot().playEffect(loc.clone().add(0.0, 1.2, 0.0), Effect.WITCH_MAGIC, 0, 1, 1.0f, 1.0f, 1.0f, 0.0f, 0, 64);
                 }
                 if (stage == 3) {
-                    this.val$e.getWorld().spigot().playEffect(loc.clone().add(0.0, 1.8, 0.0), Effect.WITCH_MAGIC, 0, 1, 1.0f, 1.0f, 1.0f, 0.0f, 0, 64);
+                    e.getWorld().spigot().playEffect(loc.clone().add(0.0, 1.8, 0.0), Effect.WITCH_MAGIC, 0, 1, 1.0f, 1.0f, 1.0f, 0.0f, 0, 64);
                 }
                 this.cout += 18.0f;
             }
@@ -314,27 +314,27 @@ extends BaseZombie {
             final /* synthetic */ org.bukkit.entity.Entity val$e;
             final /* synthetic */ LivingEntity val$entity;
             {
-                this.val$e = entity;
-                this.val$entity = livingEntity;
-                this.cout = this.val$e.getLocation().getYaw();
+                e = entity;
+                entity = livingEntity;
+                this.cout = e.getLocation().getYaw();
             }
 
             public void run() {
-                if (this.val$e.isDead()) {
+                if (e.isDead()) {
                     this.cancel();
                     return;
                 }
                 String playername = "&4&lUndefined!";
-                if (this.val$entity.hasMetadata("owner") && Bukkit.getPlayer((UUID)UUID.fromString(((MetadataValue)this.val$entity.getMetadata("owner").get(0)).asString())) != null) {
-                    playername = "&b&l" + Bukkit.getPlayer((UUID)UUID.fromString(((MetadataValue)this.val$entity.getMetadata("owner").get(0)).asString())).getName();
+                if (entity.hasMetadata("owner") && Bukkit.getPlayer((UUID)UUID.fromString(((MetadataValue)entity.getMetadata("owner").get(0)).asString())) != null) {
+                    playername = "&b&l" + Bukkit.getPlayer((UUID)UUID.fromString(((MetadataValue)entity.getMetadata("owner").get(0)).asString())).getName();
                 }
                 if (System.currentTimeMillis() > VoidlingsWardenMob.this.end) {
-                    this.val$entity.remove();
+                    entity.remove();
                     this.cancel();
                     return;
                 }
                 VoidlingsWardenMob.this.say(playername + " " + ChatColor.RED + SUtil.getFormattedTime(VoidlingsWardenMob.this.end - System.currentTimeMillis(), 1000));
-                Location loc = this.val$e.getLocation();
+                Location loc = e.getLocation();
                 loc.setYaw(this.cout);
                 loc.setPitch(0.0f);
                 loc.add(loc.getDirection().normalize().multiply(3));
@@ -348,7 +348,7 @@ extends BaseZombie {
                 } else if (hitshield == 1) {
                     stage = 1;
                 }
-                this.val$e.getWorld().spigot().playEffect(loc.clone().add(0.0, 0.4, 0.0), Effect.FLYING_GLYPH, 0, 1, 1.0f, 1.0f, 1.0f, 0.0f, 0, 64);
+                e.getWorld().spigot().playEffect(loc.clone().add(0.0, 0.4, 0.0), Effect.FLYING_GLYPH, 0, 1, 1.0f, 1.0f, 1.0f, 0.0f, 0, 64);
                 this.cout += 8.0f;
             }
         }.runTaskTimer((Plugin)SkySimEngine.getPlugin(), 1L, 1L);

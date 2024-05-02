@@ -202,18 +202,13 @@ extends BaseZombie {
                         skywatch.setRightClicking(false);
                         entity.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 10000, 4));
                         entity.getEquipment().setItemInHand(SItem.of(SMaterial.BOW).getStack());
-                        new BukkitRunnable((LivingEntity)target1){
+                        new BukkitRunnable(){
                             int t = 0;
                             int atkCharge = 20;
                             double bowPower = 2.2;
                             boolean crit = true;
-                            final /* synthetic */ LivingEntity val$target1;
-                            {
-                                this.val$target1 = livingEntity;
-                            }
-
                             public void run() {
-                                if (this.val$target1.getLocation().distance(entity.getLocation()) <= 10.0) {
+                                if (target1.getLocation().distance(entity.getLocation()) <= 10.0) {
                                     this.atkCharge = 10;
                                     this.bowPower = 1.1;
                                     this.crit = false;

@@ -291,7 +291,7 @@ public final class PlayerUtils {
                     }
                     if (enchantment.getType() != EnchantmentType.LEGION) continue;
                     int level = enchantment.getLevel();
-                    List nearbyplayer = player.getNearbyEntities(30.0, 30.0, 30.0);
+                    List<Entity> nearbyplayer = player.getNearbyEntities(30.0, 30.0, 30.0);
                     nearbyplayer.removeIf(entity -> entity.getType() != EntityType.PLAYER || entity.hasMetadata("NPC"));
                     double nbps = Math.min(20, nearbyplayer.size());
                     double multiper = (double)level * 0.07 * nbps;

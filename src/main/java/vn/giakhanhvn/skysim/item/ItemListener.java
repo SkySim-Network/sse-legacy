@@ -664,7 +664,7 @@ extends PListener {
             state.setRawData((byte)4);
             state.update();
             player.getInventory().setItemInHand(SItem.of(SMaterial.SLEEPING_EYE).getStack());
-            ArrayList<Location> locations = StaticDragonManager.EYES.containsKey(player.getUniqueId()) ? StaticDragonManager.EYES.get(player.getUniqueId()) : new ArrayList<Location>();
+            List<Location> locations = StaticDragonManager.EYES.containsKey(player.getUniqueId()) ? StaticDragonManager.EYES.get(player.getUniqueId()) : new ArrayList<Location>();
             locations.add(block.getLocation());
             StaticDragonManager.EYES.remove(player.getUniqueId());
             StaticDragonManager.EYES.put(player.getUniqueId(), locations);
@@ -1057,7 +1057,7 @@ extends PListener {
             Block block = event.getBlock();
             block.setType(Material.AIR);
             event.setCancelled(true);
-            List entityList = fallingBlock.getNearbyEntities(3.0, 3.0, 3.0);
+            List<Entity> entityList = fallingBlock.getNearbyEntities(3.0, 3.0, 3.0);
             fallingBlock.getWorld().playSound(fallingBlock.getLocation(), Sound.EXPLODE, 2.0f, 0.0f);
             fallingBlock.getWorld().playEffect(fallingBlock.getLocation(), Effect.EXPLOSION_HUGE, 0);
             for (Entity e : fallingBlock.getNearbyEntities(7.0, 7.0, 7.0)) {
@@ -1065,7 +1065,7 @@ extends PListener {
                 e.remove();
             }
             fallingBlock.setVelocity(new Vector(0, 0, 0));
-            List fallingBlockList = fallingBlock.getNearbyEntities(7.0, 7.0, 7.0);
+            List<Entity> fallingBlockList = fallingBlock.getNearbyEntities(7.0, 7.0, 7.0);
             fallingBlockList.forEach(entity -> {
                 if (entity.getType() == EntityType.FALLING_BLOCK && entity.hasMetadata("t")) {
                     entity.remove();
@@ -1090,7 +1090,7 @@ extends PListener {
             Block block = event.getBlock();
             block.setType(Material.AIR);
             event.setCancelled(true);
-            List entityList = fallingBlock.getNearbyEntities(3.0, 3.0, 3.0);
+            List<Entity> entityList = fallingBlock.getNearbyEntities(3.0, 3.0, 3.0);
             fallingBlock.getWorld().playSound(fallingBlock.getLocation(), Sound.EXPLODE, 2.0f, 0.0f);
             fallingBlock.getWorld().playEffect(fallingBlock.getLocation(), Effect.EXPLOSION_HUGE, 0);
             for (Entity e : fallingBlock.getNearbyEntities(7.0, 7.0, 7.0)) {
@@ -1098,7 +1098,7 @@ extends PListener {
                 e.remove();
             }
             fallingBlock.setVelocity(new Vector(0, 0, 0));
-            List fallingBlockList = fallingBlock.getNearbyEntities(7.0, 7.0, 7.0);
+            List<Entity> fallingBlockList = fallingBlock.getNearbyEntities(7.0, 7.0, 7.0);
             fallingBlockList.forEach(entity -> {
                 if (entity.getType() == EntityType.FALLING_BLOCK && entity.hasMetadata("f")) {
                     entity.remove();

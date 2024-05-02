@@ -78,7 +78,7 @@ public class Metrics {
                 catch (NoSuchFieldException noSuchFieldException) {
                 }
             }
-            Bukkit.getServicesManager().register(Metrics.class, (Object)this, (Plugin)plugin, ServicePriority.Normal);
+            Bukkit.getServicesManager().register(Metrics.class, this, plugin, ServicePriority.Normal);
             if (!found) {
                 this.startSubmitting();
             }
@@ -269,7 +269,7 @@ public class Metrics {
         AUSTRIA("AT", "Austria"),
         AUSTRALIA("AU", "Australia"),
         ARUBA("AW", "Aruba"),
-        \u00c5LAND_ISLANDS("AX", "\u00c5land Islands"),
+        u00c5LAND_ISLANDS("AX", "\u00c5land Islands"),
         AZERBAIJAN("AZ", "Azerbaijan"),
         BOSNIA_AND_HERZEGOVINA("BA", "Bosnia and Herzegovina"),
         BARBADOS("BB", "Barbados"),
@@ -280,7 +280,7 @@ public class Metrics {
         BAHRAIN("BH", "Bahrain"),
         BURUNDI("BI", "Burundi"),
         BENIN("BJ", "Benin"),
-        SAINT_BARTH\u00c9LEMY("BL", "Saint Barth\u00e9lemy"),
+        SAINT_BARTHu00c9LEMY("BL", "Saint Barth\u00e9lemy"),
         BERMUDA("BM", "Bermuda"),
         BRUNEI("BN", "Brunei"),
         BOLIVIA("BO", "Bolivia"),
@@ -298,7 +298,7 @@ public class Metrics {
         CENTRAL_AFRICAN_REPUBLIC("CF", "Central African Republic"),
         CONGO("CG", "Congo"),
         SWITZERLAND("CH", "Switzerland"),
-        C\u00d4TE_D_IVOIRE("CI", "C\u00f4te d'Ivoire"),
+        Cu00d4TE_D_IVOIRE("CI", "C\u00f4te d'Ivoire"),
         COOK_ISLANDS("CK", "Cook Islands"),
         CHILE("CL", "Chile"),
         CAMEROON("CM", "Cameroon"),
@@ -307,7 +307,7 @@ public class Metrics {
         COSTA_RICA("CR", "Costa Rica"),
         CUBA("CU", "Cuba"),
         CAPE_VERDE("CV", "Cape Verde"),
-        CURA\u00c7AO("CW", "Cura\u00e7ao"),
+        CURAu00c7AO("CW", "Cura\u00e7ao"),
         CHRISTMAS_ISLAND("CX", "Christmas Island"),
         CYPRUS("CY", "Cyprus"),
         CZECH_REPUBLIC("CZ", "Czech Republic"),

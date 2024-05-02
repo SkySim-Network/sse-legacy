@@ -307,7 +307,7 @@ public class User {
         this.permanentCoins = this.config.getBoolean("permanentCoins");
         this.slayerQuest = (SlayerQuest)this.config.get("slayer.quest");
         if (this.config.contains("pets")) {
-            this.pets = this.config.getList("pets");
+            this.pets = (List<Pet.PetItem>) this.config.getList("pets");
         }
         this.auctionSettings = (AuctionSettings)this.config.get("auction.settings");
         if (this.auctionSettings == null) {
@@ -384,7 +384,7 @@ public class User {
             this.config.set("lastRegion", this.lastRegion.getName());
         }
         this.config.set("quiver", null);
-        for (Map.Entry<Object, Integer> entry : this.quiver.entrySet()) {
+        for (Map.Entry<SMaterial, Integer> entry : this.quiver.entrySet()) {
             this.config.set("quiver." + ((SMaterial)((Object)entry.getKey())).name().toLowerCase(), entry.getValue());
         }
         this.config.set("effects", null);

@@ -149,10 +149,7 @@ EntityStatistics {
                 if (entity.isDead()) {
                     Dragon.this.updateBar(1.0E-4f, bb);
                     SUtil.delay(() -> {
-                        ArrayList<Player> plist = new ArrayList<Player>();
-                        for (Player p : bb2.players) {
-                            plist.add(p);
-                        }
+                        ArrayList<Player> plist = new ArrayList<Player>(bb.players);
                         plist.forEach(pl -> bb.removePlayer((Player)pl));
                         bb.setProgress(0.0);
                         bb.cancel();

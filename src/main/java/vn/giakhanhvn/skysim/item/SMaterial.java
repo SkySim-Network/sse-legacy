@@ -1,91 +1,21 @@
-/*
- * Decompiled with CFR 0.152.
- * 
- * Could not load the following classes:
- *  org.bukkit.Material
- *  org.bukkit.inventory.PlayerInventory
- */
 package vn.giakhanhvn.skysim.item;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
 import org.bukkit.Material;
 import org.bukkit.inventory.PlayerInventory;
 import vn.giakhanhvn.skysim.entity.SEntityType;
-import vn.giakhanhvn.skysim.item.Ability;
-import vn.giakhanhvn.skysim.item.GenericItemType;
-import vn.giakhanhvn.skysim.item.ItemData;
-import vn.giakhanhvn.skysim.item.MaterialFunction;
-import vn.giakhanhvn.skysim.item.MaterialStatistics;
-import vn.giakhanhvn.skysim.item.PlayerBoostStatistics;
-import vn.giakhanhvn.skysim.item.Rarity;
-import vn.giakhanhvn.skysim.item.SItem;
-import vn.giakhanhvn.skysim.item.SkullStatistics;
-import vn.giakhanhvn.skysim.item.TickingMaterial;
-import vn.giakhanhvn.skysim.item.accessory.AutoRecombobulator;
-import vn.giakhanhvn.skysim.item.accessory.BrokenPiggyBank;
-import vn.giakhanhvn.skysim.item.accessory.CrackedPiggyBank;
-import vn.giakhanhvn.skysim.item.accessory.FarmingTalisman;
-import vn.giakhanhvn.skysim.item.accessory.PerfectTalisman;
-import vn.giakhanhvn.skysim.item.accessory.PiggyBank;
-import vn.giakhanhvn.skysim.item.accessory.SuperspeedTalisman;
-import vn.giakhanhvn.skysim.item.accessory.TarantulaTalisman;
-import vn.giakhanhvn.skysim.item.armor.ArmorSet;
-import vn.giakhanhvn.skysim.item.armor.BigBounceBoots;
-import vn.giakhanhvn.skysim.item.armor.BlyatHelmet;
-import vn.giakhanhvn.skysim.item.armor.CrownOfGreed;
-import vn.giakhanhvn.skysim.item.armor.DarkGoggles;
-import vn.giakhanhvn.skysim.item.armor.ObsidianChestplate;
-import vn.giakhanhvn.skysim.item.armor.PrecursorEye;
-import vn.giakhanhvn.skysim.item.armor.ShadowGoggles;
-import vn.giakhanhvn.skysim.item.armor.SpidersBoots;
-import vn.giakhanhvn.skysim.item.armor.TarantulaHelmet;
-import vn.giakhanhvn.skysim.item.armor.USSRHelmet;
-import vn.giakhanhvn.skysim.item.armor.VoidlingsWardenHelmet;
-import vn.giakhanhvn.skysim.item.armor.WardenHelmet;
-import vn.giakhanhvn.skysim.item.armor.WitherGoggles;
-import vn.giakhanhvn.skysim.item.armor.gigachad.GigachadBoots;
-import vn.giakhanhvn.skysim.item.armor.gigachad.GigachadChestplate;
-import vn.giakhanhvn.skysim.item.armor.gigachad.GigachadHelmet;
-import vn.giakhanhvn.skysim.item.armor.gigachad.GigachadLeggings;
-import vn.giakhanhvn.skysim.item.armor.gigachad.GigachadSet;
+import vn.giakhanhvn.skysim.item.accessory.*;
+import vn.giakhanhvn.skysim.item.armor.*;
+import vn.giakhanhvn.skysim.item.armor.gigachad.*;
 import vn.giakhanhvn.skysim.item.armor.hardened.HardenedDiamondBoots;
 import vn.giakhanhvn.skysim.item.armor.hardened.HardenedDiamondChestplate;
 import vn.giakhanhvn.skysim.item.armor.hardened.HardenedDiamondHelmet;
 import vn.giakhanhvn.skysim.item.armor.hardened.HardenedDiamondLeggings;
-import vn.giakhanhvn.skysim.item.armor.lapis.LapisArmorBoots;
-import vn.giakhanhvn.skysim.item.armor.lapis.LapisArmorChestplate;
-import vn.giakhanhvn.skysim.item.armor.lapis.LapisArmorHelmet;
-import vn.giakhanhvn.skysim.item.armor.lapis.LapisArmorLeggings;
-import vn.giakhanhvn.skysim.item.armor.lapis.LapisArmorSet;
-import vn.giakhanhvn.skysim.item.armor.miner.MinerBoots;
-import vn.giakhanhvn.skysim.item.armor.miner.MinerChestplate;
-import vn.giakhanhvn.skysim.item.armor.miner.MinerHelmet;
-import vn.giakhanhvn.skysim.item.armor.miner.MinerLeggings;
-import vn.giakhanhvn.skysim.item.armor.miner.MinerSet;
-import vn.giakhanhvn.skysim.item.armor.minichad.MinichadBoots;
-import vn.giakhanhvn.skysim.item.armor.minichad.MinichadChestplate;
-import vn.giakhanhvn.skysim.item.armor.minichad.MinichadHelmet;
-import vn.giakhanhvn.skysim.item.armor.minichad.MinichadLeggings;
-import vn.giakhanhvn.skysim.item.armor.minichad.MinichadSet;
-import vn.giakhanhvn.skysim.item.armor.necron.NecronBoots;
-import vn.giakhanhvn.skysim.item.armor.necron.NecronChestplate;
-import vn.giakhanhvn.skysim.item.armor.necron.NecronFullSet;
-import vn.giakhanhvn.skysim.item.armor.necron.NecronHelmet;
-import vn.giakhanhvn.skysim.item.armor.necron.NecronLeggings;
-import vn.giakhanhvn.skysim.item.armor.renegade450Helmet;
-import vn.giakhanhvn.skysim.item.armor.sorrow.SorrowArmorBoots;
-import vn.giakhanhvn.skysim.item.armor.sorrow.SorrowArmorChestplate;
-import vn.giakhanhvn.skysim.item.armor.sorrow.SorrowArmorHelmet;
-import vn.giakhanhvn.skysim.item.armor.sorrow.SorrowArmorLeggings;
-import vn.giakhanhvn.skysim.item.armor.sorrow.SorrowArmorSet;
-import vn.giakhanhvn.skysim.item.armor.storm.StormBoots;
-import vn.giakhanhvn.skysim.item.armor.storm.StormChestplate;
-import vn.giakhanhvn.skysim.item.armor.storm.StormFullSet;
-import vn.giakhanhvn.skysim.item.armor.storm.StormHelmet;
-import vn.giakhanhvn.skysim.item.armor.storm.StormLeggings;
+import vn.giakhanhvn.skysim.item.armor.lapis.*;
+import vn.giakhanhvn.skysim.item.armor.miner.*;
+import vn.giakhanhvn.skysim.item.armor.minichad.*;
+import vn.giakhanhvn.skysim.item.armor.necron.*;
+import vn.giakhanhvn.skysim.item.armor.sorrow.*;
+import vn.giakhanhvn.skysim.item.armor.storm.*;
 import vn.giakhanhvn.skysim.item.armor.vanilla.chainmail.ChainmailBoots;
 import vn.giakhanhvn.skysim.item.armor.vanilla.chainmail.ChainmailChestplate;
 import vn.giakhanhvn.skysim.item.armor.vanilla.chainmail.ChainmailHelmet;
@@ -106,278 +36,41 @@ import vn.giakhanhvn.skysim.item.armor.vanilla.leather.LeatherBoots;
 import vn.giakhanhvn.skysim.item.armor.vanilla.leather.LeatherChestplate;
 import vn.giakhanhvn.skysim.item.armor.vanilla.leather.LeatherHelmet;
 import vn.giakhanhvn.skysim.item.armor.vanilla.leather.LeatherLeggings;
-import vn.giakhanhvn.skysim.item.axe.vanilla.DiamondAxe;
-import vn.giakhanhvn.skysim.item.axe.vanilla.GoldenAxe;
-import vn.giakhanhvn.skysim.item.axe.vanilla.IronAxe;
-import vn.giakhanhvn.skysim.item.axe.vanilla.StoneAxe;
-import vn.giakhanhvn.skysim.item.axe.vanilla.WoodenAxe;
-import vn.giakhanhvn.skysim.item.bow.Bow;
-import vn.giakhanhvn.skysim.item.bow.DeathBow;
-import vn.giakhanhvn.skysim.item.bow.EndStoneBow;
-import vn.giakhanhvn.skysim.item.bow.HurricaneBow;
-import vn.giakhanhvn.skysim.item.bow.JujuShortBow;
-import vn.giakhanhvn.skysim.item.bow.MosquitoBow;
-import vn.giakhanhvn.skysim.item.bow.RunaansBow;
+import vn.giakhanhvn.skysim.item.axe.vanilla.*;
 import vn.giakhanhvn.skysim.item.bow.Terminator;
-import vn.giakhanhvn.skysim.item.dragon.old.OldDragonBoots;
-import vn.giakhanhvn.skysim.item.dragon.old.OldDragonChestplate;
-import vn.giakhanhvn.skysim.item.dragon.old.OldDragonFragment;
-import vn.giakhanhvn.skysim.item.dragon.old.OldDragonHelmet;
-import vn.giakhanhvn.skysim.item.dragon.old.OldDragonLeggings;
-import vn.giakhanhvn.skysim.item.dragon.old.OldDragonSet;
-import vn.giakhanhvn.skysim.item.dragon.protector.ProtectorDragonBoots;
-import vn.giakhanhvn.skysim.item.dragon.protector.ProtectorDragonChestplate;
-import vn.giakhanhvn.skysim.item.dragon.protector.ProtectorDragonFragment;
-import vn.giakhanhvn.skysim.item.dragon.protector.ProtectorDragonHelmet;
-import vn.giakhanhvn.skysim.item.dragon.protector.ProtectorDragonLeggings;
-import vn.giakhanhvn.skysim.item.dragon.protector.ProtectorDragonSet;
-import vn.giakhanhvn.skysim.item.dragon.strong.StrongDragonBoots;
-import vn.giakhanhvn.skysim.item.dragon.strong.StrongDragonChestplate;
-import vn.giakhanhvn.skysim.item.dragon.strong.StrongDragonFragment;
-import vn.giakhanhvn.skysim.item.dragon.strong.StrongDragonHelmet;
-import vn.giakhanhvn.skysim.item.dragon.strong.StrongDragonLeggings;
-import vn.giakhanhvn.skysim.item.dragon.strong.StrongDragonSet;
-import vn.giakhanhvn.skysim.item.dragon.superior.SuperiorDragonBoots;
-import vn.giakhanhvn.skysim.item.dragon.superior.SuperiorDragonChestplate;
-import vn.giakhanhvn.skysim.item.dragon.superior.SuperiorDragonFragment;
-import vn.giakhanhvn.skysim.item.dragon.superior.SuperiorDragonHelmet;
-import vn.giakhanhvn.skysim.item.dragon.superior.SuperiorDragonLeggings;
-import vn.giakhanhvn.skysim.item.dragon.superior.SuperiorDragonSet;
-import vn.giakhanhvn.skysim.item.dragon.unstable.UnstableDragonBoots;
-import vn.giakhanhvn.skysim.item.dragon.unstable.UnstableDragonChestplate;
-import vn.giakhanhvn.skysim.item.dragon.unstable.UnstableDragonFragment;
-import vn.giakhanhvn.skysim.item.dragon.unstable.UnstableDragonHelmet;
-import vn.giakhanhvn.skysim.item.dragon.unstable.UnstableDragonLeggings;
-import vn.giakhanhvn.skysim.item.dragon.unstable.UnstableDragonSet;
-import vn.giakhanhvn.skysim.item.dragon.wise.WiseDragonBoots;
-import vn.giakhanhvn.skysim.item.dragon.wise.WiseDragonChestplate;
-import vn.giakhanhvn.skysim.item.dragon.wise.WiseDragonFragment;
-import vn.giakhanhvn.skysim.item.dragon.wise.WiseDragonHelmet;
-import vn.giakhanhvn.skysim.item.dragon.wise.WiseDragonLeggings;
-import vn.giakhanhvn.skysim.item.dragon.wise.WiseDragonSet;
-import vn.giakhanhvn.skysim.item.dragon.young.YoungDragonBoots;
-import vn.giakhanhvn.skysim.item.dragon.young.YoungDragonChestplate;
-import vn.giakhanhvn.skysim.item.dragon.young.YoungDragonFragment;
-import vn.giakhanhvn.skysim.item.dragon.young.YoungDragonHelmet;
-import vn.giakhanhvn.skysim.item.dragon.young.YoungDragonLeggings;
-import vn.giakhanhvn.skysim.item.dragon.young.YoungDragonSet;
-import vn.giakhanhvn.skysim.item.enchanted.EnchantedAcaciaWood;
-import vn.giakhanhvn.skysim.item.enchanted.EnchantedBirchWood;
-import vn.giakhanhvn.skysim.item.enchanted.EnchantedBone;
-import vn.giakhanhvn.skysim.item.enchanted.EnchantedCharcoal;
-import vn.giakhanhvn.skysim.item.enchanted.EnchantedCoal;
-import vn.giakhanhvn.skysim.item.enchanted.EnchantedDarkOakWood;
-import vn.giakhanhvn.skysim.item.enchanted.EnchantedDiamond;
-import vn.giakhanhvn.skysim.item.enchanted.EnchantedDiamondBlock;
-import vn.giakhanhvn.skysim.item.enchanted.EnchantedEndStone;
-import vn.giakhanhvn.skysim.item.enchanted.EnchantedEnderPearl;
-import vn.giakhanhvn.skysim.item.enchanted.EnchantedEyeOfEnder;
-import vn.giakhanhvn.skysim.item.enchanted.EnchantedJungleWood;
-import vn.giakhanhvn.skysim.item.enchanted.EnchantedOakWood;
-import vn.giakhanhvn.skysim.item.enchanted.EnchantedObsidian;
-import vn.giakhanhvn.skysim.item.enchanted.EnchantedPotato;
-import vn.giakhanhvn.skysim.item.enchanted.EnchantedSpruceWood;
+import vn.giakhanhvn.skysim.item.bow.*;
+import vn.giakhanhvn.skysim.item.dragon.old.*;
+import vn.giakhanhvn.skysim.item.dragon.protector.*;
+import vn.giakhanhvn.skysim.item.dragon.strong.*;
+import vn.giakhanhvn.skysim.item.dragon.superior.*;
+import vn.giakhanhvn.skysim.item.dragon.unstable.*;
+import vn.giakhanhvn.skysim.item.dragon.wise.*;
+import vn.giakhanhvn.skysim.item.dragon.young.*;
+import vn.giakhanhvn.skysim.item.enchanted.*;
 import vn.giakhanhvn.skysim.item.enchanting.EnchantedBook;
-import vn.giakhanhvn.skysim.item.entity.AtonedHorrorHead;
-import vn.giakhanhvn.skysim.item.entity.BS1;
-import vn.giakhanhvn.skysim.item.entity.BS2;
-import vn.giakhanhvn.skysim.item.entity.BS3;
-import vn.giakhanhvn.skysim.item.entity.BS4;
-import vn.giakhanhvn.skysim.item.entity.BS5;
-import vn.giakhanhvn.skysim.item.entity.BS6;
-import vn.giakhanhvn.skysim.item.entity.BS7;
-import vn.giakhanhvn.skysim.item.entity.BS8;
-import vn.giakhanhvn.skysim.item.entity.BS9;
-import vn.giakhanhvn.skysim.item.entity.JerryGunBullet;
-import vn.giakhanhvn.skysim.item.entity.Nukekubi;
-import vn.giakhanhvn.skysim.item.entity.RevenantHorrorHead;
-import vn.giakhanhvn.skysim.item.entity.RevenantHorrorHead2;
-import vn.giakhanhvn.skysim.item.entity.TerracottaHead;
-import vn.giakhanhvn.skysim.item.farming.BrownMushroom;
-import vn.giakhanhvn.skysim.item.farming.Cactus;
-import vn.giakhanhvn.skysim.item.farming.Carrot;
-import vn.giakhanhvn.skysim.item.farming.CocoaBeans;
-import vn.giakhanhvn.skysim.item.farming.Melon;
-import vn.giakhanhvn.skysim.item.farming.Potato;
-import vn.giakhanhvn.skysim.item.farming.Pumpkin;
-import vn.giakhanhvn.skysim.item.farming.RedMushroom;
-import vn.giakhanhvn.skysim.item.farming.SugarCane;
-import vn.giakhanhvn.skysim.item.farming.WheatSeeds;
-import vn.giakhanhvn.skysim.item.foraging.AcaciaWood;
-import vn.giakhanhvn.skysim.item.foraging.BirchWood;
-import vn.giakhanhvn.skysim.item.foraging.DarkOakWood;
-import vn.giakhanhvn.skysim.item.foraging.JungleWood;
-import vn.giakhanhvn.skysim.item.foraging.OakWood;
-import vn.giakhanhvn.skysim.item.foraging.SpruceWood;
-import vn.giakhanhvn.skysim.item.hoe.vanilla.DiamondHoe;
-import vn.giakhanhvn.skysim.item.hoe.vanilla.GoldenHoe;
-import vn.giakhanhvn.skysim.item.hoe.vanilla.IronHoe;
-import vn.giakhanhvn.skysim.item.hoe.vanilla.StoneHoe;
-import vn.giakhanhvn.skysim.item.hoe.vanilla.WoodenHoe;
-import vn.giakhanhvn.skysim.item.mining.CoalOre;
-import vn.giakhanhvn.skysim.item.mining.Cobblestone;
-import vn.giakhanhvn.skysim.item.mining.DiamondBlock;
-import vn.giakhanhvn.skysim.item.mining.DiamondOre;
-import vn.giakhanhvn.skysim.item.mining.EmeraldOre;
-import vn.giakhanhvn.skysim.item.mining.EndStone;
-import vn.giakhanhvn.skysim.item.mining.Glowstone;
-import vn.giakhanhvn.skysim.item.mining.GoldOre;
-import vn.giakhanhvn.skysim.item.mining.Gravel;
-import vn.giakhanhvn.skysim.item.mining.Ice;
-import vn.giakhanhvn.skysim.item.mining.IronOre;
-import vn.giakhanhvn.skysim.item.mining.LapisLazuliOre;
-import vn.giakhanhvn.skysim.item.mining.Mitril;
-import vn.giakhanhvn.skysim.item.mining.NetherQuartzOre;
-import vn.giakhanhvn.skysim.item.mining.Netherrack;
-import vn.giakhanhvn.skysim.item.mining.Obsidian;
-import vn.giakhanhvn.skysim.item.mining.RedstoneOre;
-import vn.giakhanhvn.skysim.item.mining.Sand;
-import vn.giakhanhvn.skysim.item.mining.Stone;
-import vn.giakhanhvn.skysim.item.mining.Titanium;
-import vn.giakhanhvn.skysim.item.oddities.BagOfCoins;
-import vn.giakhanhvn.skysim.item.oddities.Bedrock;
-import vn.giakhanhvn.skysim.item.oddities.BoosterCookie;
-import vn.giakhanhvn.skysim.item.oddities.CompressedBits;
-import vn.giakhanhvn.skysim.item.oddities.CompressedVoidFrag;
-import vn.giakhanhvn.skysim.item.oddities.CreativeMind;
-import vn.giakhanhvn.skysim.item.oddities.CrystalFragment;
-import vn.giakhanhvn.skysim.item.oddities.DeadBushOfLove;
-import vn.giakhanhvn.skysim.item.oddities.DemonsPearl;
-import vn.giakhanhvn.skysim.item.oddities.DiamondSadanTrophy;
-import vn.giakhanhvn.skysim.item.oddities.DimoonCatalyst;
-import vn.giakhanhvn.skysim.item.oddities.DimoonFragment;
-import vn.giakhanhvn.skysim.item.oddities.EtherwarpConduit;
-import vn.giakhanhvn.skysim.item.oddities.EtherwarpMerger;
-import vn.giakhanhvn.skysim.item.oddities.EtherwarpTranscoder;
-import vn.giakhanhvn.skysim.item.oddities.GameAnnihilator;
-import vn.giakhanhvn.skysim.item.oddities.GameBreaker;
-import vn.giakhanhvn.skysim.item.oddities.GodPot;
-import vn.giakhanhvn.skysim.item.oddities.GoldSadanTrophy;
-import vn.giakhanhvn.skysim.item.oddities.GoldenPowder;
-import vn.giakhanhvn.skysim.item.oddities.GrapplingHook;
-import vn.giakhanhvn.skysim.item.oddities.GyrokineticEye;
-import vn.giakhanhvn.skysim.item.oddities.HotPotatoBook;
-import vn.giakhanhvn.skysim.item.oddities.JudgementCore;
-import vn.giakhanhvn.skysim.item.oddities.MaddoxBatphone;
-import vn.giakhanhvn.skysim.item.oddities.NecronHandle;
-import vn.giakhanhvn.skysim.item.oddities.NullSphere;
-import vn.giakhanhvn.skysim.item.oddities.QuiverArrow;
-import vn.giakhanhvn.skysim.item.oddities.Recombobulator3000;
-import vn.giakhanhvn.skysim.item.oddities.RefinedPowder;
-import vn.giakhanhvn.skysim.item.oddities.RemnantOfTheEye;
-import vn.giakhanhvn.skysim.item.oddities.RevenantViscera;
-import vn.giakhanhvn.skysim.item.oddities.ShardoftheDiamondOrb;
-import vn.giakhanhvn.skysim.item.oddities.ShardoftheShredded;
-import vn.giakhanhvn.skysim.item.oddities.SkyBlockMenu;
-import vn.giakhanhvn.skysim.item.oddities.SleepingEye;
-import vn.giakhanhvn.skysim.item.oddities.SummoningEye;
-import vn.giakhanhvn.skysim.item.oddities.SummoningFrame;
-import vn.giakhanhvn.skysim.item.oddities.VoidFragment;
-import vn.giakhanhvn.skysim.item.oddities.WardenHeart;
-import vn.giakhanhvn.skysim.item.oddities.WaterBottle;
-import vn.giakhanhvn.skysim.item.oddities.WeakWolfCatalyst;
-import vn.giakhanhvn.skysim.item.oddities.WeirdTuba;
-import vn.giakhanhvn.skysim.item.orb.ManaFluxPowerOrb;
-import vn.giakhanhvn.skysim.item.orb.OrbBuff;
-import vn.giakhanhvn.skysim.item.orb.OverfluxPowerOrb;
-import vn.giakhanhvn.skysim.item.orb.PlasmafluxPowerOrb;
-import vn.giakhanhvn.skysim.item.orb.QuantumfluxPowerOrb;
-import vn.giakhanhvn.skysim.item.orb.RadiantPowerOrb;
-import vn.giakhanhvn.skysim.item.pet.AragornPet;
-import vn.giakhanhvn.skysim.item.pet.ArchivyPet;
-import vn.giakhanhvn.skysim.item.pet.BabyYeti;
-import vn.giakhanhvn.skysim.item.pet.BabyYeti2;
-import vn.giakhanhvn.skysim.item.pet.BlackCat;
-import vn.giakhanhvn.skysim.item.pet.ChimmyPet;
-import vn.giakhanhvn.skysim.item.pet.EnderDragonPet;
-import vn.giakhanhvn.skysim.item.pet.EnderDragonPet2;
-import vn.giakhanhvn.skysim.item.pet.EndermanPet;
-import vn.giakhanhvn.skysim.item.pet.GoldenTigerPet;
-import vn.giakhanhvn.skysim.item.pet.GungaPet;
-import vn.giakhanhvn.skysim.item.pet.KP56Pet;
-import vn.giakhanhvn.skysim.item.pet.MagicivyPet;
-import vn.giakhanhvn.skysim.item.pet.TankPet;
-import vn.giakhanhvn.skysim.item.pet.VoidlingsPet;
-import vn.giakhanhvn.skysim.item.pickaxe.vanilla.DiamondPickaxe;
-import vn.giakhanhvn.skysim.item.pickaxe.vanilla.GoldenPickaxe;
-import vn.giakhanhvn.skysim.item.pickaxe.vanilla.IronPickaxe;
-import vn.giakhanhvn.skysim.item.pickaxe.vanilla.StonePickaxe;
-import vn.giakhanhvn.skysim.item.pickaxe.vanilla.WoodenPickaxe;
-import vn.giakhanhvn.skysim.item.revenant.BeheadedHorror;
-import vn.giakhanhvn.skysim.item.revenant.FoulFlesh;
-import vn.giakhanhvn.skysim.item.revenant.RevenantCatalyst;
-import vn.giakhanhvn.skysim.item.revenant.RevenantFlesh;
-import vn.giakhanhvn.skysim.item.revenant.ScytheBlade;
-import vn.giakhanhvn.skysim.item.revenant.UndeadCatalyst;
-import vn.giakhanhvn.skysim.item.rune.BiteRune;
-import vn.giakhanhvn.skysim.item.rune.CoutureRune;
-import vn.giakhanhvn.skysim.item.rune.PestilenceRune;
-import vn.giakhanhvn.skysim.item.rune.SnakeRune;
-import vn.giakhanhvn.skysim.item.rune.SpiritRune;
-import vn.giakhanhvn.skysim.item.shovel.vanilla.DiamondShovel;
-import vn.giakhanhvn.skysim.item.shovel.vanilla.GoldenShovel;
-import vn.giakhanhvn.skysim.item.shovel.vanilla.IronShovel;
-import vn.giakhanhvn.skysim.item.shovel.vanilla.StoneShovel;
-import vn.giakhanhvn.skysim.item.shovel.vanilla.WoodenShovel;
-import vn.giakhanhvn.skysim.item.storage.GreaterBackpack;
-import vn.giakhanhvn.skysim.item.storage.JumboBackpack;
-import vn.giakhanhvn.skysim.item.storage.LargeBackpack;
-import vn.giakhanhvn.skysim.item.storage.MediumBackpack;
-import vn.giakhanhvn.skysim.item.storage.SmallBackpack;
-import vn.giakhanhvn.skysim.item.sven.GrizzlyBait;
-import vn.giakhanhvn.skysim.item.sven.HamsterWheel;
-import vn.giakhanhvn.skysim.item.sven.OverfluxCapacitor;
-import vn.giakhanhvn.skysim.item.sven.RedClawEgg;
-import vn.giakhanhvn.skysim.item.sven.WolfTooth;
-import vn.giakhanhvn.skysim.item.tarantula.DigestedMosquito;
-import vn.giakhanhvn.skysim.item.tarantula.FlySwatter;
-import vn.giakhanhvn.skysim.item.tarantula.SpiderCatalyst;
-import vn.giakhanhvn.skysim.item.tarantula.TarantulaWeb;
-import vn.giakhanhvn.skysim.item.tarantula.ToxicArrowPoison;
-import vn.giakhanhvn.skysim.item.weapon.AspectOfTheDragons;
-import vn.giakhanhvn.skysim.item.weapon.AspectOfTheEnd;
-import vn.giakhanhvn.skysim.item.weapon.AspectOfTheJerry;
-import vn.giakhanhvn.skysim.item.weapon.AspectOfTheVoid;
-import vn.giakhanhvn.skysim.item.weapon.AtomsplitKatana;
-import vn.giakhanhvn.skysim.item.weapon.AxeOfTheShredded;
-import vn.giakhanhvn.skysim.item.weapon.Bonemerang;
-import vn.giakhanhvn.skysim.item.weapon.BonzoStaff;
-import vn.giakhanhvn.skysim.item.weapon.Dagger;
-import vn.giakhanhvn.skysim.item.weapon.DimoonizaryDagger;
-import vn.giakhanhvn.skysim.item.weapon.EdibleMace;
-import vn.giakhanhvn.skysim.item.weapon.EmeraldBlade;
-import vn.giakhanhvn.skysim.item.weapon.Excrarion;
-import vn.giakhanhvn.skysim.item.weapon.Exterminator;
-import vn.giakhanhvn.skysim.item.weapon.FloridZombieSword;
-import vn.giakhanhvn.skysim.item.weapon.FlowerOfTruth;
-import vn.giakhanhvn.skysim.item.weapon.FrozenScythe;
-import vn.giakhanhvn.skysim.item.weapon.GiantSword;
-import vn.giakhanhvn.skysim.item.weapon.GyrokineticWand;
-import vn.giakhanhvn.skysim.item.weapon.Hyperion;
-import vn.giakhanhvn.skysim.item.weapon.IceSprayWand;
-import vn.giakhanhvn.skysim.item.weapon.JerryChineGun;
-import vn.giakhanhvn.skysim.item.weapon.LeapingSword;
-import vn.giakhanhvn.skysim.item.weapon.LividDagger;
-import vn.giakhanhvn.skysim.item.weapon.MidasStaff;
-import vn.giakhanhvn.skysim.item.weapon.PoochSword;
-import vn.giakhanhvn.skysim.item.weapon.PrismarineBlade;
-import vn.giakhanhvn.skysim.item.weapon.ReaperFalchion;
-import vn.giakhanhvn.skysim.item.weapon.RevantusSword;
-import vn.giakhanhvn.skysim.item.weapon.RogueSword;
-import vn.giakhanhvn.skysim.item.weapon.Scylla;
-import vn.giakhanhvn.skysim.item.weapon.ShadowFury;
-import vn.giakhanhvn.skysim.item.weapon.SoulWhip;
-import vn.giakhanhvn.skysim.item.weapon.Valkyrie;
-import vn.giakhanhvn.skysim.item.weapon.VoidedgeKatana;
-import vn.giakhanhvn.skysim.item.weapon.VoidwalkerKatana;
-import vn.giakhanhvn.skysim.item.weapon.VorpalKatana;
-import vn.giakhanhvn.skysim.item.weapon.ZombieSword;
-import vn.giakhanhvn.skysim.item.weapon.vanilla.DiamondSword;
-import vn.giakhanhvn.skysim.item.weapon.vanilla.GoldenSword;
-import vn.giakhanhvn.skysim.item.weapon.vanilla.IronSword;
-import vn.giakhanhvn.skysim.item.weapon.vanilla.StoneSword;
-import vn.giakhanhvn.skysim.item.weapon.vanilla.WoodenSword;
+import vn.giakhanhvn.skysim.item.entity.*;
+import vn.giakhanhvn.skysim.item.farming.*;
+import vn.giakhanhvn.skysim.item.foraging.*;
+import vn.giakhanhvn.skysim.item.hoe.vanilla.*;
+import vn.giakhanhvn.skysim.item.mining.*;
+import vn.giakhanhvn.skysim.item.oddities.*;
+import vn.giakhanhvn.skysim.item.orb.*;
+import vn.giakhanhvn.skysim.item.pet.*;
+import vn.giakhanhvn.skysim.item.pickaxe.vanilla.*;
+import vn.giakhanhvn.skysim.item.revenant.*;
+import vn.giakhanhvn.skysim.item.rune.*;
+import vn.giakhanhvn.skysim.item.shovel.vanilla.*;
+import vn.giakhanhvn.skysim.item.storage.*;
+import vn.giakhanhvn.skysim.item.sven.*;
+import vn.giakhanhvn.skysim.item.tarantula.*;
+import vn.giakhanhvn.skysim.item.weapon.*;
+import vn.giakhanhvn.skysim.item.weapon.vanilla.*;
 import vn.giakhanhvn.skysim.util.SUtil;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public enum SMaterial {
     DWARVEN_MITRIL(Material.PRISMARINE_CRYSTALS, Mitril.class),
@@ -386,9 +79,9 @@ public enum SMaterial {
     HIDDEN_ETHERWARP_CONDUIT(Material.SKULL_ITEM, EtherwarpConduit.class),
     HIDDEN_ETHERWARP_MERGER(Material.SKULL_ITEM, EtherwarpMerger.class),
     HIDDEN_ETHERWARP_TRANSCODER(Material.SKULL_ITEM, EtherwarpTranscoder.class),
-    HIDDEN_USSR_HELMET(Material.STAINED_GLASS, BlyatHelmet.class, 14),
-    HIDDEN_DONATOR_HELMET(Material.STAINED_GLASS, USSRHelmet.class, 14),
-    HIDDEN_DT2_HELMET(Material.STAINED_GLASS, renegade450Helmet.class, 14),
+    HIDDEN_USSR_HELMET(Material.STAINED_GLASS, BlyatHelmet.class, (short) 14),
+    HIDDEN_DONATOR_HELMET(Material.STAINED_GLASS, USSRHelmet.class, (short) 14),
+    HIDDEN_DT2_HELMET(Material.STAINED_GLASS, renegade450Helmet.class, (short) 14),
     HIDDEN_GYROKINETIC_WAND(Material.BLAZE_ROD, GyrokineticWand.class),
     HIDDEN_GOLDEN_TIGER_2022(Material.SKULL_ITEM, GoldenTigerPet.class),
     HIDDEN_CHIMMY_PET(Material.SKULL_ITEM, ChimmyPet.class),
@@ -564,15 +257,15 @@ public enum SMaterial {
     ENCHANTED_EYE_OF_ENDER(Material.EYE_OF_ENDER, EnchantedEyeOfEnder.class),
     ENCHANTED_END_STONE(Material.ENDER_STONE, EnchantedEndStone.class),
     ENCHANTED_COAL(Material.COAL, EnchantedCoal.class),
-    ENCHANTED_CHARCOAL(Material.COAL, EnchantedCharcoal.class, 1),
+    ENCHANTED_CHARCOAL(Material.COAL, EnchantedCharcoal.class, (short) 1),
     ENCHANTED_DIAMOND(Material.DIAMOND, EnchantedDiamond.class),
     ENCHANTED_DIAMOND_BLOCK(Material.DIAMOND_BLOCK, EnchantedDiamondBlock.class),
     ENCHANTED_OAK_WOOD(Material.LOG, EnchantedOakWood.class),
-    ENCHANTED_SPRUCE_WOOD(Material.LOG, EnchantedSpruceWood.class, 1),
-    ENCHANTED_BIRCH_WOOD(Material.LOG, EnchantedBirchWood.class, 2),
-    ENCHANTED_JUNGLE_WOOD(Material.LOG, EnchantedJungleWood.class, 3),
+    ENCHANTED_SPRUCE_WOOD(Material.LOG, EnchantedSpruceWood.class, (short) 1),
+    ENCHANTED_BIRCH_WOOD(Material.LOG, EnchantedBirchWood.class, (short) 2),
+    ENCHANTED_JUNGLE_WOOD(Material.LOG, EnchantedJungleWood.class, (short) 3),
     ENCHANTED_ACACIA_WOOD(Material.LOG_2, EnchantedAcaciaWood.class),
-    ENCHANTED_DARK_OAK_WOOD(Material.LOG_2, EnchantedDarkOakWood.class, 1),
+    ENCHANTED_DARK_OAK_WOOD(Material.LOG_2, EnchantedDarkOakWood.class, (short) 1),
     ENCHANTED_POTATO(Material.POTATO_ITEM, EnchantedPotato.class),
     ENCHANTED_BAKED_POTATO(Material.BAKED_POTATO, EnchantedPotato.class),
     BAG_OF_COINS(Material.SKULL_ITEM, BagOfCoins.class),
@@ -593,7 +286,7 @@ public enum SMaterial {
     GREATER_BACKPACK(Material.SKULL_ITEM, GreaterBackpack.class),
     JUMBO_BACKPACK(Material.SKULL_ITEM, JumboBackpack.class),
     REVENANT_FLESH(Material.ROTTEN_FLESH, RevenantFlesh.class),
-    FOUL_FLESH(Material.COAL, FoulFlesh.class, 1),
+    FOUL_FLESH(Material.COAL, FoulFlesh.class, (short) 1),
     UNDEAD_CATALYST(Material.SKULL_ITEM, UndeadCatalyst.class),
     BEHEADED_HORROR(Material.SKULL_ITEM, BeheadedHorror.class),
     REVENANT_CATALYST(Material.SKULL_ITEM, RevenantCatalyst.class),
@@ -603,15 +296,15 @@ public enum SMaterial {
     SHARD_OF_THE_SHREDDED(Material.SKULL_ITEM, ShardoftheShredded.class),
     REVENANT_VISCERA(Material.GRILLED_PORK, RevenantViscera.class),
     TARANTULA_WEB(Material.STRING, TarantulaWeb.class),
-    TOXIC_ARROW_POISON(Material.INK_SACK, ToxicArrowPoison.class, 10),
+    TOXIC_ARROW_POISON(Material.INK_SACK, ToxicArrowPoison.class, (short) 10),
     SPIDER_CATALYST(Material.SKULL_ITEM, SpiderCatalyst.class),
     FLY_SWATTER(Material.GOLD_SPADE, FlySwatter.class),
     DIGESTED_MOSQUITO(Material.ROTTEN_FLESH, DigestedMosquito.class),
     WOLF_TOOTH(Material.GHAST_TEAR, WolfTooth.class),
     HAMSTER_WHEEL(Material.TRAP_DOOR, HamsterWheel.class),
-    RED_CLAW_EGG(Material.MONSTER_EGG, RedClawEgg.class, 96),
+    RED_CLAW_EGG(Material.MONSTER_EGG, RedClawEgg.class, (short) 96),
     OVERFLUX_CAPACITOR(Material.QUARTZ, OverfluxCapacitor.class),
-    GRIZZLY_BAIT(Material.RAW_FISH, GrizzlyBait.class, 1),
+    GRIZZLY_BAIT(Material.RAW_FISH, GrizzlyBait.class, (short) 1),
     NULL_SPHERE(Material.FIREWORK_CHARGE, NullSphere.class),
     PESTILENCE_RUNE(Material.SKULL_ITEM, PestilenceRune.class),
     SNAKE_RUNE(Material.SKULL_ITEM, SnakeRune.class),
@@ -1005,221 +698,221 @@ public enum SMaterial {
     RECORD_10(Material.RECORD_10),
     RECORD_11(Material.RECORD_11),
     RECORD_12(Material.RECORD_12),
-    SLIGHTLY_DAMAGED_ANVIL(Material.ANVIL, 1, "Slightly Damaged Anvil"),
-    VERY_DAMAGED_ANVIL(Material.ANVIL, 2, "Very Damaged Anvil"),
-    RED_BANNER(Material.BANNER, 1, "Red Banner"),
-    GREEN_BANNER(Material.BANNER, 2, "Green Banner"),
-    BROWN_BANNER(Material.BANNER, 3, "Brown Banner"),
-    BLUE_BANNER(Material.BANNER, 4, "Blue Banner"),
-    PURPLE_BANNER(Material.BANNER, 5, "Purple Banner"),
-    CYAN_BANNER(Material.BANNER, 6, "Cyan Banner"),
-    LIGHT_GRAY_BANNER(Material.BANNER, 7, "Light Gray Banner"),
-    GRAY_BANNER(Material.BANNER, 8, "Gray Banner"),
-    PINK_BANNER(Material.BANNER, 9, "Pink Banner"),
-    LIME_BANNER(Material.BANNER, 10, "Lime Banner"),
-    YELLOW_BANNER(Material.BANNER, 11, "Yellow Banner"),
-    LIGHT_BLUE_BANNER(Material.BANNER, 12, "Light Blue Banner"),
-    MAGENTA_BANNER(Material.BANNER, 13, "Magenta Banner"),
-    ORANGE_BANNER(Material.BANNER, 14, "Orange Banner"),
-    ORANGE_CARPET(Material.CARPET, 1, "Orange Carpet"),
-    MAGENTA_CARPET(Material.CARPET, 2, "Magenta Carpet"),
-    LIGHT_BLUE_CARPET(Material.CARPET, 3, "Light Blue Carpet"),
-    YELLOW_CARPET(Material.CARPET, 4, "Yellow Carpet"),
-    LIME_CARPET(Material.CARPET, 5, "Lime Carpet"),
-    PINK_CARPET(Material.CARPET, 6, "Pink Carpet"),
-    GRAY_CARPET(Material.CARPET, 7, "Gray Carpet"),
-    LIGHT_GRAY_CARPET(Material.CARPET, 8, "Light Gray Carpet"),
-    CYAN_CARPET(Material.CARPET, 9, "Cyan Carpet"),
-    PURPLE_CARPET(Material.CARPET, 10, "Purple Carpet"),
-    BLUE_CARPET(Material.CARPET, 11, "Blue Carpet"),
-    BROWN_CARPET(Material.CARPET, 12, "Brown Carpet"),
-    GREEN_CARPET(Material.CARPET, 13, "Green Carpet"),
-    RED_CARPET(Material.CARPET, 14, "Red Carpet"),
-    BLACK_CARPET(Material.CARPET, 15, "Black Carpet"),
-    CHARCOAL(Material.COAL, 1, "Charcoal"),
-    MOSSY_COBBLESTONE_WALL(Material.COBBLE_WALL, 1, "Mossy Cobblestone Wall"),
-    COOKED_SALMON(Material.COOKED_FISH, 1, "Cooked Salmon"),
-    COARSE_DIRT(Material.DIRT, 1, "Coarse Dirt"),
-    PODZOL(Material.DIRT, 2, "Podzol"),
-    LILAC(Material.DOUBLE_PLANT, 1, "Lilac"),
-    DOUBLE_TALLGRASS(Material.DOUBLE_PLANT, 2, "Double Tallgrass"),
-    LARGE_FERN(Material.DOUBLE_PLANT, 3, "Large Fern"),
-    ROSE_BUSH(Material.DOUBLE_PLANT, 4, "Rose Bush"),
-    PEONY(Material.DOUBLE_PLANT, 5, "Peony"),
-    RED_DYE(Material.INK_SACK, 1, "Red Dye"),
-    GREEN_DYE(Material.INK_SACK, 2, "Green Dye"),
-    COCOA_BEANS(Material.INK_SACK, 3, "Cocoa Beans"),
-    LAPIS_LAZULI(Material.INK_SACK, 4, "Lapis Lazuli"),
-    PURPLE_DYE(Material.INK_SACK, 5, "Purple Dye"),
-    CYAN_DYE(Material.INK_SACK, 6, "Cyan Dye"),
-    LIGHT_GRAY_DYE(Material.INK_SACK, 7, "Light Gray Dye"),
-    GRAY_DYE(Material.INK_SACK, 8, "Gray Dye"),
-    PINK_DYE(Material.INK_SACK, 9, "Pink Dye"),
-    LIME_DYE(Material.INK_SACK, 10, "Lime Dye"),
-    YELLOW_DYE(Material.INK_SACK, 11, "Yellow Dye"),
-    LIGHT_BLUE_DYE(Material.INK_SACK, 12, "Light Blue Dye"),
-    MAGENTA_DYE(Material.INK_SACK, 13, "Magenta Dye"),
-    ORANGE_DYE(Material.INK_SACK, 14, "Orange Dye"),
-    BONE_MEAL(Material.INK_SACK, 15, "Bone Meal"),
-    RAW_SALMON(Material.RAW_FISH, 1, "Raw Salmon"),
-    TROPICAL_FISH(Material.RAW_FISH, 2, "Tropical Fish"),
-    PUFFERFISH(Material.RAW_FISH, 3, "Pufferfish"),
-    ENCHANTED_GOLDEN_APPLE(Material.GOLDEN_APPLE, 1, "Enchanted Golden Apple"),
-    SPRUCE_LEAVES(Material.LEAVES, 1, "Spruce Leaves"),
-    BIRCH_LEAVES(Material.LEAVES, 2, "Birch Leaves"),
-    JUNGLE_LEAVES(Material.LEAVES, 3, "Jungle Leaves"),
-    DARK_OAK_LEAVES(Material.LEAVES_2, 1, "Dark Oak Leaves"),
-    SPRUCE_WOOD(Material.LOG, 1, SpruceWood.class, true),
-    BIRCH_WOOD(Material.LOG, 2, BirchWood.class, true),
-    JUNGLE_WOOD(Material.LOG, 3, JungleWood.class, true),
-    DARK_OAK_WOOD(Material.LOG_2, 1, DarkOakWood.class, true),
-    COBBLESTONE_MONSTER_EGG(Material.MONSTER_EGGS, 1, "Cobblestone Monster Egg"),
-    STONE_BRICK_MONSTER_EGG(Material.MONSTER_EGGS, 2, "Stone Brick Monster Egg"),
-    MOSSY_STONE_BRICK_MONSTER_EGG(Material.MONSTER_EGGS, 3, "Mossy Stone Brick Monster Egg"),
-    CRACKED_STONE_BRICK_MONSTER_EGG(Material.MONSTER_EGGS, 4, "Cracked Stone Brick Monster Egg"),
-    CHISELED_STONE_BRICK_MONSTER_EGG(Material.MONSTER_EGGS, 5, "Chiseled Stone Brick Monster Egg"),
-    SPRUCE_WOOD_PLANKS(Material.WOOD, 1, "Spruce Wood Planks"),
-    BIRCH_WOOD_PLANKS(Material.WOOD, 2, "Birch Wood Planks"),
-    JUNGLE_WOOD_PLANKS(Material.WOOD, 3, "Jungle Wood Planks"),
-    ACACIA_WOOD_PLANKS(Material.WOOD, 4, "Acacia Wood Planks"),
-    DARK_OAK_WOOD_PLANKS(Material.WOOD, 5, "Dark Oak Wood Planks"),
-    PRISMARINE_BRICKS(Material.PRISMARINE, 1, "Prismarine Bricks"),
-    DARK_PRISMARINE(Material.PRISMARINE, 2, "Dark Prismarine"),
-    CHISELED_QUARTZ_BLOCK(Material.QUARTZ_BLOCK, 1, "Chiseled Quartz Block"),
-    PILLAR_QUARTZ_BLOCK(Material.QUARTZ_BLOCK, 2, "Pillar Quartz Block"),
-    BLUE_ORCHID(Material.RED_ROSE, 1, "Blue Orchid"),
-    ALLIUM(Material.RED_ROSE, 2, "Allium"),
-    AZURE_BLUET(Material.RED_ROSE, 3, "Azure Bluet"),
-    RED_TULIP(Material.RED_ROSE, 4, "Red Tulip"),
-    ORANGE_TULIP(Material.RED_ROSE, 5, "Orange Tulip"),
-    WHITE_TULIP(Material.RED_ROSE, 6, "White Tulip"),
-    PINK_TULIP(Material.RED_ROSE, 7, "Pink Tulip"),
-    OXEYE_DAISY(Material.RED_ROSE, 8, "Oxeye Daisy"),
-    CHISELED_RED_SANDSTONE(Material.RED_SANDSTONE, 1, "Chiseled Red Sandstone"),
-    PILLAR_RED_SANDSTONE(Material.RED_SANDSTONE, 2, "Pillar Red Sandstone"),
-    RED_SAND(Material.SAND, 1, "Red Sand"),
-    CHISELED_SANDSTONE(Material.SANDSTONE, 1, "Chiseled Sandstone"),
-    SMOOTH_SANDSTONE(Material.SANDSTONE, 2, "Smooth Sandstone"),
-    SPRUCE_SAPLING(Material.SAPLING, 1, "Spruce Sapling"),
-    BIRCH_SAPLING(Material.SAPLING, 2, "Birch Sapling"),
-    JUNGLE_SAPLING(Material.SAPLING, 3, "Jungle Sapling"),
-    ACACIA_SAPLING(Material.SAPLING, 4, "Acacia Sapling"),
-    DARK_OAK_SAPLING(Material.SAPLING, 5, "Dark Oak Sapling"),
-    WITHER_SKELETON_SKULL(Material.SKULL_ITEM, 1, "Wither Skeleton Skull"),
-    ZOMBIE_HEAD(Material.SKULL_ITEM, 2, "Zombie Head"),
-    HEAD(Material.SKULL_ITEM, 3, "Head"),
+    SLIGHTLY_DAMAGED_ANVIL(Material.ANVIL, (short) 1, "Slightly Damaged Anvil"),
+    VERY_DAMAGED_ANVIL(Material.ANVIL, (short) 2, "Very Damaged Anvil"),
+    RED_BANNER(Material.BANNER, (short) 1, "Red Banner"),
+    GREEN_BANNER(Material.BANNER, (short) 2, "Green Banner"),
+    BROWN_BANNER(Material.BANNER, (short) 3, "Brown Banner"),
+    BLUE_BANNER(Material.BANNER, (short) 4, "Blue Banner"),
+    PURPLE_BANNER(Material.BANNER, (short) 5, "Purple Banner"),
+    CYAN_BANNER(Material.BANNER, (short) 6, "Cyan Banner"),
+    LIGHT_GRAY_BANNER(Material.BANNER, (short) 7, "Light Gray Banner"),
+    GRAY_BANNER(Material.BANNER, (short) 8, "Gray Banner"),
+    PINK_BANNER(Material.BANNER, (short) 9, "Pink Banner"),
+    LIME_BANNER(Material.BANNER, (short) 10, "Lime Banner"),
+    YELLOW_BANNER(Material.BANNER, (short) 11, "Yellow Banner"),
+    LIGHT_BLUE_BANNER(Material.BANNER, (short) 12, "Light Blue Banner"),
+    MAGENTA_BANNER(Material.BANNER, (short) 13, "Magenta Banner"),
+    ORANGE_BANNER(Material.BANNER, (short) 14, "Orange Banner"),
+    ORANGE_CARPET(Material.CARPET, (short) 1, "Orange Carpet"),
+    MAGENTA_CARPET(Material.CARPET, (short) 2, "Magenta Carpet"),
+    LIGHT_BLUE_CARPET(Material.CARPET, (short) 3, "Light Blue Carpet"),
+    YELLOW_CARPET(Material.CARPET, (short) 4, "Yellow Carpet"),
+    LIME_CARPET(Material.CARPET, (short) 5, "Lime Carpet"),
+    PINK_CARPET(Material.CARPET, (short) 6, "Pink Carpet"),
+    GRAY_CARPET(Material.CARPET, (short) 7, "Gray Carpet"),
+    LIGHT_GRAY_CARPET(Material.CARPET, (short) 8, "Light Gray Carpet"),
+    CYAN_CARPET(Material.CARPET, (short) 9, "Cyan Carpet"),
+    PURPLE_CARPET(Material.CARPET, (short) 10, "Purple Carpet"),
+    BLUE_CARPET(Material.CARPET, (short) 11, "Blue Carpet"),
+    BROWN_CARPET(Material.CARPET, (short) 12, "Brown Carpet"),
+    GREEN_CARPET(Material.CARPET, (short) 13, "Green Carpet"),
+    RED_CARPET(Material.CARPET, (short) 14, "Red Carpet"),
+    BLACK_CARPET(Material.CARPET, (short) 15, "Black Carpet"),
+    CHARCOAL(Material.COAL, (short) 1, "Charcoal"),
+    MOSSY_COBBLESTONE_WALL(Material.COBBLE_WALL, (short) 1, "Mossy Cobblestone Wall"),
+    COOKED_SALMON(Material.COOKED_FISH, (short) 1, "Cooked Salmon"),
+    COARSE_DIRT(Material.DIRT, (short) 1, "Coarse Dirt"),
+    PODZOL(Material.DIRT, (short) 2, "Podzol"),
+    LILAC(Material.DOUBLE_PLANT, (short) 1, "Lilac"),
+    DOUBLE_TALLGRASS(Material.DOUBLE_PLANT, (short) 2, "Double Tallgrass"),
+    LARGE_FERN(Material.DOUBLE_PLANT, (short) 3, "Large Fern"),
+    ROSE_BUSH(Material.DOUBLE_PLANT, (short) 4, "Rose Bush"),
+    PEONY(Material.DOUBLE_PLANT, (short) 5, "Peony"),
+    RED_DYE(Material.INK_SACK, (short) 1, "Red Dye"),
+    GREEN_DYE(Material.INK_SACK, (short) 2, "Green Dye"),
+    COCOA_BEANS(Material.INK_SACK, (short) 3, "Cocoa Beans"),
+    LAPIS_LAZULI(Material.INK_SACK, (short) 4, "Lapis Lazuli"),
+    PURPLE_DYE(Material.INK_SACK, (short) 5, "Purple Dye"),
+    CYAN_DYE(Material.INK_SACK, (short) 6, "Cyan Dye"),
+    LIGHT_GRAY_DYE(Material.INK_SACK, (short) 7, "Light Gray Dye"),
+    GRAY_DYE(Material.INK_SACK, (short) 8, "Gray Dye"),
+    PINK_DYE(Material.INK_SACK, (short) 9, "Pink Dye"),
+    LIME_DYE(Material.INK_SACK, (short) 10, "Lime Dye"),
+    YELLOW_DYE(Material.INK_SACK, (short) 11, "Yellow Dye"),
+    LIGHT_BLUE_DYE(Material.INK_SACK, (short) 12, "Light Blue Dye"),
+    MAGENTA_DYE(Material.INK_SACK, (short) 13, "Magenta Dye"),
+    ORANGE_DYE(Material.INK_SACK, (short) 14, "Orange Dye"),
+    BONE_MEAL(Material.INK_SACK, (short) 15, "Bone Meal"),
+    RAW_SALMON(Material.RAW_FISH, (short) 1, "Raw Salmon"),
+    TROPICAL_FISH(Material.RAW_FISH, (short) 2, "Tropical Fish"),
+    PUFFERFISH(Material.RAW_FISH, (short) 3, "Pufferfish"),
+    ENCHANTED_GOLDEN_APPLE(Material.GOLDEN_APPLE, (short) 1, "Enchanted Golden Apple"),
+    SPRUCE_LEAVES(Material.LEAVES, (short) 1, "Spruce Leaves"),
+    BIRCH_LEAVES(Material.LEAVES, (short) 2, "Birch Leaves"),
+    JUNGLE_LEAVES(Material.LEAVES, (short) 3, "Jungle Leaves"),
+    DARK_OAK_LEAVES(Material.LEAVES_2, (short) 1, "Dark Oak Leaves"),
+    SPRUCE_WOOD(Material.LOG, (short) 1, SpruceWood.class, true),
+    BIRCH_WOOD(Material.LOG, (short) 2, BirchWood.class, true),
+    JUNGLE_WOOD(Material.LOG, (short) 3, JungleWood.class, true),
+    DARK_OAK_WOOD(Material.LOG_2, (short) 1, DarkOakWood.class, true),
+    COBBLESTONE_MONSTER_EGG(Material.MONSTER_EGGS, (short) 1, "Cobblestone Monster Egg"),
+    STONE_BRICK_MONSTER_EGG(Material.MONSTER_EGGS, (short) 2, "Stone Brick Monster Egg"),
+    MOSSY_STONE_BRICK_MONSTER_EGG(Material.MONSTER_EGGS, (short) 3, "Mossy Stone Brick Monster Egg"),
+    CRACKED_STONE_BRICK_MONSTER_EGG(Material.MONSTER_EGGS, (short) 4, "Cracked Stone Brick Monster Egg"),
+    CHISELED_STONE_BRICK_MONSTER_EGG(Material.MONSTER_EGGS, (short) 5, "Chiseled Stone Brick Monster Egg"),
+    SPRUCE_WOOD_PLANKS(Material.WOOD, (short) 1, "Spruce Wood Planks"),
+    BIRCH_WOOD_PLANKS(Material.WOOD, (short) 2, "Birch Wood Planks"),
+    JUNGLE_WOOD_PLANKS(Material.WOOD, (short) 3, "Jungle Wood Planks"),
+    ACACIA_WOOD_PLANKS(Material.WOOD, (short) 4, "Acacia Wood Planks"),
+    DARK_OAK_WOOD_PLANKS(Material.WOOD, (short) 5, "Dark Oak Wood Planks"),
+    PRISMARINE_BRICKS(Material.PRISMARINE, (short) 1, "Prismarine Bricks"),
+    DARK_PRISMARINE(Material.PRISMARINE, (short) 2, "Dark Prismarine"),
+    CHISELED_QUARTZ_BLOCK(Material.QUARTZ_BLOCK, (short) 1, "Chiseled Quartz Block"),
+    PILLAR_QUARTZ_BLOCK(Material.QUARTZ_BLOCK, (short) 2, "Pillar Quartz Block"),
+    BLUE_ORCHID(Material.RED_ROSE, (short) 1, "Blue Orchid"),
+    ALLIUM(Material.RED_ROSE, (short) 2, "Allium"),
+    AZURE_BLUET(Material.RED_ROSE, (short) 3, "Azure Bluet"),
+    RED_TULIP(Material.RED_ROSE, (short) 4, "Red Tulip"),
+    ORANGE_TULIP(Material.RED_ROSE, (short) 5, "Orange Tulip"),
+    WHITE_TULIP(Material.RED_ROSE, (short) 6, "White Tulip"),
+    PINK_TULIP(Material.RED_ROSE, (short) 7, "Pink Tulip"),
+    OXEYE_DAISY(Material.RED_ROSE, (short) 8, "Oxeye Daisy"),
+    CHISELED_RED_SANDSTONE(Material.RED_SANDSTONE, (short) 1, "Chiseled Red Sandstone"),
+    PILLAR_RED_SANDSTONE(Material.RED_SANDSTONE, (short) 2, "Pillar Red Sandstone"),
+    RED_SAND(Material.SAND, (short) 1, "Red Sand"),
+    CHISELED_SANDSTONE(Material.SANDSTONE, (short) 1, "Chiseled Sandstone"),
+    SMOOTH_SANDSTONE(Material.SANDSTONE, (short) 2, "Smooth Sandstone"),
+    SPRUCE_SAPLING(Material.SAPLING, (short) 1, "Spruce Sapling"),
+    BIRCH_SAPLING(Material.SAPLING, (short) 2, "Birch Sapling"),
+    JUNGLE_SAPLING(Material.SAPLING, (short) 3, "Jungle Sapling"),
+    ACACIA_SAPLING(Material.SAPLING, (short) 4, "Acacia Sapling"),
+    DARK_OAK_SAPLING(Material.SAPLING, (short) 5, "Dark Oak Sapling"),
+    WITHER_SKELETON_SKULL(Material.SKULL_ITEM, (short) 1, "Wither Skeleton Skull"),
+    ZOMBIE_HEAD(Material.SKULL_ITEM, (short) 2, "Zombie Head"),
+    HEAD(Material.SKULL_ITEM, (short) 3, "Head"),
     T_(Material.SKULL_ITEM, TerracottaHead.class),
     JERRY_GUN(Material.GOLD_BARDING, JerryChineGun.class),
-    CREEPER_HEAD(Material.SKULL_ITEM, 4, "Creeper Head"),
-    CREEPER_SPAWN_EGG(Material.MONSTER_EGG, 50, "Spawn Creeper"),
-    SKELETON_SPAWN_EGG(Material.MONSTER_EGG, 51, "Spawn Skeleton"),
-    SPIDER_SPAWN_EGG(Material.MONSTER_EGG, 52, "Spawn Spider"),
-    ZOMBIE_SPAWN_EGG(Material.MONSTER_EGG, 54, "Spawn Zombie"),
-    SLIME_SPAWN_EGG(Material.MONSTER_EGG, 55, "Spawn Slime"),
-    GHAST_SPAWN_EGG(Material.MONSTER_EGG, 56, "Spawn Ghast"),
-    ZOMBIE_PIGMAN_SPAWN_EGG(Material.MONSTER_EGG, 57, "Spawn Zombie Pigman"),
-    ENDERMAN_SPAWN_EGG(Material.MONSTER_EGG, 58, "Spawn Enderman"),
-    CAVE_SPIDER_SPAWN_EGG(Material.MONSTER_EGG, 59, "Spawn Cave Spider"),
-    SILVERFISH_SPAWN_EGG(Material.MONSTER_EGG, 60, "Spawn Silverfish"),
-    BLAZE_SPAWN_EGG(Material.MONSTER_EGG, 61, "Spawn Blaze"),
-    MAGMA_CUBE_SPAWN_EGG(Material.MONSTER_EGG, 62, "Spawn Magma Cube"),
-    BAT_SPAWN_EGG(Material.MONSTER_EGG, 65, "Spawn Bat"),
-    WITCH_SPAWN_EGG(Material.MONSTER_EGG, 66, "Spawn Witch"),
-    ENDERMITE_SPAWN_EGG(Material.MONSTER_EGG, 67, "Spawn Endermite"),
-    GUARDIAN_SPAWN_EGG(Material.MONSTER_EGG, 68, "Spawn Guardian"),
-    PIG_SPAWN_EGG(Material.MONSTER_EGG, 90, "Spawn Pig"),
-    SHEEP_SPAWN_EGG(Material.MONSTER_EGG, 91, "Spawn Sheep"),
-    COW_SPAWN_EGG(Material.MONSTER_EGG, 92, "Spawn Cow"),
-    CHICKEN_SPAWN_EGG(Material.MONSTER_EGG, 93, "Spawn Chicken"),
-    SQUID_SPAWN_EGG(Material.MONSTER_EGG, 94, "Spawn Squid"),
-    WOLF_SPAWN_EGG(Material.MONSTER_EGG, 95, "Spawn Wolf"),
-    MOOSHROOM_SPAWN_EGG(Material.MONSTER_EGG, 96, "Spawn Mooshroom"),
-    OCELOT_SPAWN_EGG(Material.MONSTER_EGG, 98, "Spawn Ocelot"),
-    HORSE_SPAWN_EGG(Material.MONSTER_EGG, 100, "Spawn Horse"),
-    RABBIT_SPAWN_EGG(Material.MONSTER_EGG, 101, "Spawn Rabbit"),
-    VILLAGER_SPAWN_EGG(Material.MONSTER_EGG, 120, "Spawn Villager"),
-    WET_SPONGE(Material.SPONGE, 1, "Wet Sponge"),
-    ORANGE_STAINED_GLASS(Material.STAINED_GLASS, 1, "Orange Stained Glass"),
-    MAGENTA_STAINED_GLASS(Material.STAINED_GLASS, 2, "Magenta Stained Glass"),
-    LIGHT_BLUE_STAINED_GLASS(Material.STAINED_GLASS, 3, "Light Blue Stained Glass"),
-    YELLOW_STAINED_GLASS(Material.STAINED_GLASS, 4, "Yellow Stained Glass"),
-    LIME_STAINED_GLASS(Material.STAINED_GLASS, 5, "Lime Stained Glass"),
-    PINK_STAINED_GLASS(Material.STAINED_GLASS, 6, "Pink Stained Glass"),
-    GRAY_STAINED_GLASS(Material.STAINED_GLASS, 7, "Gray Stained Glass"),
-    LIGHT_GRAY_STAINED_GLASS(Material.STAINED_GLASS, 8, "Light Gray Stained Glass"),
-    CYAN_STAINED_GLASS(Material.STAINED_GLASS, 9, "Cyan Stained Glass"),
-    PURPLE_STAINED_GLASS(Material.STAINED_GLASS, 10, "Purple Stained Glass"),
-    BLUE_STAINED_GLASS(Material.STAINED_GLASS, 11, "Blue Stained Glass"),
-    BROWN_STAINED_GLASS(Material.STAINED_GLASS, 12, "Brown Stained Glass"),
-    GREEN_STAINED_GLASS(Material.STAINED_GLASS, 13, "Green Stained Glass"),
-    RED_STAINED_GLASS(Material.STAINED_GLASS, 14, "Red Stained Glass"),
-    BLACK_STAINED_GLASS(Material.STAINED_GLASS, 15, "Black Stained Glass"),
-    ORANGE_STAINED_GLASS_PANE(Material.STAINED_GLASS_PANE, 1, "Orange Stained Glass Pane"),
-    MAGENTA_STAINED_GLASS_PANE(Material.STAINED_GLASS_PANE, 2, "Magenta Stained Glass Pane"),
-    LIGHT_BLUE_STAINED_GLASS_PANE(Material.STAINED_GLASS_PANE, 3, "Light Blue Stained Glass Pane"),
-    YELLOW_STAINED_GLASS_PANE(Material.STAINED_GLASS_PANE, 4, "Yellow Stained Glass Pane"),
-    LIME_STAINED_GLASS_PANE(Material.STAINED_GLASS_PANE, 5, "Lime Stained Glass Pane"),
-    PINK_STAINED_GLASS_PANE(Material.STAINED_GLASS_PANE, 6, "Pink Stained Glass Pane"),
-    GRAY_STAINED_GLASS_PANE(Material.STAINED_GLASS_PANE, 7, "Gray Stained Glass Pane"),
-    LIGHT_GRAY_STAINED_GLASS_PANE(Material.STAINED_GLASS_PANE, 8, "Light Gray Stained Glass Pane"),
-    CYAN_STAINED_GLASS_PANE(Material.STAINED_GLASS_PANE, 9, "Cyan Stained Glass Pane"),
-    PURPLE_STAINED_GLASS_PANE(Material.STAINED_GLASS_PANE, 10, "Purple Stained Glass Pane"),
-    BLUE_STAINED_GLASS_PANE(Material.STAINED_GLASS_PANE, 11, "Blue Stained Glass Pane"),
-    BROWN_STAINED_GLASS_PANE(Material.STAINED_GLASS_PANE, 12, "Brown Stained Glass Pane"),
-    GREEN_STAINED_GLASS_PANE(Material.STAINED_GLASS_PANE, 13, "Green Stained Glass Pane"),
-    RED_STAINED_GLASS_PANE(Material.STAINED_GLASS_PANE, 14, "Red Stained Glass Pane"),
-    BLACK_STAINED_GLASS_PANE(Material.STAINED_GLASS_PANE, 15, "Black Stained Glass Pane"),
-    ORANGE_STAINED_CLAY(Material.STAINED_CLAY, 1, "Orange Stained Clay"),
-    MAGENTA_STAINED_CLAY(Material.STAINED_CLAY, 2, "Magenta Stained Clay"),
-    LIGHT_BLUE_STAINED_CLAY(Material.STAINED_CLAY, 3, "Light Blue Stained Clay"),
-    YELLOW_STAINED_CLAY(Material.STAINED_CLAY, 4, "Yellow Stained Clay"),
-    LIME_STAINED_CLAY(Material.STAINED_CLAY, 5, "Lime Stained Clay"),
-    PINK_STAINED_CLAY(Material.STAINED_CLAY, 6, "Pink Stained Clay"),
-    GRAY_STAINED_CLAY(Material.STAINED_CLAY, 7, "Gray Stained Clay"),
-    LIGHT_GRAY_STAINED_CLAY(Material.STAINED_CLAY, 8, "Light Gray Stained Clay"),
-    CYAN_STAINED_CLAY(Material.STAINED_CLAY, 9, "Cyan Stained Clay"),
-    PURPLE_STAINED_CLAY(Material.STAINED_CLAY, 10, "Purple Stained Clay"),
-    BLUE_STAINED_CLAY(Material.STAINED_CLAY, 11, "Blue Stained Clay"),
-    BROWN_STAINED_CLAY(Material.STAINED_CLAY, 12, "Brown Stained Clay"),
-    GREEN_STAINED_CLAY(Material.STAINED_CLAY, 13, "Green Stained Clay"),
-    RED_STAINED_CLAY(Material.STAINED_CLAY, 14, "Red Stained Clay"),
-    BLACK_STAINED_CLAY(Material.STAINED_CLAY, 15, "Black Stained Clay"),
-    GRANITE(Material.STONE, 1, "Granite"),
-    POLISHED_GRANITE(Material.STONE, 2, "Polished Granite"),
-    DIORITE(Material.STONE, 3, "Diorite"),
-    POLISHED_DIORITE(Material.STONE, 4, "Polished Diorite"),
-    ANDESITE(Material.STONE, 5, "Andesite"),
-    POLISHED_ANDESITE(Material.STONE, 6, "Polished Andesite"),
-    SANDSTONE_SLAB(Material.STEP, 1, "Sandstone Slab"),
-    COBBLESTONE_SLAB(Material.STEP, 3, "Cobblestone Slab"),
-    BRICK_SLAB(Material.STEP, 4, "Brick Slab"),
-    STONE_BRICK_SLAB(Material.STEP, 5, "Stone Brick Slab"),
-    NETHER_BRICK_SLAB(Material.STEP, 6, "Nether Brick Slab"),
-    QUARTZ_SLAB(Material.STEP, 7, "Quartz Slab"),
-    MOSSY_STONE_BRICKS(Material.SMOOTH_BRICK, 1, "Mossy Stone Bricks"),
-    CRACKED_STONE_BRICKS(Material.SMOOTH_BRICK, 2, "Cracked Stone Bricks"),
-    CHISELED_STONE_BRICKS(Material.SMOOTH_BRICK, 3, "Chiseled Stone Bricks"),
-    GRASS(Material.LONG_GRASS, 1, "Grass"),
-    FERN(Material.LONG_GRASS, 2, "Fern"),
-    SPRUCE_WOOD_SLAB(Material.WOOD_STEP, 1, "Spruce Wood Slab"),
-    BIRCH_WOOD_SLAB(Material.WOOD_STEP, 2, "Birch Wood Slab"),
-    JUNGLE_WOOD_SLAB(Material.WOOD_STEP, 3, "Jungle Wood Slab"),
-    ACACIA_WOOD_SLAB(Material.WOOD_STEP, 4, "Acacia Wood Slab"),
-    DARK_OAK_WOOD_SLAB(Material.WOOD_STEP, 5, "Dark Oak Wood Slab"),
-    ORANGE_WOOL(Material.WOOL, 1, "Orange Wool"),
-    MAGENTA_WOOL(Material.WOOL, 2, "Magenta Wool"),
-    LIGHT_BLUE_WOOL(Material.WOOL, 3, "Light Blue Wool"),
-    YELLOW_WOOL(Material.WOOL, 4, "Yellow Wool"),
-    LIME_WOOL(Material.WOOL, 5, "Lime Wool"),
-    PINK_WOOL(Material.WOOL, 6, "Pink Wool"),
-    GRAY_WOOL(Material.WOOL, 7, "Gray Wool"),
-    LIGHT_GRAY_WOOL(Material.WOOL, 8, "Light Gray Wool"),
-    CYAN_WOOL(Material.WOOL, 9, "Cyan Wool"),
-    PURPLE_WOOL(Material.WOOL, 10, "Purple Wool"),
-    BLUE_WOOL(Material.WOOL, 11, "Blue Wool"),
-    BROWN_WOOL(Material.WOOL, 12, "Brown Wool"),
-    GREEN_WOOL(Material.WOOL, 13, "Green Wool"),
-    RED_WOOL(Material.WOOL, 14, "Red Wool"),
+    CREEPER_HEAD(Material.SKULL_ITEM, (short) 4, "Creeper Head"),
+    CREEPER_SPAWN_EGG(Material.MONSTER_EGG, (short) 50, "Spawn Creeper"),
+    SKELETON_SPAWN_EGG(Material.MONSTER_EGG, (short) 51, "Spawn Skeleton"),
+    SPIDER_SPAWN_EGG(Material.MONSTER_EGG, (short) 52, "Spawn Spider"),
+    ZOMBIE_SPAWN_EGG(Material.MONSTER_EGG, (short) 54, "Spawn Zombie"),
+    SLIME_SPAWN_EGG(Material.MONSTER_EGG, (short) 55, "Spawn Slime"),
+    GHAST_SPAWN_EGG(Material.MONSTER_EGG, (short) 56, "Spawn Ghast"),
+    ZOMBIE_PIGMAN_SPAWN_EGG(Material.MONSTER_EGG, (short) 57, "Spawn Zombie Pigman"),
+    ENDERMAN_SPAWN_EGG(Material.MONSTER_EGG, (short) 58, "Spawn Enderman"),
+    CAVE_SPIDER_SPAWN_EGG(Material.MONSTER_EGG, (short) 59, "Spawn Cave Spider"),
+    SILVERFISH_SPAWN_EGG(Material.MONSTER_EGG, (short) 60, "Spawn Silverfish"),
+    BLAZE_SPAWN_EGG(Material.MONSTER_EGG, (short) 61, "Spawn Blaze"),
+    MAGMA_CUBE_SPAWN_EGG(Material.MONSTER_EGG, (short) 62, "Spawn Magma Cube"),
+    BAT_SPAWN_EGG(Material.MONSTER_EGG, (short) 65, "Spawn Bat"),
+    WITCH_SPAWN_EGG(Material.MONSTER_EGG, (short) 66, "Spawn Witch"),
+    ENDERMITE_SPAWN_EGG(Material.MONSTER_EGG, (short) 67, "Spawn Endermite"),
+    GUARDIAN_SPAWN_EGG(Material.MONSTER_EGG, (short) 68, "Spawn Guardian"),
+    PIG_SPAWN_EGG(Material.MONSTER_EGG, (short) 90, "Spawn Pig"),
+    SHEEP_SPAWN_EGG(Material.MONSTER_EGG, (short) 91, "Spawn Sheep"),
+    COW_SPAWN_EGG(Material.MONSTER_EGG, (short) 92, "Spawn Cow"),
+    CHICKEN_SPAWN_EGG(Material.MONSTER_EGG, (short) 93, "Spawn Chicken"),
+    SQUID_SPAWN_EGG(Material.MONSTER_EGG, (short) 94, "Spawn Squid"),
+    WOLF_SPAWN_EGG(Material.MONSTER_EGG, (short) 95, "Spawn Wolf"),
+    MOOSHROOM_SPAWN_EGG(Material.MONSTER_EGG, (short) 96, "Spawn Mooshroom"),
+    OCELOT_SPAWN_EGG(Material.MONSTER_EGG, (short) 98, "Spawn Ocelot"),
+    HORSE_SPAWN_EGG(Material.MONSTER_EGG, (short) 100, "Spawn Horse"),
+    RABBIT_SPAWN_EGG(Material.MONSTER_EGG, (short) 101, "Spawn Rabbit"),
+    VILLAGER_SPAWN_EGG(Material.MONSTER_EGG, (short) 120, "Spawn Villager"),
+    WET_SPONGE(Material.SPONGE, (short) 1, "Wet Sponge"),
+    ORANGE_STAINED_GLASS(Material.STAINED_GLASS, (short) 1, "Orange Stained Glass"),
+    MAGENTA_STAINED_GLASS(Material.STAINED_GLASS, (short) 2, "Magenta Stained Glass"),
+    LIGHT_BLUE_STAINED_GLASS(Material.STAINED_GLASS, (short) 3, "Light Blue Stained Glass"),
+    YELLOW_STAINED_GLASS(Material.STAINED_GLASS, (short) 4, "Yellow Stained Glass"),
+    LIME_STAINED_GLASS(Material.STAINED_GLASS, (short) 5, "Lime Stained Glass"),
+    PINK_STAINED_GLASS(Material.STAINED_GLASS, (short) 6, "Pink Stained Glass"),
+    GRAY_STAINED_GLASS(Material.STAINED_GLASS, (short) 7, "Gray Stained Glass"),
+    LIGHT_GRAY_STAINED_GLASS(Material.STAINED_GLASS, (short) 8, "Light Gray Stained Glass"),
+    CYAN_STAINED_GLASS(Material.STAINED_GLASS, (short) 9, "Cyan Stained Glass"),
+    PURPLE_STAINED_GLASS(Material.STAINED_GLASS, (short) 10, "Purple Stained Glass"),
+    BLUE_STAINED_GLASS(Material.STAINED_GLASS, (short) 11, "Blue Stained Glass"),
+    BROWN_STAINED_GLASS(Material.STAINED_GLASS, (short) 12, "Brown Stained Glass"),
+    GREEN_STAINED_GLASS(Material.STAINED_GLASS, (short) 13, "Green Stained Glass"),
+    RED_STAINED_GLASS(Material.STAINED_GLASS, (short) 14, "Red Stained Glass"),
+    BLACK_STAINED_GLASS(Material.STAINED_GLASS, (short) 15, "Black Stained Glass"),
+    ORANGE_STAINED_GLASS_PANE(Material.STAINED_GLASS_PANE, (short) 1, "Orange Stained Glass Pane"),
+    MAGENTA_STAINED_GLASS_PANE(Material.STAINED_GLASS_PANE, (short) 2, "Magenta Stained Glass Pane"),
+    LIGHT_BLUE_STAINED_GLASS_PANE(Material.STAINED_GLASS_PANE, (short) 3, "Light Blue Stained Glass Pane"),
+    YELLOW_STAINED_GLASS_PANE(Material.STAINED_GLASS_PANE, (short) 4, "Yellow Stained Glass Pane"),
+    LIME_STAINED_GLASS_PANE(Material.STAINED_GLASS_PANE, (short) 5, "Lime Stained Glass Pane"),
+    PINK_STAINED_GLASS_PANE(Material.STAINED_GLASS_PANE, (short) 6, "Pink Stained Glass Pane"),
+    GRAY_STAINED_GLASS_PANE(Material.STAINED_GLASS_PANE, (short) 7, "Gray Stained Glass Pane"),
+    LIGHT_GRAY_STAINED_GLASS_PANE(Material.STAINED_GLASS_PANE, (short) 8, "Light Gray Stained Glass Pane"),
+    CYAN_STAINED_GLASS_PANE(Material.STAINED_GLASS_PANE, (short) 9, "Cyan Stained Glass Pane"),
+    PURPLE_STAINED_GLASS_PANE(Material.STAINED_GLASS_PANE, (short) 10, "Purple Stained Glass Pane"),
+    BLUE_STAINED_GLASS_PANE(Material.STAINED_GLASS_PANE, (short) 11, "Blue Stained Glass Pane"),
+    BROWN_STAINED_GLASS_PANE(Material.STAINED_GLASS_PANE, (short) 12, "Brown Stained Glass Pane"),
+    GREEN_STAINED_GLASS_PANE(Material.STAINED_GLASS_PANE, (short) 13, "Green Stained Glass Pane"),
+    RED_STAINED_GLASS_PANE(Material.STAINED_GLASS_PANE, (short) 14, "Red Stained Glass Pane"),
+    BLACK_STAINED_GLASS_PANE(Material.STAINED_GLASS_PANE, (short) 15, "Black Stained Glass Pane"),
+    ORANGE_STAINED_CLAY(Material.STAINED_CLAY, (short) 1, "Orange Stained Clay"),
+    MAGENTA_STAINED_CLAY(Material.STAINED_CLAY, (short) 2, "Magenta Stained Clay"),
+    LIGHT_BLUE_STAINED_CLAY(Material.STAINED_CLAY, (short) 3, "Light Blue Stained Clay"),
+    YELLOW_STAINED_CLAY(Material.STAINED_CLAY, (short) 4, "Yellow Stained Clay"),
+    LIME_STAINED_CLAY(Material.STAINED_CLAY, (short) 5, "Lime Stained Clay"),
+    PINK_STAINED_CLAY(Material.STAINED_CLAY, (short) 6, "Pink Stained Clay"),
+    GRAY_STAINED_CLAY(Material.STAINED_CLAY, (short) 7, "Gray Stained Clay"),
+    LIGHT_GRAY_STAINED_CLAY(Material.STAINED_CLAY, (short) 8, "Light Gray Stained Clay"),
+    CYAN_STAINED_CLAY(Material.STAINED_CLAY, (short) 9, "Cyan Stained Clay"),
+    PURPLE_STAINED_CLAY(Material.STAINED_CLAY, (short) 10, "Purple Stained Clay"),
+    BLUE_STAINED_CLAY(Material.STAINED_CLAY, (short) 11, "Blue Stained Clay"),
+    BROWN_STAINED_CLAY(Material.STAINED_CLAY, (short) 12, "Brown Stained Clay"),
+    GREEN_STAINED_CLAY(Material.STAINED_CLAY, (short) 13, "Green Stained Clay"),
+    RED_STAINED_CLAY(Material.STAINED_CLAY, (short) 14, "Red Stained Clay"),
+    BLACK_STAINED_CLAY(Material.STAINED_CLAY, (short) 15, "Black Stained Clay"),
+    GRANITE(Material.STONE, (short) 1, "Granite"),
+    POLISHED_GRANITE(Material.STONE, (short) 2, "Polished Granite"),
+    DIORITE(Material.STONE, (short) 3, "Diorite"),
+    POLISHED_DIORITE(Material.STONE, (short) 4, "Polished Diorite"),
+    ANDESITE(Material.STONE, (short) 5, "Andesite"),
+    POLISHED_ANDESITE(Material.STONE, (short) 6, "Polished Andesite"),
+    SANDSTONE_SLAB(Material.STEP, (short) 1, "Sandstone Slab"),
+    COBBLESTONE_SLAB(Material.STEP, (short) 3, "Cobblestone Slab"),
+    BRICK_SLAB(Material.STEP, (short) 4, "Brick Slab"),
+    STONE_BRICK_SLAB(Material.STEP, (short) 5, "Stone Brick Slab"),
+    NETHER_BRICK_SLAB(Material.STEP, (short) 6, "Nether Brick Slab"),
+    QUARTZ_SLAB(Material.STEP, (short) 7, "Quartz Slab"),
+    MOSSY_STONE_BRICKS(Material.SMOOTH_BRICK, (short) 1, "Mossy Stone Bricks"),
+    CRACKED_STONE_BRICKS(Material.SMOOTH_BRICK, (short) 2, "Cracked Stone Bricks"),
+    CHISELED_STONE_BRICKS(Material.SMOOTH_BRICK, (short) 3, "Chiseled Stone Bricks"),
+    GRASS(Material.LONG_GRASS, (short) 1, "Grass"),
+    FERN(Material.LONG_GRASS, (short) 2, "Fern"),
+    SPRUCE_WOOD_SLAB(Material.WOOD_STEP, (short) 1, "Spruce Wood Slab"),
+    BIRCH_WOOD_SLAB(Material.WOOD_STEP, (short) 2, "Birch Wood Slab"),
+    JUNGLE_WOOD_SLAB(Material.WOOD_STEP, (short) 3, "Jungle Wood Slab"),
+    ACACIA_WOOD_SLAB(Material.WOOD_STEP, (short) 4, "Acacia Wood Slab"),
+    DARK_OAK_WOOD_SLAB(Material.WOOD_STEP, (short) 5, "Dark Oak Wood Slab"),
+    ORANGE_WOOL(Material.WOOL, (short) 1, "Orange Wool"),
+    MAGENTA_WOOL(Material.WOOL, (short) 2, "Magenta Wool"),
+    LIGHT_BLUE_WOOL(Material.WOOL, (short) 3, "Light Blue Wool"),
+    YELLOW_WOOL(Material.WOOL, (short) 4, "Yellow Wool"),
+    LIME_WOOL(Material.WOOL, (short) 5, "Lime Wool"),
+    PINK_WOOL(Material.WOOL, (short) 6, "Pink Wool"),
+    GRAY_WOOL(Material.WOOL, (short) 7, "Gray Wool"),
+    LIGHT_GRAY_WOOL(Material.WOOL, (short) 8, "Light Gray Wool"),
+    CYAN_WOOL(Material.WOOL, (short) 9, "Cyan Wool"),
+    PURPLE_WOOL(Material.WOOL, (short) 10, "Purple Wool"),
+    BLUE_WOOL(Material.WOOL, (short) 11, "Blue Wool"),
+    BROWN_WOOL(Material.WOOL, (short) 12, "Brown Wool"),
+    GREEN_WOOL(Material.WOOL, (short) 13, "Green Wool"),
+    RED_WOOL(Material.WOOL, (short) 14, "Red Wool"),
     JERRY_HEAD(Material.SKULL_ITEM, JerryGunBullet.class),
     ATONED_HEAD(Material.SKULL_ITEM, AtonedHorrorHead.class),
     REV_HORROR_2(Material.SKULL_ITEM, RevenantHorrorHead2.class),
@@ -1233,7 +926,7 @@ public enum SMaterial {
     BONZO_BALLOON_7(Material.SKULL_ITEM, BS7.class),
     BONZO_BALLOON_8(Material.SKULL_ITEM, BS8.class),
     BONZO_BALLOON_9(Material.SKULL_ITEM, BS9.class),
-    BLACK_WOOL(Material.WOOL, 15, "Black Wool");
+    BLACK_WOOL(Material.WOOL, (short) 15, "Black Wool");
 
     private static final List<ArmorSet> CACHED_SETS;
     public static YoungDragonSet YOUNG_DRAGON_SET;
@@ -1256,7 +949,7 @@ public enum SMaterial {
     private final boolean craft;
     private final String baseName;
 
-    private SMaterial(Material craftMaterial, short data, Class<?> clazz, boolean craft, String baseName) {
+    SMaterial(final Material craftMaterial, final short data, final Class<?> clazz, final boolean craft, final String baseName) {
         this.craftMaterial = craftMaterial;
         this.data = data;
         this.clazz = clazz;
@@ -1264,94 +957,92 @@ public enum SMaterial {
         this.baseName = baseName;
     }
 
-    private SMaterial(Material craftMaterial, short data, Class<?> clazz, boolean craft) {
+    SMaterial(final Material craftMaterial, final short data, final Class<?> clazz, final boolean craft) {
         this(craftMaterial, data, clazz, craft, null);
     }
 
-    private SMaterial(Material craftMaterial, Class<?> clazz, boolean craft) {
-        this(craftMaterial, 0, clazz, craft);
+    SMaterial(final Material craftMaterial, final Class<?> clazz, final boolean craft) {
+        this(craftMaterial, (short) 0, clazz, craft);
     }
 
-    private SMaterial(Material craftMaterial, Class<?> clazz) {
+    SMaterial(final Material craftMaterial, final Class<?> clazz) {
         this(craftMaterial, clazz, false);
     }
 
-    private SMaterial(Material craftMaterial, Class<?> clazz, short data) {
+    SMaterial(final Material craftMaterial, final Class<?> clazz, final short data) {
         this(craftMaterial, data, clazz, false);
     }
 
-    private SMaterial(Material craftMaterial, short data, String baseName) {
+    SMaterial(final Material craftMaterial, final short data, final String baseName) {
         this(craftMaterial, data, null, true, baseName);
     }
 
-    private SMaterial(Material craftMaterial) {
+    SMaterial(final Material craftMaterial) {
         this(craftMaterial, null, true);
     }
 
-    public static SMaterial getMaterial(String name) {
+    public static SMaterial getMaterial(final String name) {
         try {
-            return SMaterial.valueOf(name.toUpperCase());
-        }
-        catch (IllegalArgumentException ex) {
+            return valueOf(name.toUpperCase());
+        } catch (final IllegalArgumentException ex) {
             return null;
         }
     }
 
-    public static SMaterial getSpecEquivalent(Material material, short data) {
+    public static SMaterial getSpecEquivalent(final Material material, short data) {
         if (material == Material.LOG || material == Material.LOG_2 || material == Material.LEAVES || material == Material.LEAVES_2) {
-            data = (short)(data % 4);
+            data %= 4;
         }
-        List results = Arrays.stream(SMaterial.values()).filter(m -> m.craft && m.getCraftMaterial() == material).collect(Collectors.toList());
-        for (SMaterial result : results) {
-            if (result.data != data) continue;
-            return result;
+        final List<SMaterial> results = Arrays.stream(values()).filter(m -> m.craft && m.getCraftMaterial() == material).collect(Collectors.toList());
+        for (final SMaterial result : results) {
+            if (result.data == data) {
+                return result;
+            }
         }
         if (results.isEmpty()) {
             return null;
         }
-        return (SMaterial)((Object)results.get(0));
+        return results.get(0);
     }
 
-    public static <T extends ArmorSet> T registerArmorSet(Class<? extends ArmorSet> set) {
+    public static <T extends ArmorSet> T registerArmorSet(final Class<? extends ArmorSet> set) {
         try {
-            ArmorSet s = set.newInstance();
-            CACHED_SETS.add(s);
-            return (T)s;
-        }
-        catch (IllegalAccessException | InstantiationException e) {
+            final ArmorSet s = set.newInstance();
+            SMaterial.CACHED_SETS.add(s);
+            return (T) s;
+        } catch (final InstantiationException | IllegalAccessException e) {
             e.printStackTrace();
             return null;
         }
     }
 
-    public static ArmorSet findArmorSet(SMaterial helmet, SMaterial chestplate, SMaterial leggings, SMaterial boots) {
-        List subList = CACHED_SETS.stream().filter(s -> s.getHelmet().equals(helmet.getStatistics().getClass()) && s.getChestplate().equals(chestplate.getStatistics().getClass()) && s.getLeggings().equals(leggings.getStatistics().getClass()) && s.getBoots().equals(boots.getStatistics().getClass())).collect(Collectors.toList());
+    public static ArmorSet findArmorSet(final SMaterial helmet, final SMaterial chestplate, final SMaterial leggings, final SMaterial boots) {
+        final List<ArmorSet> subList = SMaterial.CACHED_SETS.stream().filter(s -> s.getHelmet().equals(helmet.getStatistics().getClass()) && s.getChestplate().equals(chestplate.getStatistics().getClass()) && s.getLeggings().equals(leggings.getStatistics().getClass()) && s.getBoots().equals(boots.getStatistics().getClass())).collect(Collectors.toList());
         if (subList.size() == 0) {
             return null;
         }
-        return (ArmorSet)subList.get(0);
+        return subList.get(0);
     }
 
-    public static ArmorSet findArmorSet(SMaterial piece) {
-        List subList = CACHED_SETS.stream().filter(s -> s.getHelmet().equals(piece.getStatistics().getClass()) || s.getChestplate().equals(piece.getStatistics().getClass()) || s.getLeggings().equals(piece.getStatistics().getClass()) || s.getBoots().equals(piece.getStatistics().getClass())).collect(Collectors.toList());
+    public static ArmorSet findArmorSet(final SMaterial piece) {
+        final List<ArmorSet> subList = SMaterial.CACHED_SETS.stream().filter(s -> s.getHelmet().equals(piece.getStatistics().getClass()) || s.getChestplate().equals(piece.getStatistics().getClass()) || s.getLeggings().equals(piece.getStatistics().getClass()) || s.getBoots().equals(piece.getStatistics().getClass())).collect(Collectors.toList());
         if (subList.size() == 0) {
             return null;
         }
-        return (ArmorSet)subList.get(0);
+        return subList.get(0);
     }
 
     public MaterialFunction getFunction() {
-        Object generic = this.getGenericInstance();
+        final Object generic = this.getGenericInstance();
         if (generic instanceof MaterialFunction) {
-            return (MaterialFunction)generic;
+            return (MaterialFunction) generic;
         }
         return null;
     }
 
     public MaterialStatistics getStatistics() {
         if (!this.hasClass()) {
-            return new MaterialStatistics(){
-
+            return new MaterialStatistics() {
                 @Override
                 public String getDisplayName() {
                     return null;
@@ -1373,14 +1064,14 @@ public enum SMaterial {
                 }
             };
         }
-        Object generic = this.getGenericInstance();
+        final Object generic = this.getGenericInstance();
         if (generic instanceof MaterialStatistics) {
-            return (MaterialStatistics)generic;
+            return (MaterialStatistics) generic;
         }
         return null;
     }
 
-    public String getDisplayName(short variant) {
+    public String getDisplayName(final short variant) {
         if (this.hasClass()) {
             return this.getStatistics().getDisplayName();
         }
@@ -1388,36 +1079,36 @@ public enum SMaterial {
     }
 
     public TickingMaterial getTickingInstance() {
-        Object generic = this.getGenericInstance();
+        final Object generic = this.getGenericInstance();
         if (generic instanceof TickingMaterial) {
-            return (TickingMaterial)generic;
+            return (TickingMaterial) generic;
         }
         return null;
     }
 
     public PlayerBoostStatistics getBoostStatistics() {
-        MaterialStatistics statistics = this.getStatistics();
+        final MaterialStatistics statistics = this.getStatistics();
         if (!(statistics instanceof PlayerBoostStatistics)) {
             return null;
         }
-        return (PlayerBoostStatistics)statistics;
+        return (PlayerBoostStatistics) statistics;
     }
 
     public SkullStatistics getSkullStatistics() {
-        MaterialStatistics statistics = this.getStatistics();
+        final MaterialStatistics statistics = this.getStatistics();
         if (!(statistics instanceof SkullStatistics)) {
             return null;
         }
-        return (SkullStatistics)statistics;
+        return (SkullStatistics) statistics;
     }
 
     public Ability getAbility() {
         if (!this.hasClass()) {
             return null;
         }
-        Object generic = this.getGenericInstance();
+        final Object generic = this.getGenericInstance();
         if (generic instanceof Ability) {
-            return (Ability)generic;
+            return (Ability) generic;
         }
         return null;
     }
@@ -1426,9 +1117,9 @@ public enum SMaterial {
         if (!this.hasClass()) {
             return null;
         }
-        Object generic = this.getGenericInstance();
+        final Object generic = this.getGenericInstance();
         if (generic instanceof OrbBuff) {
-            return (OrbBuff)generic;
+            return (OrbBuff) generic;
         }
         return null;
     }
@@ -1437,9 +1128,9 @@ public enum SMaterial {
         if (!this.hasClass()) {
             return null;
         }
-        Object generic = this.getGenericInstance();
+        final Object generic = this.getGenericInstance();
         if (generic instanceof ItemData) {
-            return (ItemData)generic;
+            return (ItemData) generic;
         }
         return null;
     }
@@ -1450,8 +1141,7 @@ public enum SMaterial {
         }
         try {
             return this.clazz.newInstance();
-        }
-        catch (IllegalAccessException | InstantiationException reflectiveOperationException) {
+        } catch (final InstantiationException | IllegalAccessException ex) {
             return null;
         }
     }
@@ -1460,12 +1150,12 @@ public enum SMaterial {
         return this.clazz != null;
     }
 
-    public static ArmorSet getIncompleteArmorSet(PlayerInventory inventory) {
-        SItem helmet = SItem.find(inventory.getHelmet());
-        SItem chestplate = SItem.find(inventory.getChestplate());
-        SItem leggings = SItem.find(inventory.getLeggings());
-        SItem boots = SItem.find(inventory.getBoots());
-        for (ArmorSet set : CACHED_SETS) {
+    public static ArmorSet getIncompleteArmorSet(final PlayerInventory inventory) {
+        final SItem helmet = SItem.find(inventory.getHelmet());
+        final SItem chestplate = SItem.find(inventory.getChestplate());
+        final SItem leggings = SItem.find(inventory.getLeggings());
+        final SItem boots = SItem.find(inventory.getBoots());
+        for (final ArmorSet set : SMaterial.CACHED_SETS) {
             if (set.getHelmet() != null && helmet != null && helmet.getType().getStatistics().getClass() == set.getHelmet()) {
                 return set;
             }
@@ -1475,8 +1165,9 @@ public enum SMaterial {
             if (set.getLeggings() != null && leggings != null && leggings.getType().getStatistics().getClass() == set.getLeggings()) {
                 return set;
             }
-            if (set.getBoots() == null || boots == null || boots.getType().getStatistics().getClass() != set.getBoots()) continue;
-            return set;
+            if (set.getBoots() != null && boots != null && boots.getType().getStatistics().getClass() == set.getBoots()) {
+                return set;
+            }
         }
         return null;
     }
@@ -1499,33 +1190,31 @@ public enum SMaterial {
 
     static {
         CACHED_SETS = new ArrayList<ArmorSet>();
-        YOUNG_DRAGON_SET = (YoungDragonSet)SMaterial.registerArmorSet(YoungDragonSet.class);
-        SUPERIOR_DRAGON_SET = (SuperiorDragonSet)SMaterial.registerArmorSet(SuperiorDragonSet.class);
-        WISE_DRAGON_SET = (WiseDragonSet)SMaterial.registerArmorSet(WiseDragonSet.class);
-        UNSTABLE_DRAGON_SET = (UnstableDragonSet)SMaterial.registerArmorSet(UnstableDragonSet.class);
-        STRONG_DRAGON_SET = (StrongDragonSet)SMaterial.registerArmorSet(StrongDragonSet.class);
-        OLD_DRAGON_SET = (OldDragonSet)SMaterial.registerArmorSet(OldDragonSet.class);
-        PROTECTOR_DRAGON_SET = (ProtectorDragonSet)SMaterial.registerArmorSet(ProtectorDragonSet.class);
-        LAPIS_ARMOR_SET = (LapisArmorSet)SMaterial.registerArmorSet(LapisArmorSet.class);
-        MINER_SET = (MinerSet)SMaterial.registerArmorSet(MinerSet.class);
-        NECRONS_SET = (NecronFullSet)SMaterial.registerArmorSet(NecronFullSet.class);
-        STORMS_SET = (StormFullSet)SMaterial.registerArmorSet(StormFullSet.class);
-        SORROW_SET = (SorrowArmorSet)SMaterial.registerArmorSet(SorrowArmorSet.class);
-        GIGACHAD_SET = (GigachadSet)SMaterial.registerArmorSet(GigachadSet.class);
-        MINICHAD_SET = (MinichadSet)SMaterial.registerArmorSet(MinichadSet.class);
+        SMaterial.YOUNG_DRAGON_SET = SMaterial.registerArmorSet(YoungDragonSet.class);
+        SMaterial.SUPERIOR_DRAGON_SET = SMaterial.registerArmorSet(SuperiorDragonSet.class);
+        SMaterial.WISE_DRAGON_SET = SMaterial.registerArmorSet(WiseDragonSet.class);
+        SMaterial.UNSTABLE_DRAGON_SET = SMaterial.registerArmorSet(UnstableDragonSet.class);
+        SMaterial.STRONG_DRAGON_SET = SMaterial.registerArmorSet(StrongDragonSet.class);
+        SMaterial.OLD_DRAGON_SET = SMaterial.registerArmorSet(OldDragonSet.class);
+        SMaterial.PROTECTOR_DRAGON_SET = SMaterial.registerArmorSet(ProtectorDragonSet.class);
+        SMaterial.LAPIS_ARMOR_SET = SMaterial.registerArmorSet(LapisArmorSet.class);
+        SMaterial.MINER_SET = SMaterial.registerArmorSet(MinerSet.class);
+        SMaterial.NECRONS_SET = SMaterial.registerArmorSet(NecronFullSet.class);
+        SMaterial.STORMS_SET = SMaterial.registerArmorSet(StormFullSet.class);
+        SMaterial.SORROW_SET = SMaterial.registerArmorSet(SorrowArmorSet.class);
+        SMaterial.GIGACHAD_SET = SMaterial.registerArmorSet(GigachadSet.class);
+        SMaterial.MINICHAD_SET = SMaterial.registerArmorSet(MinichadSet.class);
     }
 
-    public static enum VagueEntityMaterial {
+    public enum VagueEntityMaterial {
         HELMET,
         CHESTPLATE,
         LEGGINGS,
         BOOTS,
         FRAGMENT;
 
-
-        public SMaterial getEntityArmorPiece(SEntityType type) {
+        public SMaterial getEntityArmorPiece(final SEntityType type) {
             return SMaterial.getMaterial(type.name() + "_" + this.name());
         }
     }
 }
-

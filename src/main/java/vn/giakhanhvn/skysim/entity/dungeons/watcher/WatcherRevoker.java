@@ -140,19 +140,19 @@ extends BaseZombie {
                             final /* synthetic */ LivingEntity val$target1;
                             final /* synthetic */ PlayerWatcher val$skywatch;
                             {
-                                this.val$target1 = livingEntity;
-                                this.val$skywatch = playerWatcher;
+                                target1 = livingEntity;
+                                skywatch = playerWatcher;
                             }
 
                             public void run() {
-                                if (this.val$target1.getLocation().distance(entity.getLocation()) <= 10.0) {
+                                if (target1.getLocation().distance(entity.getLocation()) <= 10.0) {
                                     this.atkCharge = 10;
                                     this.bowPower = 1.1;
                                     this.crit = false;
                                 }
                                 ++this.t;
                                 if (!WatcherRevoker.this.isBowing) {
-                                    this.val$skywatch.setRightClicking(false);
+                                    skywatch.setRightClicking(false);
                                     entity.removePotionEffect(PotionEffectType.SLOW);
                                     this.cancel();
                                     return;
@@ -161,13 +161,13 @@ extends BaseZombie {
                                     if (!WatcherRevoker.this.isBowing) {
                                         return;
                                     }
-                                    this.val$skywatch.setRightClicking(true);
+                                    skywatch.setRightClicking(true);
                                 }
                                 if (this.t == this.atkCharge) {
                                     if (!WatcherRevoker.this.isBowing) {
                                         return;
                                     }
-                                    this.val$skywatch.setRightClicking(false);
+                                    skywatch.setRightClicking(false);
                                 }
                                 if (this.t >= this.atkCharge + 1) {
                                     if (!WatcherRevoker.this.isBowing) {
@@ -183,7 +183,7 @@ extends BaseZombie {
                                     } else {
                                         arr.setCritical(true);
                                     }
-                                    this.val$skywatch.setRightClicking(false);
+                                    skywatch.setRightClicking(false);
                                     entity.removePotionEffect(PotionEffectType.SLOW);
                                     WatcherRevoker.this.isBowing = false;
                                 }

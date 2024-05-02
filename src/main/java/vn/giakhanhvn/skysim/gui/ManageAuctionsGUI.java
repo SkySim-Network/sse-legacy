@@ -15,6 +15,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
+import org.bukkit.Achievement;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -50,7 +52,7 @@ extends GUI {
     public void onOpen(GUIOpenEvent e) {
         final Player player = e.getPlayer();
         User user = User.getUser(player.getUniqueId());
-        Stream stream = user.getAuctions().stream();
+        Stream<AuctionItem> stream = user.getAuctions().stream();
         switch (this.sort) {
             case RECENTLY_UPDATED: {
                 stream = stream.sorted((i1, i2) -> {
@@ -86,9 +88,9 @@ extends GUI {
                 stream = stream.sorted((i1, i2) -> Integer.compare(i2.getBids().size(), i1.getBids().size()));
             }
         }
-        final List items = stream.collect(Collectors.toList());
+        final List<AuctionItem> items = stream.collect(Collectors.toList());
         int ended = 0;
-        for (final AuctionItem item : items) {
+        for (AuctionItem item : items) {
             if (!item.isExpired()) continue;
             ++ended;
         }

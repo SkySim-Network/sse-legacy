@@ -228,7 +228,7 @@ public class SUtil {
         }
         GameProfile profile = new GameProfile(UUID.fromString(stringUUID), null);
         byte[] ed = Base64.getEncoder().encode(String.format("{textures:{SKIN:{url:\"http://textures.minecraft.net/texture/%s\"}}}", texture).getBytes());
-        profile.getProperties().put((Object)"textures", (Object)new Property("textures", new String(ed)));
+        profile.getProperties().put("textures", new Property("textures", new String(ed)));
         try {
             Field f = meta.getClass().getDeclaredField("profile");
             f.setAccessible(true);
@@ -237,20 +237,20 @@ public class SUtil {
         catch (IllegalAccessException | IllegalArgumentException | NoSuchFieldException exception) {
             // empty catch block
         }
-        stack.setItemMeta((ItemMeta)meta);
+        stack.setItemMeta(meta);
         return stack;
     }
 
     public static ItemStack getSkullURL(String url) {
-        ItemStack head = new ItemStack(Material.SKULL_ITEM, 1, 3);
+        ItemStack head = new ItemStack(Material.SKULL_ITEM, 1, (short) 3);
         if (url.isEmpty()) {
             return head;
         }
         SkullMeta headMeta = (SkullMeta)head.getItemMeta();
-        headMeta.setDisplayName(ChatColor.translateAlternateColorCodes((char)'&', (String)"Bonzo"));
+        headMeta.setDisplayName(ChatColor.translateAlternateColorCodes('&', "Bonzo"));
         GameProfile profile = new GameProfile(UUID.randomUUID(), null);
         byte[] encodedData = Base64.getEncoder().encode(String.format("{textures:{SKIN:{url:\"%s\"}}}", url).getBytes());
-        profile.getProperties().put((Object)"textures", (Object)new Property("textures", new String(encodedData)));
+        profile.getProperties().put("textures", new Property("textures", new String(encodedData)));
         Field profileField = null;
         try {
             profileField = headMeta.getClass().getDeclaredField("profile");
@@ -260,12 +260,12 @@ public class SUtil {
         catch (IllegalAccessException | IllegalArgumentException | NoSuchFieldException e1) {
             e1.printStackTrace();
         }
-        head.setItemMeta((ItemMeta)headMeta);
+        head.setItemMeta(headMeta);
         return head;
     }
 
     public static ItemStack getSkull(String texture, SMaterial material) {
-        return SUtil.getSkull(texture, new ItemStack(Material.SKULL_ITEM, 1, 3), material);
+        return SUtil.getSkull(texture, new ItemStack(Material.SKULL_ITEM, 1, (short) 3), material);
     }
 
     public static List<String> splitByWordAndLength(String string, int splitLength, String separator) {
@@ -284,12 +284,12 @@ public class SUtil {
         }
         LeatherArmorMeta meta = (LeatherArmorMeta)stack.getItemMeta();
         meta.setColor(color);
-        stack.setItemMeta((ItemMeta)meta);
+        stack.setItemMeta(meta);
         return stack;
     }
 
     public static String color(String string) {
-        return ChatColor.translateAlternateColorCodes((char)'&', (String)string);
+        return ChatColor.translateAlternateColorCodes('&', string);
     }
 
     public static String toRomanNumeral(int num) {
@@ -324,7 +324,7 @@ public class SUtil {
         if (variant != 0) {
             return SMaterial.getSpecEquivalent(material, variant).getBaseName();
         }
-        net.minecraft.server.v1_8_R3.ItemStack nmsStack = CraftItemStack.asNMSCopy((ItemStack)new ItemStack(material));
+        net.minecraft.server.v1_8_R3.ItemStack nmsStack = CraftItemStack.asNMSCopy(new ItemStack(material));
         if (nmsStack == null) {
             return material.name();
         }
@@ -335,8 +335,8 @@ public class SUtil {
     }
 
     public static void sendActionBar(Player player, String message) {
-        PacketPlayOutChat packet = new PacketPlayOutChat(IChatBaseComponent.ChatSerializer.a((String)("{\"text\":\"" + message + "\"}")), 2);
-        ((CraftPlayer)player).getHandle().playerConnection.sendPacket((Packet)packet);
+        PacketPlayOutChat packet = new PacketPlayOutChat(IChatBaseComponent.ChatSerializer.a("{\"text\":\"" + message + "\"}"), (byte) 2);
+        ((CraftPlayer)player).getHandle().playerConnection.sendPacket(packet);
     }
 
     public static GenericItemType getItemType(Material material) {
@@ -410,11 +410,11 @@ public class SUtil {
     }
 
     public static void sendTypedTitle(Player player, String message, PacketPlayOutTitle.EnumTitleAction type) {
-        IChatBaseComponent chatTitle = IChatBaseComponent.ChatSerializer.a((String)("{\"text\": \"" + message + "\"}"));
+        IChatBaseComponent chatTitle = IChatBaseComponent.ChatSerializer.a("{\"text\": \"" + message + "\"}");
         PacketPlayOutTitle title = new PacketPlayOutTitle(type, chatTitle);
         PacketPlayOutTitle length = new PacketPlayOutTitle(5, 60, 5);
-        ((CraftPlayer)player).getHandle().playerConnection.sendPacket((Packet)title);
-        ((CraftPlayer)player).getHandle().playerConnection.sendPacket((Packet)length);
+        ((CraftPlayer)player).getHandle().playerConnection.sendPacket(title);
+        ((CraftPlayer)player).getHandle().playerConnection.sendPacket(length);
     }
 
     public static void sendTitle(Player player, String message) {
@@ -435,7 +435,7 @@ public class SUtil {
                     location.getWorld().strikeLightning(location);
                 }
             }
-        }.runTaskLater((Plugin)SkySimEngine.getPlugin(), delay);
+        }.runTaskLater(SkySimEngine.getPlugin(), delay);
     }
 
     public static void runIntervalForTicks(final Runnable runnable, long interval, long end) {
@@ -449,13 +449,13 @@ public class SUtil {
                 }
                 runnable.run();
             }
-        }.runTaskTimer((Plugin)SkySimEngine.getPlugin(), 0L, interval);
+        }.runTaskTimer(SkySimEngine.getPlugin(), 0L, interval);
         new BukkitRunnable(){
 
             public void run() {
                 stop.set(true);
             }
-        }.runTaskLater((Plugin)SkySimEngine.getPlugin(), end);
+        }.runTaskLater(SkySimEngine.getPlugin(), end);
     }
 
     public static String getDate() {
@@ -464,7 +464,7 @@ public class SUtil {
 
     public static Item spawnPersonalItem(ItemStack stack, Location location, Player player) {
         Item item = location.getWorld().dropItem(location, stack);
-        item.setMetadata("owner", (MetadataValue)new FixedMetadataValue((Plugin)SkySimEngine.getPlugin(), (Object)player.getUniqueId().toString()));
+        item.setMetadata("owner", new FixedMetadataValue(SkySimEngine.getPlugin(), player.getUniqueId().toString()));
         return item;
     }
 
@@ -473,7 +473,7 @@ public class SUtil {
         list.sort(Map.Entry.comparingByValue());
         LinkedHashMap result = new LinkedHashMap();
         for (Map.Entry entry : list) {
-            result.put(entry.getKey(), (Comparable)entry.getValue());
+            result.put(entry.getKey(), entry.getValue());
         }
         return result;
     }
@@ -509,7 +509,7 @@ public class SUtil {
     }
 
     public static void toggleAllowFlightNoCreative(UUID uuid, boolean flight) {
-        Player player = Bukkit.getPlayer((UUID)uuid);
+        Player player = Bukkit.getPlayer(uuid);
         if (player == null) {
             return;
         }
@@ -549,7 +549,7 @@ public class SUtil {
                         if (entity instanceof Player || !(entity instanceof LivingEntity) || entity instanceof ArmorStand || entity instanceof NPC || entity.isDead()) continue;
                         possible.add((LivingEntity)entity);
                     }
-                    LivingEntity setTarget = (LivingEntity)SUtil.getRandom(possible);
+                    LivingEntity setTarget = SUtil.getRandom(possible);
                     if (setTarget == null) {
                         return;
                     }
@@ -561,7 +561,7 @@ public class SUtil {
                 projectile.teleport(location);
                 projectile.setVelocity(vector.clone().multiply(-1.0).multiply(0.2));
             }
-        }.runTaskTimer((Plugin)SkySimEngine.getPlugin(), 0L, 1L);
+        }.runTaskTimer(SkySimEngine.getPlugin(), 0L, 1L);
     }
 
     public static void giantsHitboxFix(final Projectile projectile) {
@@ -590,13 +590,13 @@ public class SUtil {
                 projectile.teleport(location);
                 projectile.setVelocity(vector.clone().multiply(-1.0).multiply(0.5));
             }
-        }.runTaskTimer((Plugin)SkySimEngine.getPlugin(), 0L, 1L);
+        }.runTaskTimer(SkySimEngine.getPlugin(), 0L, 1L);
         new BukkitRunnable(){
 
             public void run() {
                 projectile.remove();
             }
-        }.runTaskLater((Plugin)SkySimEngine.getPlugin(), 140L);
+        }.runTaskLater(SkySimEngine.getPlugin(), 140L);
     }
 
     public static void markAimingArrow(final Projectile projectile, final Enchantment aiming) {
@@ -617,11 +617,11 @@ public class SUtil {
                     if (aiminglvl > 4) {
                         aiminglvl = 4;
                     }
-                    for (Entity entity : projectile.getNearbyEntities((double)(2 * aiminglvl), (double)(2 * aiminglvl), (double)(2 * aiminglvl))) {
+                    for (Entity entity : projectile.getNearbyEntities(2 * aiminglvl, 2 * aiminglvl, 2 * aiminglvl)) {
                         if (entity instanceof Player || !(entity instanceof LivingEntity) || entity instanceof ArmorStand || entity instanceof NPC || entity.isDead() || entity.hasMetadata("GiantSword")) continue;
                         possible.add((LivingEntity)entity);
                     }
-                    LivingEntity setTarget = (LivingEntity)SUtil.getRandom(possible);
+                    LivingEntity setTarget = SUtil.getRandom(possible);
                     if (setTarget == null) {
                         return;
                     }
@@ -633,17 +633,17 @@ public class SUtil {
                 projectile.teleport(location);
                 projectile.setVelocity(vector.clone().multiply(-1.0).multiply(0.15));
             }
-        }.runTaskTimer((Plugin)SkySimEngine.getPlugin(), 0L, 1L);
+        }.runTaskTimer(SkySimEngine.getPlugin(), 0L, 1L);
         new BukkitRunnable(){
 
             public void run() {
                 projectile.remove();
             }
-        }.runTaskLater((Plugin)SkySimEngine.getPlugin(), 80L);
+        }.runTaskLater(SkySimEngine.getPlugin(), 80L);
     }
 
     public static ItemStack getStack(String name, Material material, short data, int amount, List<String> lore) {
-        ItemStack stack = new ItemStack(material, (int)data);
+        ItemStack stack = new ItemStack(material, data);
         stack.setDurability(data);
         ItemMeta meta = stack.getItemMeta();
         if (name != null) {
@@ -651,7 +651,7 @@ public class SUtil {
         }
         stack.setAmount(amount);
         meta.setLore(lore);
-        meta.addItemFlags(new ItemFlag[]{ItemFlag.HIDE_ENCHANTS, ItemFlag.HIDE_POTION_EFFECTS, ItemFlag.HIDE_UNBREAKABLE, ItemFlag.HIDE_ATTRIBUTES});
+        meta.addItemFlags(ItemFlag.HIDE_ENCHANTS, ItemFlag.HIDE_POTION_EFFECTS, ItemFlag.HIDE_UNBREAKABLE, ItemFlag.HIDE_ATTRIBUTES);
         stack.setItemMeta(meta);
         return stack;
     }
@@ -664,7 +664,7 @@ public class SUtil {
         ItemStack stack = SUtil.getStack(name, Material.SKULL_ITEM, (short)3, amount, lore);
         SkullMeta meta = (SkullMeta)stack.getItemMeta();
         meta.setOwner(skullName);
-        stack.setItemMeta((ItemMeta)meta);
+        stack.setItemMeta(meta);
         return stack;
     }
 
@@ -722,11 +722,11 @@ public class SUtil {
             Vector pasteLocation = new Vector(location.getX(), location.getY(), location.getZ());
             BukkitWorld pasteWorld = new BukkitWorld(location.getWorld());
             WorldData pasteWorldData = pasteWorld.getWorldData();
-            Clipboard clipboard = ClipboardFormat.SCHEMATIC.getReader((InputStream)new FileInputStream(schematicFile)).read(pasteWorldData);
+            Clipboard clipboard = ClipboardFormat.SCHEMATIC.getReader(new FileInputStream(schematicFile)).read(pasteWorldData);
             ClipboardHolder clipboardHolder = new ClipboardHolder(clipboard, pasteWorldData);
             EditSession editSession = WorldEdit.getInstance().getEditSessionFactory().getEditSession((com.sk89q.worldedit.world.World)pasteWorld, -1);
-            Operation operation = clipboardHolder.createPaste((Extent)editSession, pasteWorldData).to(pasteLocation).ignoreAirBlocks(!withAir).build();
-            Operations.complete((Operation)operation);
+            Operation operation = clipboardHolder.createPaste(editSession, pasteWorldData).to(pasteLocation).ignoreAirBlocks(!withAir).build();
+            Operations.complete(operation);
             return true;
         }
         catch (WorldEditException | IOException ex) {
@@ -912,7 +912,7 @@ public class SUtil {
     public static byte[] gzipCompress(byte[] uncompressedData) {
         byte[] result = new byte[]{};
         try (ByteArrayOutputStream bos = new ByteArrayOutputStream(uncompressedData.length);
-             GZIPOutputStream gzipOS = new GZIPOutputStream(bos);){
+             GZIPOutputStream gzipOS = new GZIPOutputStream(bos)){
             gzipOS.write(uncompressedData);
             gzipOS.close();
             result = bos.toByteArray();
@@ -927,7 +927,7 @@ public class SUtil {
         byte[] result = new byte[]{};
         try (ByteArrayInputStream bis = new ByteArrayInputStream(compressedData);
              ByteArrayOutputStream bos = new ByteArrayOutputStream();
-             GZIPInputStream gzipIS = new GZIPInputStream(bis);){
+             GZIPInputStream gzipIS = new GZIPInputStream(bis)){
             int len;
             byte[] buffer = new byte[1024];
             while ((len = gzipIS.read(buffer)) != -1) {
@@ -1018,13 +1018,13 @@ public class SUtil {
             public void run() {
                 runnable.run();
             }
-        }.runTaskLater((Plugin)SkySimEngine.getPlugin(), delay);
+        }.runTaskLater(SkySimEngine.getPlugin(), delay);
     }
 
     public static GameProfile createGameProfile(String url) {
         GameProfile profile = new GameProfile(UUID.randomUUID(), null);
         byte[] ed = Base64.getEncoder().encode(String.format("{textures:{SKIN:{url:\"http://textures.minecraft.net/texture/%s\"}}}", url).getBytes());
-        profile.getProperties().put((Object)"textures", (Object)new Property("textures", new String(ed)));
+        profile.getProperties().put("textures", new Property("textures", new String(ed)));
         return profile;
     }
 
@@ -1087,31 +1087,31 @@ public class SUtil {
     public static <T> T[] unnest(T[][] array2d, Class<T> clazz) {
         Object[] array = (Object[])Array.newInstance(clazz, SUtil.deepLength(array2d));
         int c = 0;
-        for (int i = 0; i < array2d.length; ++i) {
+        for (T[] ts : array2d) {
             int j = 0;
-            while (j < array2d[i].length) {
-                array[c] = array2d[i][j];
+            while (j < ts.length) {
+                array[c] = ts[j];
                 ++j;
                 ++c;
             }
         }
-        return array;
+        return (T[]) array;
     }
 
     public static String createProgressText(String text, int current, int max) {
         double percent = max != 0 ? (double)current / (double)max * 100.0 : 0.0;
         percent = Math.round(percent * 10.0 / 10.0);
-        return ChatColor.GRAY + text + ": " + (percent < 100.0 ? ChatColor.YELLOW + "" + SUtil.commaify(percent) + ChatColor.GOLD + "%" : ChatColor.GREEN + "100.0%");
+        return ChatColor.GRAY + text + ": " + (percent < 100.0 ? ChatColor.YELLOW + SUtil.commaify(percent) + ChatColor.GOLD + "%" : ChatColor.GREEN + "100.0%");
     }
 
     public static String createProgressText(String text, double current, double max) {
         double percent = max != 0.0 ? current / max * 100.0 : 0.0;
         percent = Math.round(percent * 10.0 / 10.0);
-        return ChatColor.GRAY + text + ": " + (percent < 100.0 ? ChatColor.YELLOW + "" + SUtil.commaify(percent) + ChatColor.GOLD + "%" : ChatColor.GREEN + "100.0%");
+        return ChatColor.GRAY + text + ": " + (percent < 100.0 ? ChatColor.YELLOW + SUtil.commaify(percent) + ChatColor.GOLD + "%" : ChatColor.GREEN + "100.0%");
     }
 
     public static String createLineProgressBar(int length, ChatColor progressColor, int current, int max) {
-        double percent = Math.min((double)current, (double)max) / (double)max;
+        double percent = Math.min(current, (double)max) / (double)max;
         long completed = Math.round((double)length * percent);
         StringBuilder builder = new StringBuilder().append(progressColor);
         int i = 0;
@@ -1172,7 +1172,7 @@ public class SUtil {
         for (int i = 0; i < list.size(); ++i) {
             array[i] = list.get(i);
         }
-        return array;
+        return (T[]) array;
     }
 
     public static Rarity findPotionRarity(int level) {
@@ -1230,7 +1230,7 @@ public class SUtil {
 
     public static boolean canFitStack(Inventory inventory, ItemStack fit) {
         for (ItemStack stack : inventory) {
-            if (stack == null || !fit.equals((Object)stack) || stack.getAmount() + fit.getAmount() > 64) continue;
+            if (stack == null || !fit.equals(stack) || stack.getAmount() + fit.getAmount() > 64) continue;
             return true;
         }
         return false;
@@ -1242,7 +1242,7 @@ public class SUtil {
             public void run() {
                 runnable.run();
             }
-        }.runTaskTimer((Plugin)SkySimEngine.getPlugin(), delay, interval);
+        }.runTaskTimer(SkySimEngine.getPlugin(), delay, interval);
     }
 
     public static int blackMagic(double d) {
@@ -1260,13 +1260,13 @@ public class SUtil {
 
     public static String toNormalCase(String string) {
         string = string.replaceAll("_", " ");
-        Object[] spl = string.split(" ");
+        String[] spl = string.split(" ");
         for (int i = 0; i < spl.length; ++i) {
             String s = spl[i];
-            if (s.length() == 0) continue;
+            if (s.isEmpty()) continue;
             spl[i] = s.length() == 1 ? s.toUpperCase() : s.substring(0, 1).toUpperCase() + s.substring(1).toLowerCase();
         }
-        return StringUtils.join((Object[])spl, (String)" ");
+        return StringUtils.join(spl, " ");
     }
 
     public static String getAuctionFormattedTime(long millis) {

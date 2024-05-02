@@ -156,15 +156,10 @@ SlayerBoss {
             e.getEquipment().setHelmet(SItem.of(SMaterial.REV_HORROR_2).getStack());
             this.getAttributeInstance(GenericAttributes.MOVEMENT_SPEED).setValue(this.getMovementSpeed() + 0.02);
             this.hologram.getEntity().setCustomName(ChatColor.DARK_RED + "ENRAGED " + ChatColor.RED + SUtil.getFormattedTime(this.end - System.currentTimeMillis(), 1000));
-            new BukkitRunnable((LivingEntity)e){
-                final /* synthetic */ LivingEntity val$e;
-                {
-                    this.val$e = livingEntity;
-                }
-
+            new BukkitRunnable(){
                 public void run() {
-                    this.val$e.getEquipment().setChestplate(SUtil.enchant(new ItemStack(Material.DIAMOND_CHESTPLATE)));
-                    this.val$e.getEquipment().setHelmet(SItem.of(SMaterial.REVENANT_HORROR_HEAD).getStack());
+                    e.getEquipment().setChestplate(SUtil.enchant(new ItemStack(Material.DIAMOND_CHESTPLATE)));
+                    e.getEquipment().setHelmet(SItem.of(SMaterial.REVENANT_HORROR_HEAD).getStack());
                     RevenantHorror.this.raged = false;
                     RevenantHorror.this.getAttributeInstance(GenericAttributes.MOVEMENT_SPEED).setValue(RevenantHorror.this.getMovementSpeed());
                     RevenantHorror.this.hologram.getEntity().setCustomName(ChatColor.RED + SUtil.getFormattedTime(RevenantHorror.this.end - System.currentTimeMillis(), 1000));

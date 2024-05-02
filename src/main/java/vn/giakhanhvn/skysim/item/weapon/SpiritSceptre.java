@@ -183,13 +183,8 @@ Ability {
                         this.cancel();
                         return;
                     }
-                    if (i % 2 == 0 && i < 13) {
-                        armorStand1.teleport(armorStand1.getLocation().add(teleportTo).multiply(1.0));
-                        armorStand1.teleport(armorStand1.getLocation().add(teleportTo).multiply(1.0));
-                    } else if (i % 2 == 0) {
-                        armorStand1.teleport(armorStand1.getLocation().subtract(loc.getDirection().normalize().multiply(1)));
-                        armorStand1.teleport(armorStand1.getLocation().subtract(loc.getDirection().normalize().multiply(1)));
-                    }
+                    armorStand1.teleport(armorStand1.getLocation().add(teleportTo).multiply(1.0));
+                    armorStand1.teleport(armorStand1.getLocation().add(teleportTo).multiply(1.0));
                     PlayerStatistics statistics = PlayerUtils.STATISTICS_CACHE.get(player1.getUniqueId());
                     int manaPool = SUtil.blackMagic(100.0 + statistics.getIntelligence().addAll());
                     if (SpiritSceptre.this.ACT3 == "true") {

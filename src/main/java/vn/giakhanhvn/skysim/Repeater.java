@@ -343,14 +343,14 @@ public class Repeater {
         PlayerInventory inventory = player.getInventory();
         SItem sitem = SItem.find(player.getItemInHand());
         if (sitem != null) {
-            Object enchL;
-            if (sitem.getType() != SMaterial.ENCHANTED_BOOK && sitem.getEnchantments() != null && (enchL = Enchantment.ultimateEnchantsListFromList(sitem.getEnchantments())).size() > 1) {
-                Iterator<Enchantment> iterator = enchL.iterator();
-                while (iterator.hasNext()) {
-                    Enchantment ench = iterator.next();
-                    sitem.removeEnchantment(ench.getType());
+            if (sitem.getType() != SMaterial.ENCHANTED_BOOK && sitem.getEnchantments() != null) {
+                final List<Enchantment> enchL = Enchantment.ultimateEnchantsListFromList(sitem.getEnchantments());
+                if (enchL.size() > 1) {
+                    for (final Enchantment ench : enchL) {
+                        sitem.removeEnchantment(ench.getType());
+                    }
+                    player.sendMessage(ChatColor.RED + "Your item have multiple legacy ultimate enchantments so we need to remove all of them, sorry! You can always get a new one, also just to remind you, only 1 ultimate enchantment is allowed per weapon.");
                 }
-                player.sendMessage(ChatColor.RED + "Your item have multiple legacy ultimate enchantments so we need to remove all of them, sorry! You can always get a new one, also just to remind you, only 1 ultimate enchantment is allowed per weapon.");
             }
             if (sitem.getEnchantment(EnchantmentType.ONE_FOR_ALL) != null && sitem.getType() != SMaterial.ENCHANTED_BOOK && sitem.getType().getStatistics().getType() == GenericItemType.WEAPON) {
                 for (Enchantment enchantment : sitem.getEnchantments()) {

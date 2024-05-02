@@ -7,18 +7,20 @@
  */
 package vn.giakhanhvn.skysim.item;
 
+import lombok.Getter;
 import org.bukkit.ChatColor;
 import org.bukkit.inventory.ItemStack;
 import vn.giakhanhvn.skysim.util.SUtil;
 
 public enum ItemCategory {
-    WEAPONS("Weapons", ChatColor.GOLD, 1),
-    ARMOR("Armor", ChatColor.AQUA, 11),
-    ACCESSORIES("Accessories", ChatColor.DARK_GREEN, 13),
-    CONSUMABLES("Consumables", ChatColor.RED, 14),
-    BLOCKS("Blocks", ChatColor.YELLOW, 12),
-    TOOLS_MISC("Tools & Misc", ChatColor.LIGHT_PURPLE, 10);
+    WEAPONS("Weapons", ChatColor.GOLD, (short) 1),
+    ARMOR("Armor", ChatColor.AQUA, (short) 11),
+    ACCESSORIES("Accessories", ChatColor.DARK_GREEN, (short) 13),
+    CONSUMABLES("Consumables", ChatColor.RED, (short) 14),
+    BLOCKS("Blocks", ChatColor.YELLOW, (short) 12),
+    TOOLS_MISC("Tools & Misc", ChatColor.LIGHT_PURPLE, (short) 10);
 
+    @Getter
     private final String name;
     private final ChatColor text;
     private final short item;
@@ -27,10 +29,6 @@ public enum ItemCategory {
         this.name = name;
         this.text = text;
         this.item = item;
-    }
-
-    public String getName() {
-        return this.name;
     }
 
     public String getColoredName() {

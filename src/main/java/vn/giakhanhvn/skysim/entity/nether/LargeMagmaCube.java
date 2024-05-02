@@ -58,30 +58,18 @@ EntityFunction {
         final LivingEntity entity = (LivingEntity)e.getEntity();
         LivingEntity found = e.getTarget();
         new BukkitRunnable((Entity)found, sEntity){
-            final /* synthetic */ Entity val$found;
-            final /* synthetic */ SEntity val$sEntity;
-            {
-                this.val$found = entity2;
-                this.val$sEntity = sEntity;
-            }
-
             public void run() {
                 if (entity.isDead()) {
                     this.cancel();
                     return;
                 }
                 CraftEntity target = ((CraftMagmaCube)entity).getHandle().getGoalTarget().getBukkitEntity();
-                if (!this.val$found.equals(target)) {
+                if (!found.equals(target)) {
                     this.cancel();
                     return;
                 }
                 for (int i = 0; i < 3; ++i) {
                     new BukkitRunnable((Entity)target){
-                        final /* synthetic */ Entity val$target;
-                        {
-                            this.val$target = entity;
-                        }
-
                         public void run() {
                             if (entity.isDead()) {
                                 this.cancel();
@@ -89,7 +77,7 @@ EntityFunction {
                             }
                             Fireball fireball = (Fireball)entity.getWorld().spawn(entity.getEyeLocation().add(entity.getEyeLocation().getDirection().multiply(3.0)), Fireball.class);
                             fireball.setMetadata("magma", (MetadataValue)new FixedMetadataValue((Plugin)SkySimEngine.getPlugin(), (Object)val$sEntity));
-                            fireball.setDirection(this.val$target.getLocation().getDirection().multiply(-1.0).normalize());
+                            fireball.setDirection(target.getLocation().getDirection().multiply(-1.0).normalize());
                         }
                     }.runTaskLater((Plugin)SkySimEngine.getPlugin(), (long)((i + 1) * 10));
                 }

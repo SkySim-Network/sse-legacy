@@ -248,13 +248,6 @@ implements NPCMobs {
                     this.cancel();
                     return;
                 }
-                if (i % 2 == 0 && i < 13) {
-                    armorStand1.teleport(armorStand1.getLocation().add(teleportTo).multiply(1.0));
-                    armorStand1.teleport(armorStand1.getLocation().add(teleportTo).multiply(1.0));
-                } else if (i % 2 == 0) {
-                    armorStand1.teleport(armorStand1.getLocation().subtract(loc.getDirection().normalize().multiply(1)));
-                    armorStand1.teleport(armorStand1.getLocation().subtract(loc.getDirection().normalize().multiply(1)));
-                }
                 for (int j = 0; j < 20; ++j) {
                     armorStand1.getWorld().spigot().playEffect(armorStand1.getLocation().clone().add(0.0, 1.75, 0.0), Effect.CRIT, 0, 1, (float)SUtil.random(-0.5, 0.5), (float)SUtil.random(0.0, 0.5), (float)SUtil.random(-0.5, 0.5), 0.0f, 1, 20);
                 }

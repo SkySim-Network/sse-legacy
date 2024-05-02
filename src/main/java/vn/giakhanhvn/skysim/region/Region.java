@@ -20,6 +20,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+
+import lombok.Setter;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -35,8 +37,11 @@ public class Region {
     private static final Map<String, Region> REGION_CACHE = new HashMap<String, Region>();
     protected static final SkySimEngine plugin = SkySimEngine.getPlugin();
     protected final String name;
+    @Setter
     protected Location firstLocation;
+    @Setter
     protected Location secondLocation;
+    @Setter
     protected RegionType type;
     private List<BlockState> capture;
 
@@ -206,7 +211,7 @@ public class Region {
     }
 
     public List<Entity> getPlayersWithinRegion() {
-        ArrayList entities = new ArrayList(this.firstLocation.getWorld().getEntitiesByClasses(new Class[]{Player.class}));
+        ArrayList<Entity> entities = new ArrayList<>(this.firstLocation.getWorld().getEntitiesByClasses(Player.class));
         return entities.stream().filter(this::insideRegion).collect(Collectors.toList());
     }
 
@@ -249,18 +254,6 @@ public class Region {
 
     public RegionType getType() {
         return this.type;
-    }
-
-    public void setFirstLocation(Location firstLocation) {
-        this.firstLocation = firstLocation;
-    }
-
-    public void setSecondLocation(Location secondLocation) {
-        this.secondLocation = secondLocation;
-    }
-
-    public void setType(RegionType type) {
-        this.type = type;
     }
 
     public List<BlockState> getCapture() {

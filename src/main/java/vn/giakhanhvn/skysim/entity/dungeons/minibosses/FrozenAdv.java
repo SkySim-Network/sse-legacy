@@ -228,18 +228,14 @@ extends BaseZombie {
                         skywatch.setRightClicking(false);
                         entity.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 10000, 4));
                         entity.getEquipment().setItemInHand(SItem.of(SMaterial.BOW).getStack());
-                        new BukkitRunnable((LivingEntity)target1){
+                        new BukkitRunnable(){
                             int t = 0;
                             int atkCharge = 20;
                             double bowPower = 2.2;
                             boolean crit = true;
-                            final /* synthetic */ LivingEntity val$target1;
-                            {
-                                this.val$target1 = livingEntity;
-                            }
 
                             public void run() {
-                                if (this.val$target1.getLocation().distance(entity.getLocation()) <= 10.0) {
+                                if (target1.getLocation().distance(entity.getLocation()) <= 10.0) {
                                     this.atkCharge = 10;
                                     this.bowPower = 1.1;
                                     this.crit = false;
@@ -507,7 +503,7 @@ extends BaseZombie {
     }
 
     public void lightningPlayer(org.bukkit.entity.Entity en) {
-        List a = en.getNearbyEntities(10.0, 10.0, 10.0);
+        List<org.bukkit.entity.Entity> a = en.getNearbyEntities(10.0, 10.0, 10.0);
         a.removeIf(entity -> entity.getType() != EntityType.PLAYER);
         if (a.size() < 3) {
             for (int i = 0; i < SUtil.random(1, 3); ++i) {

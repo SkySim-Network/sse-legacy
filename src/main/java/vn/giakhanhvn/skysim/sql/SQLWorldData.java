@@ -22,174 +22,84 @@ public class SQLWorldData {
     private final String INSERT = "INSERT INTO `worlds` (`id`, `name`) VALUES (?, ?);";
     private final String COUNT = "SELECT COUNT(*) AS rows FROM `worlds`";
 
-    public boolean exists(World world) {
-        boolean bl;
-        block8: {
-            Connection connection = SQLWorldData.plugin.sql.getConnection();
-            try {
-                PreparedStatement statement = connection.prepareStatement("SELECT * FROM `worlds` WHERE name=?");
-                statement.setString(1, world.getName());
-                ResultSet set = statement.executeQuery();
-                bl = set.next();
-                if (connection == null) break block8;
-            }
-            catch (Throwable throwable) {
-                try {
-                    if (connection != null) {
-                        try {
-                            connection.close();
-                        }
-                        catch (Throwable throwable2) {
-                            throwable.addSuppressed(throwable2);
-                        }
-                    }
-                    throw throwable;
-                }
-                catch (SQLException ex) {
-                    ex.printStackTrace();
-                    return false;
-                }
-            }
-            connection.close();
+    public boolean exists(final World world) {
+        try (final Connection connection = SQLWorldData.plugin.sql.getConnection()) {
+            final PreparedStatement statement = connection.prepareStatement("SELECT * FROM `worlds` WHERE name=?");
+            statement.setString(1, world.getName());
+            final ResultSet set = statement.executeQuery();
+            return set.next();
+        } catch (final SQLException ex) {
+            ex.printStackTrace();
+            return false;
         }
-        return bl;
     }
 
-    public boolean existsID(int id) {
-        boolean bl;
-        block8: {
-            Connection connection = SQLWorldData.plugin.sql.getConnection();
-            try {
-                PreparedStatement statement = connection.prepareStatement("SELECT * FROM `worlds` WHERE id=?");
-                statement.setInt(1, id);
-                ResultSet set = statement.executeQuery();
-                bl = set.next();
-                if (connection == null) break block8;
-            }
-            catch (Throwable throwable) {
-                try {
-                    if (connection != null) {
-                        try {
-                            connection.close();
-                        }
-                        catch (Throwable throwable2) {
-                            throwable.addSuppressed(throwable2);
-                        }
-                    }
-                    throw throwable;
-                }
-                catch (SQLException ex) {
-                    ex.printStackTrace();
-                    return false;
-                }
-            }
-            connection.close();
-        }
-        return bl;
-    }
-
-    public int getWorldID(World world) {
-        int n;
-        block9: {
-            Connection connection = SQLWorldData.plugin.sql.getConnection();
-            try {
-                PreparedStatement statement;
-                if (!this.exists(world)) {
-                    statement = connection.prepareStatement("INSERT INTO `worlds` (`id`, `name`) VALUES (?, ?);");
-                    statement.setInt(1, this.getWorldCount() + 1);
-                    statement.setString(2, world.getName());
-                    statement.execute();
-                }
-                statement = connection.prepareStatement("SELECT * FROM `worlds` WHERE name=?");
-                statement.setString(1, world.getName());
-                ResultSet set = statement.executeQuery();
-                set.next();
-                int id = set.getInt("id");
-                set.close();
-                n = id;
-                if (connection == null) break block9;
-            }
-            catch (Throwable throwable) {
-                try {
-                    if (connection != null) {
-                        try {
-                            connection.close();
-                        }
-                        catch (Throwable throwable2) {
-                            throwable.addSuppressed(throwable2);
-                        }
-                    }
-                    throw throwable;
-                }
-                catch (SQLException ex) {
-                    ex.printStackTrace();
-                    return -1;
-                }
-            }
-            connection.close();
-        }
-        return n;
-    }
-
-    /*
-     * Enabled aggressive block sorting
-     * Enabled unnecessary exception pruning
-     * Enabled aggressive exception aggregation
-     */
-    public World getWorld(int id) {
-        try (Connection connection = SQLWorldData.plugin.sql.getConnection();){
-            if (!this.existsID(id)) {
-                World world2 = null;
-                return world2;
-            }
-            PreparedStatement statement = connection.prepareStatement("SELECT * FROM `worlds` WHERE id=?");
+    public boolean existsID(final int id) {
+        try (final Connection connection = SQLWorldData.plugin.sql.getConnection()) {
+            final PreparedStatement statement = connection.prepareStatement("SELECT * FROM `worlds` WHERE id=?");
             statement.setInt(1, id);
-            ResultSet set = statement.executeQuery();
-            set.next();
-            String name = set.getString("name");
-            set.close();
-            World world = Bukkit.getWorld((String)name);
-            return world;
+            final ResultSet set = statement.executeQuery();
+            return set.next();
+        } catch (final SQLException ex) {
+            ex.printStackTrace();
+            return false;
         }
-        catch (SQLException ex) {
+    }
+
+    public int getWorldID(final World world) {
+        try (final Connection connection = SQLWorldData.plugin.sql.getConnection()) {
+            if (!this.exists(world)) {
+                final PreparedStatement statement = connection.prepareStatement("INSERT INTO `worlds` (`id`, `name`) VALUES (?, ?);");
+                statement.setInt(1, this.getWorldCount() + 1);
+                statement.setString(2, world.getName());
+                statement.execute();
+            }
+            final PreparedStatement statement = connection.prepareStatement("SELECT * FROM `worlds` WHERE name=?");
+            statement.setString(1, world.getName());
+            final ResultSet set = statement.executeQuery();
+            set.next();
+            final int id = set.getInt("id");
+            set.close();
+            return id;
+        } catch (final SQLException ex) {
+            ex.printStackTrace();
+            return -1;
+        }
+    }
+
+    public World getWorld(final int id) {
+        try (final Connection connection = SQLWorldData.plugin.sql.getConnection()) {
+            if (!this.existsID(id)) {
+                final World world = null;
+                if (connection != null) {
+                    connection.close();
+                }
+                return world;
+            }
+            final PreparedStatement statement = connection.prepareStatement("SELECT * FROM `worlds` WHERE id=?");
+            statement.setInt(1, id);
+            final ResultSet set = statement.executeQuery();
+            set.next();
+            final String name = set.getString("name");
+            set.close();
+            return Bukkit.getWorld(name);
+        } catch (final SQLException ex) {
             ex.printStackTrace();
             return null;
         }
     }
 
     public int getWorldCount() {
-        int n;
-        block8: {
-            Connection connection = SQLWorldData.plugin.sql.getConnection();
-            try {
-                PreparedStatement statement = connection.prepareStatement("SELECT COUNT(*) AS rows FROM `worlds`");
-                ResultSet set = statement.executeQuery();
-                set.next();
-                int count = set.getInt("rows");
-                set.close();
-                n = count;
-                if (connection == null) break block8;
-            }
-            catch (Throwable throwable) {
-                try {
-                    if (connection != null) {
-                        try {
-                            connection.close();
-                        }
-                        catch (Throwable throwable2) {
-                            throwable.addSuppressed(throwable2);
-                        }
-                    }
-                    throw throwable;
-                }
-                catch (SQLException ex) {
-                    ex.printStackTrace();
-                    return 0;
-                }
-            }
-            connection.close();
+        try (final Connection connection = SQLWorldData.plugin.sql.getConnection()) {
+            final PreparedStatement statement = connection.prepareStatement("SELECT COUNT(*) AS rows FROM `worlds`");
+            final ResultSet set = statement.executeQuery();
+            set.next();
+            final int count = set.getInt("rows");
+            set.close();
+            return count;
+        } catch (final SQLException ex) {
+            ex.printStackTrace();
+            return 0;
         }
-        return n;
     }
 }
-

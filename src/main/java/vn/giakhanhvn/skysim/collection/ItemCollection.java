@@ -27,9 +27,9 @@ import vn.giakhanhvn.skysim.util.SUtil;
 
 public class ItemCollection {
     private static final Map<String, ItemCollection> COLLECTION_MAP = new HashMap<String, ItemCollection>();
-    public static final ItemCollection WHEAT = new ItemCollection("Wheat", ItemCollectionCategory.FARMING, SMaterial.WHEAT, 0, new ItemCollectionRewards(50, new ItemCollectionReward[0]), new ItemCollectionRewards(100, new ItemCollectionReward[0]), new ItemCollectionRewards(250, new ItemCollectionReward[0]), new ItemCollectionRewards(500, new ItemCollectionReward[0]), new ItemCollectionRewards(1000, new ItemCollectionReward[0]), new ItemCollectionRewards(2500, new ItemCollectionReward[0]), new ItemCollectionRewards(10000, new ItemCollectionReward[0]), new ItemCollectionRewards(15000, new ItemCollectionReward[0]), new ItemCollectionRewards(25000, new ItemCollectionReward[0]), new ItemCollectionRewards(50000, new ItemCollectionReward[0]), new ItemCollectionRewards(100000, new ItemCollectionReward[0]));
-    public static final ItemCollection OAK_WOOD = new ItemCollection("Oak Wood", ItemCollectionCategory.FORAGING, SMaterial.OAK_WOOD, 0, 9);
-    public static final ItemCollection STRING = new ItemCollection("String", ItemCollectionCategory.COMBAT, SMaterial.STRING, 0, new ItemCollectionRewards(50, new ItemCollectionReward[0]), new ItemCollectionRewards(100, new ItemCollectionReward[0]), new ItemCollectionRewards(250, new ItemCollectionUpgradeReward("Quiver", ChatColor.GREEN)), new ItemCollectionRewards(1000, new ItemCollectionReward[0]), new ItemCollectionRewards(2500, new ItemCollectionReward[0]), new ItemCollectionRewards(5000, new ItemCollectionReward[0]), new ItemCollectionRewards(10000, new ItemCollectionReward[0]), new ItemCollectionRewards(25000, new ItemCollectionReward[0]), new ItemCollectionRewards(50000, new ItemCollectionReward[0]));
+    public static final ItemCollection WHEAT = new ItemCollection("Wheat", ItemCollectionCategory.FARMING, SMaterial.WHEAT, (short) 0, new ItemCollectionRewards(50, new ItemCollectionReward[0]), new ItemCollectionRewards(100, new ItemCollectionReward[0]), new ItemCollectionRewards(250, new ItemCollectionReward[0]), new ItemCollectionRewards(500, new ItemCollectionReward[0]), new ItemCollectionRewards(1000, new ItemCollectionReward[0]), new ItemCollectionRewards(2500, new ItemCollectionReward[0]), new ItemCollectionRewards(10000, new ItemCollectionReward[0]), new ItemCollectionRewards(15000, new ItemCollectionReward[0]), new ItemCollectionRewards(25000, new ItemCollectionReward[0]), new ItemCollectionRewards(50000, new ItemCollectionReward[0]), new ItemCollectionRewards(100000, new ItemCollectionReward[0]));
+    public static final ItemCollection OAK_WOOD = new ItemCollection("Oak Wood", ItemCollectionCategory.FORAGING, SMaterial.OAK_WOOD, (short) 0, 9);
+    public static final ItemCollection STRING = new ItemCollection("String", ItemCollectionCategory.COMBAT, SMaterial.STRING, (short) 0, new ItemCollectionRewards(50, new ItemCollectionReward[0]), new ItemCollectionRewards(100, new ItemCollectionReward[0]), new ItemCollectionRewards(250, new ItemCollectionUpgradeReward("Quiver", ChatColor.GREEN)), new ItemCollectionRewards(1000, new ItemCollectionReward[0]), new ItemCollectionRewards(2500, new ItemCollectionReward[0]), new ItemCollectionRewards(5000, new ItemCollectionReward[0]), new ItemCollectionRewards(10000, new ItemCollectionReward[0]), new ItemCollectionRewards(25000, new ItemCollectionReward[0]), new ItemCollectionRewards(50000, new ItemCollectionReward[0]));
     private final String name;
     private final String identifier;
     private final ItemCollectionCategory category;
@@ -88,7 +88,7 @@ public class ItemCollection {
     }
 
     public int getMaxAmount() {
-        if (this.rewards.size() == 0 || this.rewards.get(this.rewards.size() - 1) == null) {
+        if (this.rewards.isEmpty() || this.rewards.get(this.rewards.size() - 1) == null) {
             return 0;
         }
         return this.rewards.get(this.rewards.size() - 1).getRequirement();

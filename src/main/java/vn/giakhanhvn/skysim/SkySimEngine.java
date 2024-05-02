@@ -1,3 +1,37 @@
+/*
+ * Decompiled with CFR 0.152.
+ *
+ * Could not load the following classes:
+ *  com.comphenix.protocol.ProtocolLibrary
+ *  com.comphenix.protocol.ProtocolManager
+ *  com.google.common.io.Files
+ *  com.onarandombox.MultiverseCore.MultiverseCore
+ *  de.slikey.effectlib.EffectManager
+ *  net.milkbowl.vault.economy.Economy
+ *  org.bukkit.Bukkit
+ *  org.bukkit.Material
+ *  org.bukkit.World
+ *  org.bukkit.block.Block
+ *  org.bukkit.command.CommandMap
+ *  org.bukkit.configuration.serialization.ConfigurationSerialization
+ *  org.bukkit.entity.Entity
+ *  org.bukkit.entity.HumanEntity
+ *  org.bukkit.entity.Player
+ *  org.bukkit.event.Event
+ *  org.bukkit.event.Listener
+ *  org.bukkit.inventory.ItemStack
+ *  org.bukkit.inventory.Recipe
+ *  org.bukkit.inventory.ShapedRecipe
+ *  org.bukkit.inventory.ShapelessRecipe
+ *  org.bukkit.plugin.Plugin
+ *  org.bukkit.plugin.RegisteredServiceProvider
+ *  org.bukkit.plugin.java.JavaPlugin
+ *  org.bukkit.plugin.messaging.PluginMessageListener
+ *  org.bukkit.potion.PotionEffect
+ *  org.bukkit.potion.PotionEffectType
+ *  org.bukkit.scheduler.BukkitRunnable
+ *  org.bukkit.scheduler.BukkitTask
+ */
 package vn.giakhanhvn.skysim;
 
 import com.comphenix.protocol.ProtocolLibrary;
@@ -159,9 +193,9 @@ import vn.giakhanhvn.skysim.util.SLog;
 import vn.giakhanhvn.skysim.util.SerialNBTTagCompound;
 
 public class SkySimEngine
-extends JavaPlugin
-implements PluginMessageListener,
-BungeeChannel.ForwardConsumer {
+        extends JavaPlugin
+        implements PluginMessageListener,
+        BungeeChannel.ForwardConsumer {
     public static MultiverseCore core = (MultiverseCore)Bukkit.getServer().getPluginManager().getPlugin("Multiverse-Core");
     private static ProtocolManager protocolManager;
     private static Economy econ;
@@ -204,22 +238,8 @@ BungeeChannel.ForwardConsumer {
             this.getServer().getMessenger().registerIncomingPluginChannel((Plugin)this, "BungeeCord", (PluginMessageListener)this);
             this.bc = new BungeeChannel((Plugin)this);
             this.setupEconomy();
-            if (Bukkit.getPluginManager().getPlugin("SputnikSkySim") == null) {
-                SLog.severe("===================================");
-                SLog.severe("SKYSIM ENGINE - MADE BY GIAKHANHVN");
-                SLog.severe(" ");
-                SLog.severe("SputnikSkySim not found, disabling this plugin");
-                SLog.severe("for safety!");
-                SLog.severe("===================================");
-                Bukkit.getPluginManager().disablePlugin((Plugin)this);
-                break block21;
-            }
             SLog.info("===================================");
             SLog.info("SKYSIM ENGINE - MADE BY GIAKHANHVN");
-            SLog.info(" ");
-            SLog.info("SputnikSkySim found! Hooking into...");
-            SLog.info("If it's take more than 5s to execute this");
-            SLog.info("contact developers!");
             SLog.info("===================================");
             plugin = this;
             SLog.info("Hooked successfully into SputnikSkySim!");
@@ -338,11 +358,6 @@ BungeeChannel.ForwardConsumer {
             SLog.info("===================================");
             SLog.info("SKYSIM ENGINE - MADE BY GIAKHANHVN");
             SLog.info("PLUGIN ENABLED! HOOKED INTO SSS!");
-            SLog.info(" ");
-            SLog.info("This plugin provide SkySim most functions!");
-            SLog.info("Originally made by super (Slayers code used)");
-            SLog.info("Made by GiaKhanhVN (C) 2021");
-            SLog.info("Any illegal usage will be suppressed! DO NOT LEAK IT!");
             SLog.info("===================================");
             this.sq = new SummoningSequence(Bukkit.getWorld((String)"arena"));
             Bukkit.getWorld((String)"arena").setAutoSave(false);
@@ -707,4 +722,3 @@ BungeeChannel.ForwardConsumer {
         econ = null;
     }
 }
-

@@ -90,7 +90,7 @@ public class AuctionItem {
         this.starter = this.config.getLong("starter");
         this.bids = (List)this.config.get("bids");
         this.owner = UUID.fromString(this.config.getString("owner"));
-        List strings = this.config.getStringList("participants");
+        List<String> strings = this.config.getStringList("participants");
         for (String string : strings) {
             this.participants.add(UUID.fromString(string));
         }

@@ -265,24 +265,24 @@ EndermanStatistics {
                 final /* synthetic */ org.bukkit.entity.Entity val$entity;
                 final /* synthetic */ Player val$player;
                 {
-                    this.val$entity = entity;
-                    this.val$player = player;
+                    entity = entity;
+                    player = player;
                 }
 
                 public void run() {
-                    if (this.val$entity.isDead()) {
-                        ArmorStand stand = (ArmorStand)Repeater.BEACON_THROW2.get(this.val$player.getUniqueId());
-                        BlockFallAPI.removeBlock(Repeater.BEACON.get(stand), this.val$entity.getWorld());
+                    if (entity.isDead()) {
+                        ArmorStand stand = (ArmorStand)Repeater.BEACON_THROW2.get(player.getUniqueId());
+                        BlockFallAPI.removeBlock(Repeater.BEACON.get(stand), entity.getWorld());
                         if (stand != null) {
                             stand.remove();
                         }
                         this.cancel();
                         return;
                     }
-                    Location l1 = this.val$entity.getLocation();
-                    l1.add(this.val$entity.getLocation().getDirection().normalize().multiply(1));
+                    Location l1 = entity.getLocation();
+                    l1.add(entity.getLocation().getDirection().normalize().multiply(1));
                     l1.setYaw((float)SUtil.random(0, 360));
-                    ArmorStand armorStand1 = (ArmorStand)this.val$entity.getWorld().spawnEntity(l1.add(0.0, 0.3, 0.0), EntityType.ARMOR_STAND);
+                    ArmorStand armorStand1 = (ArmorStand)entity.getWorld().spawnEntity(l1.add(0.0, 0.3, 0.0), EntityType.ARMOR_STAND);
                     armorStand1.getEquipment().setHelmet(SItem.of(SMaterial.BEACON).getStack());
                     armorStand1.setGravity(true);
                     armorStand1.setVisible(false);
@@ -291,14 +291,14 @@ EndermanStatistics {
                     armorStand1.setMetadata("BeaconSkill", (MetadataValue)new FixedMetadataValue((Plugin)SkySimEngine.getPlugin(), (Object)true));
                     vec.setY(0.55);
                     armorStand1.setVelocity(vec);
-                    Sputnik.endermanCarryBlock((Enderman)this.val$entity, Material.AIR);
-                    SUtil.delay(() -> this.val$player.playSound(this.val$player.getLocation(), Sound.PORTAL_TRIGGER, 0.4f, 0.81f), 10L);
-                    SUtil.delay(() -> this.val$player.playSound(this.val$player.getLocation(), "mob.guardian.elder.idle", 0.2f, 0.85f), 15L);
-                    SUtil.delay(() -> this.val$player.playSound(this.val$player.getLocation(), "mob.guardian.elder.idle", 0.2f, 0.85f), 40L);
-                    SUtil.delay(() -> this.val$player.playSound(this.val$player.getLocation(), "mob.guardian.elder.idle", 0.2f, 0.85f), 40L);
+                    Sputnik.endermanCarryBlock((Enderman)entity, Material.AIR);
+                    SUtil.delay(() -> player.playSound(player.getLocation(), Sound.PORTAL_TRIGGER, 0.4f, 0.81f), 10L);
+                    SUtil.delay(() -> player.playSound(player.getLocation(), "mob.guardian.elder.idle", 0.2f, 0.85f), 15L);
+                    SUtil.delay(() -> player.playSound(player.getLocation(), "mob.guardian.elder.idle", 0.2f, 0.85f), 40L);
+                    SUtil.delay(() -> player.playSound(player.getLocation(), "mob.guardian.elder.idle", 0.2f, 0.85f), 40L);
                     VoidgloomSeraph.this.Ar1.add(armorStand1);
                     Repeater.BEACON_OWNER.remove(armorStand1);
-                    Repeater.BEACON_OWNER.put((org.bukkit.entity.Entity)armorStand1, this.val$player);
+                    Repeater.BEACON_OWNER.put((org.bukkit.entity.Entity)armorStand1, player);
                     VoidgloomSeraph.a(armorStand1);
                 }
             }.runTaskLater((Plugin)SkySimEngine.getPlugin(), 80L);
@@ -306,14 +306,14 @@ EndermanStatistics {
                 final /* synthetic */ org.bukkit.entity.Entity val$entity;
                 final /* synthetic */ Player val$player;
                 {
-                    this.val$entity = entity;
-                    this.val$player = player;
+                    entity = entity;
+                    player = player;
                 }
 
                 public void run() {
-                    if (this.val$entity.isDead()) {
-                        ArmorStand stand = (ArmorStand)Repeater.BEACON_THROW2.get(this.val$player.getUniqueId());
-                        BlockFallAPI.removeBlock(Repeater.BEACON.get(stand), this.val$entity.getWorld());
+                    if (entity.isDead()) {
+                        ArmorStand stand = (ArmorStand)Repeater.BEACON_THROW2.get(player.getUniqueId());
+                        BlockFallAPI.removeBlock(Repeater.BEACON.get(stand), entity.getWorld());
                         if (CACHED_BLOCK.containsKey(stand) && CACHED_BLOCK_ID.containsKey(stand) && CACHED_BLOCK_DATA.containsKey(stand)) {
                             CACHED_BLOCK.get(stand).getLocation().getBlock().setTypeIdAndData(CACHED_BLOCK_ID.get(stand).intValue(), CACHED_BLOCK_DATA.get(stand).byteValue(), true);
                         }
@@ -323,24 +323,24 @@ EndermanStatistics {
                         this.cancel();
                         return;
                     }
-                    ArmorStand stand = (ArmorStand)Repeater.BEACON_THROW2.get(this.val$player.getUniqueId());
+                    ArmorStand stand = (ArmorStand)Repeater.BEACON_THROW2.get(player.getUniqueId());
                     VoidgloomSeraph.this.Ar1.add(stand);
                     if (!VoidgloomSeraph.this.isBroken) {
-                        User.getUser(this.val$player.getUniqueId()).damage(this.val$player.getMaxHealth() * 3.0, EntityDamageEvent.DamageCause.ENTITY_ATTACK, this.val$entity);
-                        this.val$player.damage(0.1, this.val$entity);
-                        BlockFallAPI.removeBlock(Repeater.BEACON.get(stand), this.val$entity.getWorld());
+                        User.getUser(player.getUniqueId()).damage(player.getMaxHealth() * 3.0, EntityDamageEvent.DamageCause.ENTITY_ATTACK, entity);
+                        player.damage(0.1, entity);
+                        BlockFallAPI.removeBlock(Repeater.BEACON.get(stand), entity.getWorld());
                         if (stand != null) {
                             stand.remove();
                         }
                         VoidgloomSeraph.this.activebea = false;
-                        this.val$entity.getWorld().playSound(stand.getLocation(), Sound.ITEM_BREAK, 1.0f, 0.5f);
-                        this.val$entity.getWorld().playEffect(stand.getLocation(), Effect.EXPLOSION_LARGE, 1);
+                        entity.getWorld().playSound(stand.getLocation(), Sound.ITEM_BREAK, 1.0f, 0.5f);
+                        entity.getWorld().playEffect(stand.getLocation(), Effect.EXPLOSION_LARGE, 1);
                         if (CACHED_BLOCK.containsKey(stand) && CACHED_BLOCK_ID.containsKey(stand) && CACHED_BLOCK_DATA.containsKey(stand)) {
                             CACHED_BLOCK.get(stand).getLocation().getBlock().setTypeIdAndData(CACHED_BLOCK_ID.get(stand).intValue(), CACHED_BLOCK_DATA.get(stand).byteValue(), true);
                         }
                     } else {
                         VoidgloomSeraph.this.isBroken = false;
-                        BlockFallAPI.removeBlock(Repeater.BEACON.get(stand), this.val$entity.getWorld());
+                        BlockFallAPI.removeBlock(Repeater.BEACON.get(stand), entity.getWorld());
                         if (CACHED_BLOCK.containsKey(stand) && CACHED_BLOCK_ID.containsKey(stand) && CACHED_BLOCK_DATA.containsKey(stand)) {
                             CACHED_BLOCK.get(stand).getLocation().getBlock().setTypeIdAndData(CACHED_BLOCK_ID.get(stand).intValue(), CACHED_BLOCK_DATA.get(stand).byteValue(), true);
                         }
@@ -427,7 +427,7 @@ EndermanStatistics {
             new BukkitRunnable((org.bukkit.entity.Entity)entity){
                 final /* synthetic */ org.bukkit.entity.Entity val$entity;
                 {
-                    this.val$entity = entity;
+                    entity = entity;
                 }
 
                 public void run() {
@@ -435,7 +435,7 @@ EndermanStatistics {
                         this.cancel();
                         return;
                     }
-                    stand_sit.setPassenger(this.val$entity);
+                    stand_sit.setPassenger(entity);
                 }
             }.runTaskTimer((Plugin)SkySimEngine.getPlugin(), 0L, 1L);
             ArmorStand stand3 = (ArmorStand)stand_sit.getWorld().spawn(stand_sit.getLocation().add(0.0, 0.0, 0.0), ArmorStand.class);
@@ -498,28 +498,28 @@ EndermanStatistics {
                 final /* synthetic */ ArmorStand val$stand2;
                 final /* synthetic */ ArmorStand val$stand1;
                 {
-                    this.val$entity = entity;
-                    this.val$stand = armorStand;
-                    this.val$player = player;
-                    this.val$stand22 = armorStand2;
-                    this.val$stand11 = armorStand3;
-                    this.val$stand1_ = armorStand4;
-                    this.val$stand2 = armorStand5;
-                    this.val$stand1 = armorStand6;
+                    entity = entity;
+                    stand = armorStand;
+                    player = player;
+                    stand22 = armorStand2;
+                    stand11 = armorStand3;
+                    stand1_ = armorStand4;
+                    stand2 = armorStand5;
+                    stand1 = armorStand6;
                 }
 
                 public void run() {
-                    if (this.val$entity.isDead()) {
+                    if (entity.isDead()) {
                         Sputnik.RemoveEntityArray(VoidgloomSeraph.this.Ar2);
                         this.cancel();
                         return;
                     }
-                    Sputnik.entityBeam(this.val$stand, this.val$stand.getLocation(), this.val$player, this.val$entity);
-                    Sputnik.entityBeam(this.val$stand22, this.val$stand.getLocation(), this.val$player, this.val$entity);
-                    Sputnik.entityBeam(this.val$stand11, this.val$stand.getLocation(), this.val$player, this.val$entity);
-                    Sputnik.entityBeam(this.val$stand1_, this.val$stand.getLocation(), this.val$player, this.val$entity);
-                    Sputnik.entityBeam(this.val$stand2, this.val$stand.getLocation(), this.val$player, this.val$entity);
-                    Sputnik.entityBeam(this.val$stand1, this.val$stand.getLocation(), this.val$player, this.val$entity);
+                    Sputnik.entityBeam(stand, stand.getLocation(), player, entity);
+                    Sputnik.entityBeam(stand22, stand.getLocation(), player, entity);
+                    Sputnik.entityBeam(stand11, stand.getLocation(), player, entity);
+                    Sputnik.entityBeam(stand1_, stand.getLocation(), player, entity);
+                    Sputnik.entityBeam(stand2, stand.getLocation(), player, entity);
+                    Sputnik.entityBeam(stand1, stand.getLocation(), player, entity);
                     new BukkitRunnable(){
 
                         public void run() {
@@ -548,13 +548,13 @@ EndermanStatistics {
             new BukkitRunnable((org.bukkit.entity.Entity)entity){
                 final /* synthetic */ org.bukkit.entity.Entity val$entity;
                 {
-                    this.val$entity = entity;
+                    entity = entity;
                 }
 
                 public void run() {
                     VoidgloomSeraph.this.HeartRadi = false;
                     Sputnik.RemoveEntityArray(VoidgloomSeraph.this.Ar2);
-                    EntityManager.DEFENSE_PERCENTAGE.put(this.val$entity, 75);
+                    EntityManager.DEFENSE_PERCENTAGE.put(entity, 75);
                     new BukkitRunnable(){
 
                         public void run() {
@@ -589,22 +589,22 @@ EndermanStatistics {
                 final /* synthetic */ org.bukkit.entity.Entity val$entity;
                 final /* synthetic */ Player val$player;
                 {
-                    this.val$entity = entity;
-                    this.val$player = player;
+                    entity = entity;
+                    player = player;
                 }
 
                 public void run() {
-                    if (this.val$entity.isDead()) {
-                        if (LivingSkulls.containsKey(this.val$player.getUniqueId())) {
-                            Sputnik.RemoveEntityArray(LivingSkulls.get(this.val$player.getUniqueId()));
+                    if (entity.isDead()) {
+                        if (LivingSkulls.containsKey(player.getUniqueId())) {
+                            Sputnik.RemoveEntityArray(LivingSkulls.get(player.getUniqueId()));
                         }
                         this.cancel();
                         return;
                     }
                     if (VoidgloomSeraph.this.activeskull) {
-                        VoidgloomSeraph.spawnNukekubi(this.val$entity, this.val$player, 1, 2);
+                        VoidgloomSeraph.spawnNukekubi(entity, player, 1, 2);
                     } else {
-                        VoidgloomSeraph.updateSkill(LivingSkulls.get(this.val$player.getUniqueId()));
+                        VoidgloomSeraph.updateSkill(LivingSkulls.get(player.getUniqueId()));
                         new BukkitRunnable(){
 
                             public void run() {

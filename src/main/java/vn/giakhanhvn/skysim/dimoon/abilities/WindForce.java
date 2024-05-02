@@ -37,40 +37,28 @@ implements Ability {
         player.getWorld().playSound(dimoon.getEntity().getLocation(), Sound.WITHER_SHOOT, 5.0f, 1.0f);
         World world = entity.getWorld();
         Vector[] velocity = new Vector[]{player.getLocation().toVector().subtract(entity.getLocation().toVector()).normalize()};
-        new BukkitRunnable((Entity)entity, velocity, player, world){
+        new BukkitRunnable(){
             private Location particleLocation;
             double multiplier;
-            final /* synthetic */ Entity val$entity;
-            final /* synthetic */ Vector[] val$velocity;
-            final /* synthetic */ Player val$player;
-            final /* synthetic */ World val$world;
-            {
-                this.val$entity = entity;
-                this.val$velocity = vectorArray;
-                this.val$player = player;
-                this.val$world = world;
-                this.particleLocation = this.val$entity.getLocation().add(0.0, 2.0, 0.0).clone();
-                this.multiplier = 4.0;
-            }
 
             public void run() {
-                this.particleLocation.add(this.val$velocity[0]);
-                this.val$velocity[0] = this.val$player.getLocation().toVector().subtract(this.particleLocation.toVector()).normalize().multiply(this.multiplier);
-                if (this.val$velocity[0].length() < 1.0 || this.multiplier == 1.0) {
+                this.particleLocation.add(velocity[0]);
+                velocity[0] = player.getLocation().toVector().subtract(this.particleLocation.toVector()).normalize().multiply(this.multiplier);
+                if (velocity[0].length() < 1.0 || this.multiplier == 1.0) {
                     this.cancel();
                     return;
                 }
                 this.multiplier -= 0.05;
-                this.val$world.spigot().playEffect(this.particleLocation, Effect.FIREWORKS_SPARK, 24, 1, 0.0f, 0.0f, 0.0f, 1.0f, 0, 64);
-                this.val$world.spigot().playEffect(this.particleLocation, Effect.HAPPY_VILLAGER, 24, 1, 0.0f, 0.0f, 0.0f, 1.0f, 0, 64);
+                world.spigot().playEffect(this.particleLocation, Effect.FIREWORKS_SPARK, 24, 1, 0.0f, 0.0f, 0.0f, 1.0f, 0, 64);
+                world.spigot().playEffect(this.particleLocation, Effect.HAPPY_VILLAGER, 24, 1, 0.0f, 0.0f, 0.0f, 1.0f, 0, 64);
                 if (SkySimEngine.getPlugin().dimoon == null) {
                     this.cancel();
                     return;
                 }
-                if (this.particleLocation.distance(this.val$player.getEyeLocation()) < 1.5 || this.particleLocation.distance(this.val$player.getLocation()) < 1.5) {
-                    this.val$player.getWorld().playEffect(this.particleLocation, Effect.EXPLOSION_HUGE, 0);
-                    this.val$player.getWorld().playSound(this.particleLocation, Sound.EXPLODE, 1.0f, 1.0f);
-                    this.val$player.setVelocity(new Vector(Math.random() - Math.random() * 2.0, Math.random() - Math.random() * 2.0, Math.random() - Math.random() * 2.0));
+                if (this.particleLocation.distance(player.getEyeLocation()) < 1.5 || this.particleLocation.distance(player.getLocation()) < 1.5) {
+                    player.getWorld().playEffect(this.particleLocation, Effect.EXPLOSION_HUGE, 0);
+                    player.getWorld().playSound(this.particleLocation, Sound.EXPLODE, 1.0f, 1.0f);
+                    player.setVelocity(new Vector(Math.random() - Math.random() * 2.0, Math.random() - Math.random() * 2.0, Math.random() - Math.random() * 2.0));
                     this.cancel();
                 }
             }

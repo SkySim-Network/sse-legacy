@@ -26,255 +26,144 @@ public class SQLRegionData {
     private final String COUNT = "SELECT COUNT(*) AS rows FROM `regions`";
     private final String DELETE = "DELETE FROM `regions` WHERE name=?";
 
-    public boolean exists(String regionName) {
-        boolean bl;
-        block8: {
-            Connection connection = SQLRegionData.plugin.sql.getConnection();
-            try {
-                PreparedStatement statement = connection.prepareStatement("SELECT * FROM `regions` WHERE name=?");
-                statement.setString(1, regionName);
-                ResultSet set = statement.executeQuery();
-                bl = set.next();
-                if (connection == null) break block8;
-            }
-            catch (Throwable throwable) {
-                try {
-                    if (connection != null) {
-                        try {
-                            connection.close();
-                        }
-                        catch (Throwable throwable2) {
-                            throwable.addSuppressed(throwable2);
-                        }
-                    }
-                    throw throwable;
-                }
-                catch (SQLException ex) {
-                    ex.printStackTrace();
-                    return false;
-                }
-            }
-            connection.close();
+    public boolean exists(final String regionName) {
+        try (final Connection connection = SQLRegionData.plugin.sql.getConnection()) {
+            final PreparedStatement statement = connection.prepareStatement("SELECT * FROM `regions` WHERE name=?");
+            statement.setString(1, regionName);
+            final ResultSet set = statement.executeQuery();
+            return set.next();
+        } catch (final SQLException ex) {
+            ex.printStackTrace();
+            return false;
         }
-        return bl;
     }
 
-    /*
-     * Enabled aggressive block sorting
-     * Enabled unnecessary exception pruning
-     * Enabled aggressive exception aggregation
-     */
-    public Region get(String name) {
+    public Region get(final String name) {
         if (!this.exists(name)) {
             return null;
         }
-        try (Connection connection = SQLRegionData.plugin.sql.getConnection();){
-            PreparedStatement statement = connection.prepareStatement("SELECT * FROM `regions` WHERE name=?");
+        try (final Connection connection = SQLRegionData.plugin.sql.getConnection()) {
+            final PreparedStatement statement = connection.prepareStatement("SELECT * FROM `regions` WHERE name=?");
             statement.setString(1, name);
-            ResultSet set = statement.executeQuery();
+            final ResultSet set = statement.executeQuery();
             set.next();
-            Location firstLocation = new Location(SQLRegionData.plugin.worldData.getWorld(set.getInt("world")), (double)set.getInt("x1"), (double)set.getInt("y1"), (double)set.getInt("z1"));
-            Location secondLocation = new Location(SQLRegionData.plugin.worldData.getWorld(set.getInt("world")), (double)set.getInt("x2"), (double)set.getInt("y2"), (double)set.getInt("z2"));
-            RegionType type = RegionType.getType(set.getString("type"));
+            final Location firstLocation = new Location(SQLRegionData.plugin.worldData.getWorld(set.getInt("world")), set.getInt("x1"), set.getInt("y1"), set.getInt("z1"));
+            final Location secondLocation = new Location(SQLRegionData.plugin.worldData.getWorld(set.getInt("world")), set.getInt("x2"), set.getInt("y2"), set.getInt("z2"));
+            final RegionType type = RegionType.getType(set.getString("type"));
             if (type == null) {
-                Region region2 = null;
-                return region2;
+                final Region region = null;
+                if (connection != null) {
+                    connection.close();
+                }
+                return region;
             }
             set.close();
-            Region region = new Region(name, firstLocation, secondLocation, type);
-            return region;
-        }
-        catch (SQLException ex) {
+            return new Region(name, firstLocation, secondLocation, type);
+        } catch (final SQLException ex) {
             ex.printStackTrace();
             return null;
         }
     }
 
-    public List<Region> getAllOfType(RegionType type) {
-        ArrayList<Region> arrayList;
-        block9: {
-            Connection connection = SQLRegionData.plugin.sql.getConnection();
-            try {
-                PreparedStatement statement = connection.prepareStatement("SELECT * FROM `regions` WHERE type=?");
-                statement.setInt(1, type.ordinal());
-                ResultSet set = statement.executeQuery();
-                ArrayList<Region> regions = new ArrayList<Region>();
-                while (set.next()) {
-                    String name = set.getString("name");
-                    Location firstLocation = new Location(SQLRegionData.plugin.worldData.getWorld(set.getInt("world")), (double)set.getInt("x1"), (double)set.getInt("y1"), (double)set.getInt("z1"));
-                    Location secondLocation = new Location(SQLRegionData.plugin.worldData.getWorld(set.getInt("world")), (double)set.getInt("x2"), (double)set.getInt("y2"), (double)set.getInt("z2"));
-                    regions.add(new Region(name, firstLocation, secondLocation, type));
-                }
-                set.close();
-                arrayList = regions;
-                if (connection == null) break block9;
+    public List<Region> getAllOfType(final RegionType type) {
+        try (final Connection connection = SQLRegionData.plugin.sql.getConnection()) {
+            final PreparedStatement statement = connection.prepareStatement("SELECT * FROM `regions` WHERE type=?");
+            statement.setInt(1, type.ordinal());
+            final ResultSet set = statement.executeQuery();
+            final List<Region> regions = new ArrayList<Region>();
+            while (set.next()) {
+                final String name = set.getString("name");
+                final Location firstLocation = new Location(SQLRegionData.plugin.worldData.getWorld(set.getInt("world")), set.getInt("x1"), set.getInt("y1"), set.getInt("z1"));
+                final Location secondLocation = new Location(SQLRegionData.plugin.worldData.getWorld(set.getInt("world")), set.getInt("x2"), set.getInt("y2"), set.getInt("z2"));
+                regions.add(new Region(name, firstLocation, secondLocation, type));
             }
-            catch (Throwable throwable) {
-                try {
-                    if (connection != null) {
-                        try {
-                            connection.close();
-                        }
-                        catch (Throwable throwable2) {
-                            throwable.addSuppressed(throwable2);
-                        }
-                    }
-                    throw throwable;
-                }
-                catch (SQLException ex) {
-                    ex.printStackTrace();
-                    return null;
-                }
-            }
-            connection.close();
+            set.close();
+            return regions;
+        } catch (final SQLException ex) {
+            ex.printStackTrace();
+            return null;
         }
-        return arrayList;
     }
 
     public List<Region> getAll() {
-        ArrayList<Region> arrayList;
-        block9: {
-            Connection connection = SQLRegionData.plugin.sql.getConnection();
-            try {
-                PreparedStatement statement = connection.prepareStatement("SELECT * FROM `regions`");
-                ResultSet set = statement.executeQuery();
-                ArrayList<Region> regions = new ArrayList<Region>();
-                while (set.next()) {
-                    regions.add(this.get(set.getString("name")));
-                }
-                set.close();
-                arrayList = regions;
-                if (connection == null) break block9;
+        try (final Connection connection = SQLRegionData.plugin.sql.getConnection()) {
+            final PreparedStatement statement = connection.prepareStatement("SELECT * FROM `regions`");
+            final ResultSet set = statement.executeQuery();
+            final List<Region> regions = new ArrayList<Region>();
+            while (set.next()) {
+                regions.add(this.get(set.getString("name")));
             }
-            catch (Throwable throwable) {
-                try {
-                    if (connection != null) {
-                        try {
-                            connection.close();
-                        }
-                        catch (Throwable throwable2) {
-                            throwable.addSuppressed(throwable2);
-                        }
-                    }
-                    throw throwable;
-                }
-                catch (SQLException ex) {
-                    ex.printStackTrace();
-                    return null;
-                }
-            }
-            connection.close();
+            set.close();
+            return regions;
+        } catch (final SQLException ex) {
+            ex.printStackTrace();
+            return null;
         }
-        return arrayList;
     }
 
-    public Region create(String name, Location firstLocation, Location secondLocation, RegionType type) {
-        Region region;
-        block9: {
-            if (this.exists(name = name.toLowerCase())) {
-                return this.get(name);
-            }
-            Connection connection = SQLRegionData.plugin.sql.getConnection();
-            try {
-                PreparedStatement statement = connection.prepareStatement("INSERT INTO `regions` (`name`, `x1`, `y1`, `z1`, `x2`, `y2`, `z2`, `world`, `type`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);");
-                statement.setString(1, name);
-                statement.setInt(2, (int)firstLocation.getX());
-                statement.setInt(3, (int)firstLocation.getY());
-                statement.setInt(4, (int)firstLocation.getZ());
-                statement.setInt(5, (int)secondLocation.getX());
-                statement.setInt(6, (int)secondLocation.getY());
-                statement.setInt(7, (int)secondLocation.getZ());
-                statement.setInt(8, SQLRegionData.plugin.worldData.getWorldID(firstLocation.getWorld()));
-                statement.setString(9, type.name());
-                statement.execute();
-                region = new Region(name, firstLocation, secondLocation, type);
-                if (connection == null) break block9;
-            }
-            catch (Throwable throwable) {
-                try {
-                    if (connection != null) {
-                        try {
-                            connection.close();
-                        }
-                        catch (Throwable throwable2) {
-                            throwable.addSuppressed(throwable2);
-                        }
-                    }
-                    throw throwable;
-                }
-                catch (SQLException ex) {
-                    ex.printStackTrace();
-                    return null;
-                }
-            }
-            connection.close();
+    public Region create(String name, final Location firstLocation, final Location secondLocation, final RegionType type) {
+        name = name.toLowerCase();
+        if (this.exists(name)) {
+            return this.get(name);
         }
-        return region;
+        try (final Connection connection = SQLRegionData.plugin.sql.getConnection()) {
+            final PreparedStatement statement = connection.prepareStatement("INSERT INTO `regions` (`name`, `x1`, `y1`, `z1`, `x2`, `y2`, `z2`, `world`, `type`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);");
+            statement.setString(1, name);
+            statement.setInt(2, (int) firstLocation.getX());
+            statement.setInt(3, (int) firstLocation.getY());
+            statement.setInt(4, (int) firstLocation.getZ());
+            statement.setInt(5, (int) secondLocation.getX());
+            statement.setInt(6, (int) secondLocation.getY());
+            statement.setInt(7, (int) secondLocation.getZ());
+            statement.setInt(8, SQLRegionData.plugin.worldData.getWorldID(firstLocation.getWorld()));
+            statement.setString(9, type.name());
+            statement.execute();
+            return new Region(name, firstLocation, secondLocation, type);
+        } catch (final SQLException ex) {
+            ex.printStackTrace();
+            return null;
+        }
     }
 
-    public void save(Region region) {
-        try (Connection connection = SQLRegionData.plugin.sql.getConnection();){
-            PreparedStatement statement = connection.prepareStatement("UPDATE `regions` SET x1=?, y1=?, z1=?, x2=?, y2=?, z2=?, world=?, type=? WHERE name=?");
-            statement.setInt(1, (int)region.getFirstLocation().getX());
-            statement.setInt(2, (int)region.getFirstLocation().getY());
-            statement.setInt(3, (int)region.getFirstLocation().getZ());
-            statement.setInt(4, (int)region.getSecondLocation().getX());
-            statement.setInt(5, (int)region.getSecondLocation().getY());
-            statement.setInt(6, (int)region.getSecondLocation().getZ());
+    public void save(final Region region) {
+        try (final Connection connection = SQLRegionData.plugin.sql.getConnection()) {
+            final PreparedStatement statement = connection.prepareStatement("UPDATE `regions` SET x1=?, y1=?, z1=?, x2=?, y2=?, z2=?, world=?, type=? WHERE name=?");
+            statement.setInt(1, (int) region.getFirstLocation().getX());
+            statement.setInt(2, (int) region.getFirstLocation().getY());
+            statement.setInt(3, (int) region.getFirstLocation().getZ());
+            statement.setInt(4, (int) region.getSecondLocation().getX());
+            statement.setInt(5, (int) region.getSecondLocation().getY());
+            statement.setInt(6, (int) region.getSecondLocation().getZ());
             statement.setInt(7, SQLRegionData.plugin.worldData.getWorldID(region.getFirstLocation().getWorld()));
             statement.setString(8, region.getType().name());
             statement.setString(9, region.getName());
             statement.execute();
-        }
-        catch (SQLException ex) {
+        } catch (final SQLException ex) {
             ex.printStackTrace();
         }
     }
 
-    public void delete(Region region) {
-        try (Connection connection = SQLRegionData.plugin.sql.getConnection();){
-            PreparedStatement statement = connection.prepareStatement("DELETE FROM `regions` WHERE name=?");
+    public void delete(final Region region) {
+        try (final Connection connection = SQLRegionData.plugin.sql.getConnection()) {
+            final PreparedStatement statement = connection.prepareStatement("DELETE FROM `regions` WHERE name=?");
             statement.setString(1, region.getName());
             statement.execute();
-        }
-        catch (SQLException ex) {
+        } catch (final SQLException ex) {
             ex.printStackTrace();
         }
     }
 
     public int getRegionCount() {
-        int n;
-        block8: {
-            Connection connection = SQLRegionData.plugin.sql.getConnection();
-            try {
-                PreparedStatement statement = connection.prepareStatement("SELECT COUNT(*) AS rows FROM `regions`");
-                ResultSet set = statement.executeQuery();
-                set.next();
-                int count = set.getInt("rows");
-                set.close();
-                n = count;
-                if (connection == null) break block8;
-            }
-            catch (Throwable throwable) {
-                try {
-                    if (connection != null) {
-                        try {
-                            connection.close();
-                        }
-                        catch (Throwable throwable2) {
-                            throwable.addSuppressed(throwable2);
-                        }
-                    }
-                    throw throwable;
-                }
-                catch (SQLException ex) {
-                    ex.printStackTrace();
-                    return 0;
-                }
-            }
-            connection.close();
+        try (final Connection connection = SQLRegionData.plugin.sql.getConnection()) {
+            final PreparedStatement statement = connection.prepareStatement("SELECT COUNT(*) AS rows FROM `regions`");
+            final ResultSet set = statement.executeQuery();
+            set.next();
+            final int count = set.getInt("rows");
+            set.close();
+            return count;
+        } catch (final SQLException ex) {
+            ex.printStackTrace();
+            return 0;
         }
-        return n;
     }
 }
-

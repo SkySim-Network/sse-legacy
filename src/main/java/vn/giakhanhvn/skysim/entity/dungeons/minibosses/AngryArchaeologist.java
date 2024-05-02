@@ -295,11 +295,11 @@ extends BaseZombie {
                             boolean crit = true;
                             final /* synthetic */ LivingEntity val$target1;
                             {
-                                this.val$target1 = livingEntity;
+                                target1 = livingEntity;
                             }
 
                             public void run() {
-                                if (this.val$target1.getLocation().distance(entity.getLocation()) <= 10.0) {
+                                if (target1.getLocation().distance(entity.getLocation()) <= 10.0) {
                                     this.atkCharge = 10;
                                     this.bowPower = 1.1;
                                     this.crit = false;

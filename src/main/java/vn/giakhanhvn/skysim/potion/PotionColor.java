@@ -1,23 +1,20 @@
-/*
- * Decompiled with CFR 0.152.
- */
 package vn.giakhanhvn.skysim.potion;
 
 public enum PotionColor {
-    BLUE(0),
-    PURPLE(1),
-    LIGHT_BLUE(2),
-    ORANGE(3),
-    DARK_GREEN(4),
-    RED(5),
-    DARK_BLUE(6),
-    GRAY(8),
-    DARK_RED(9),
-    DARK_GRAY(10),
-    GREEN(11),
-    BLOOD_RED(12),
-    TWILIGHT_BLUE(13),
-    LIGHT_GRAY(14);
+    BLUE((short) 0),
+    PURPLE((short) 1),
+    LIGHT_BLUE((short) 2),
+    ORANGE((short) 3),
+    DARK_GREEN((short) 4),
+    RED((short) 5),
+    DARK_BLUE((short) 6),
+    GRAY((short) 8),
+    DARK_RED((short) 9),
+    DARK_GRAY((short) 10),
+    GREEN((short) 11),
+    BLOOD_RED((short) 12),
+    TWILIGHT_BLUE((short) 13),
+    LIGHT_GRAY((short) 14);
 
     public static final short SPLASH = 16384;
     private final short data;

@@ -183,7 +183,7 @@ extends BaseZombie {
     public void onDamage(SEntity sEntity, Entity damager, EntityDamageByEntityEvent e, AtomicDouble damage) {
         LivingEntity en = sEntity.getEntity();
         Vector v = new Vector(0, 0, 0);
-        SUtil.delay(() -> WatcherLivid.lambda$onDamage$0((Entity)en, v), 1L);
+        SUtil.delay(() -> WatcherLivid.onDamage(en, v), 1L);
     }
 
     @Override
@@ -267,25 +267,13 @@ extends BaseZombie {
                 armorStand1.setRightArmPose(new EulerAngle(xPos + 0.7, 0.0, 0.0));
                 previousVector[0] = newVector = new Vector(throwVec.getX(), previousVector[0].getY() - 0.03, throwVec.getZ());
                 armorStand1.setVelocity(newVector);
-                if (i < 13) {
-                    angle = i * 20 + num;
-                    back = false;
-                } else {
-                    angle = i * 20 - num;
-                    back = true;
-                }
                 if (locof.getBlock().getType() != Material.AIR && locof.getBlock().getType() != Material.WATER) {
                     armorStand1.remove();
                     this.cancel();
                     return;
                 }
-                if (i % 2 == 0 && i < 13) {
-                    armorStand1.teleport(armorStand1.getLocation().add(teleportTo).multiply(1.0));
-                    armorStand1.teleport(armorStand1.getLocation().add(teleportTo).multiply(1.0));
-                } else if (i % 2 == 0) {
-                    armorStand1.teleport(armorStand1.getLocation().subtract(loc.getDirection().normalize().multiply(1)));
-                    armorStand1.teleport(armorStand1.getLocation().subtract(loc.getDirection().normalize().multiply(1)));
-                }
+                armorStand1.teleport(armorStand1.getLocation().add(teleportTo).multiply(1.0));
+                armorStand1.teleport(armorStand1.getLocation().add(teleportTo).multiply(1.0));
                 for (Entity en : armorStand1.getNearbyEntities(1.0, 1.0, 1.0)) {
                     if (!(en instanceof Player)) continue;
                     Player p = (Player)en;
@@ -304,7 +292,7 @@ extends BaseZombie {
         }.runTaskTimer((Plugin)SkySimEngine.getPlugin(), 0L, 2L);
     }
 
-    private static /* synthetic */ void lambda$onDamage$0(Entity en, Vector v) {
+    private static void onDamage(Entity en, Vector v) {
         en.setVelocity(v);
     }
 }

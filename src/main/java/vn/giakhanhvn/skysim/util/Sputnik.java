@@ -797,7 +797,7 @@ public class Sputnik {
         }
         playerDisguise.setShowName(false);
         if (isURLSkin && URL_2 != null) {
-            playerDisguise.getGameProfile().getProperties().put((Object)"textures", (Object)new WrappedSignedProperty("textures", skinURLorUsername, URL_2));
+            playerDisguise.getGameProfile().getProperties().put("textures", new WrappedSignedProperty("textures", skinURLorUsername, URL_2));
         } else {
             playerDisguise.setSkin(skinURLorUsername);
         }
