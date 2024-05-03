@@ -78,7 +78,7 @@ implements SNMSEntity,
 EntityFunction,
 EntityStatistics {
     public static final long DEFAULT_ATTACK_COOLDOWN = 300L;
-    public static final Range<Double> DEFAULT_DAMAGE_DEGREE_RANGE = Range.between((Comparable)Double.valueOf(0.3), (Comparable)Double.valueOf(0.7));
+    public static final Range DEFAULT_DAMAGE_DEGREE_RANGE = Range.between((Comparable)Double.valueOf(0.3), (Comparable)Double.valueOf(0.7));
     public static final double DEFAULT_SPEED_MODIFIER = 1.4;
     private boolean frozen = false;
     private double yD = 1.0;

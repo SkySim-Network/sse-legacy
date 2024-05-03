@@ -17,7 +17,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
-import net.milkbowl.vault.economy.Economy;
+
+import lombok.Getter;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.craftbukkit.v1_8_R3.inventory.CraftItemStack;
 import org.bukkit.entity.Player;
@@ -25,8 +26,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 import vn.giakhanhvn.skysim.SkySimEngine;
-import vn.giakhanhvn.skysim.gui.TradeGUI;
-import vn.giakhanhvn.skysim.gui.TradeGUIInvert;
 import vn.giakhanhvn.skysim.sequence.SoundSequenceType;
 import vn.giakhanhvn.skysim.user.User;
 import vn.giakhanhvn.skysim.util.SUtil;
@@ -43,9 +42,11 @@ public class TradeMenu {
     public static final Map<UUID, Boolean> successTrade = new HashMap<UUID, Boolean>();
     public static final Map<UUID, Boolean> player1TradeUUID = new HashMap<UUID, Boolean>();
     public static final Map<UUID, Boolean> player2TradeUUID = new HashMap<UUID, Boolean>();
-    private Player p1;
-    private Player p2;
-    private UUID tradeUUID;
+    @Getter
+    private final Player p1;
+    @Getter
+    private final Player p2;
+    private final UUID tradeUUID;
 
     public TradeMenu(Player player1, Player player2, UUID uuid) {
         this.p1 = player1;
@@ -113,37 +114,37 @@ public class TradeMenu {
                         itemlist1 = TradeGUI.itemOfferP1.get(TradeMenu.this.tradeUUID);
                         itemlist2 = TradeGUI.itemOfferP2.get(TradeMenu.this.tradeUUID);
                         StringBuilder sb1 = new StringBuilder();
-                        sb1.append("&6Trade completed with &r" + TradeMenu.this.p2.getDisplayName() + "&6!");
+                        sb1.append("&6Trade completed with &r").append(TradeMenu.this.p2.getDisplayName()).append("&6!");
                         for (ItemStack itemRece : itemlist1) {
-                            if (!CraftItemStack.asNMSCopy((ItemStack)itemRece).getTag().hasKey("data_bits")) {
-                                sb1.append("\n &a&l+ &8" + itemRece.getAmount() + "x &r" + itemRece.getItemMeta().getDisplayName());
+                            if (!CraftItemStack.asNMSCopy(itemRece).getTag().hasKey("data_bits")) {
+                                sb1.append("\n &a&l+ &8").append(itemRece.getAmount()).append("x &r").append(itemRece.getItemMeta().getDisplayName());
                                 continue;
                             }
-                            sb1.append("\n &a&l+ &8" + itemRece.getItemMeta().getDisplayName());
+                            sb1.append("\n &a&l+ &8").append(itemRece.getItemMeta().getDisplayName());
                         }
                         for (ItemStack itemTaken : itemlist2) {
-                            if (!CraftItemStack.asNMSCopy((ItemStack)itemTaken).getTag().hasKey("data_bits")) {
-                                sb1.append("\n &c&l- &8" + itemTaken.getAmount() + "x &r" + itemTaken.getItemMeta().getDisplayName());
+                            if (!CraftItemStack.asNMSCopy(itemTaken).getTag().hasKey("data_bits")) {
+                                sb1.append("\n &c&l- &8").append(itemTaken.getAmount()).append("x &r").append(itemTaken.getItemMeta().getDisplayName());
                                 continue;
                             }
-                            sb1.append("\n &c&l- &8" + itemTaken.getItemMeta().getDisplayName());
+                            sb1.append("\n &c&l- &8").append(itemTaken.getItemMeta().getDisplayName());
                         }
                         TradeMenu.this.p1.sendMessage(Sputnik.trans(sb1.toString()));
                         StringBuilder sb2 = new StringBuilder();
-                        sb2.append("&6Trade completed with " + TradeMenu.this.p1.getDisplayName() + "&6!");
+                        sb2.append("&6Trade completed with ").append(TradeMenu.this.p1.getDisplayName()).append("&6!");
                         for (ItemStack itemRece : itemlist2) {
-                            if (!CraftItemStack.asNMSCopy((ItemStack)itemRece).getTag().hasKey("data_bits")) {
-                                sb2.append("\n &a&l+ &8" + itemRece.getAmount() + "x &r" + itemRece.getItemMeta().getDisplayName());
+                            if (!CraftItemStack.asNMSCopy(itemRece).getTag().hasKey("data_bits")) {
+                                sb2.append("\n &a&l+ &8").append(itemRece.getAmount()).append("x &r").append(itemRece.getItemMeta().getDisplayName());
                                 continue;
                             }
-                            sb2.append("\n &a&l+ &8" + itemRece.getItemMeta().getDisplayName());
+                            sb2.append("\n &a&l+ &8").append(itemRece.getItemMeta().getDisplayName());
                         }
                         for (ItemStack itemTaken : itemlist1) {
-                            if (!CraftItemStack.asNMSCopy((ItemStack)itemTaken).getTag().hasKey("data_bits")) {
-                                sb2.append("\n &c&l- &8" + itemTaken.getAmount() + "x &r" + itemTaken.getItemMeta().getDisplayName());
+                            if (!CraftItemStack.asNMSCopy(itemTaken).getTag().hasKey("data_bits")) {
+                                sb2.append("\n &c&l- &8").append(itemTaken.getAmount()).append("x &r").append(itemTaken.getItemMeta().getDisplayName());
                                 continue;
                             }
-                            sb2.append("\n &c&l- &8" + itemTaken.getItemMeta().getDisplayName());
+                            sb2.append("\n &c&l- &8").append(itemTaken.getItemMeta().getDisplayName());
                         }
                         TradeMenu.this.p2.sendMessage(Sputnik.trans(sb2.toString()));
                         SoundSequenceType.TRADE_COMPLETE.play(TradeMenu.this.p1);
@@ -159,7 +160,7 @@ public class TradeMenu {
                     TradeMenu.this.returnToAllPlayers(TradeMenu.this.p1, TradeMenu.this.p2);
                 }
             }
-        }.runTaskTimer((Plugin)SkySimEngine.getPlugin(), 0L, 1L);
+        }.runTaskTimer(SkySimEngine.getPlugin(), 0L, 1L);
     }
 
     public void clean() {
@@ -182,34 +183,24 @@ public class TradeMenu {
     }
 
     public void returnToAllPlayers(Player player1, Player player2) {
-        Economy econ;
         net.minecraft.server.v1_8_R3.ItemStack nmsStack;
         for (ItemStack i : TradeGUI.itemOfferP1.get(this.tradeUUID)) {
-            nmsStack = CraftItemStack.asNMSCopy((ItemStack)i);
+            nmsStack = CraftItemStack.asNMSCopy(i);
             if (!nmsStack.getTag().hasKey("data_bits")) {
                 Sputnik.smartGiveItem(i, player1);
                 continue;
             }
-            econ = SkySimEngine.getEconomy();
-            econ.depositPlayer((OfflinePlayer)player1, (double)nmsStack.getTag().getLong("data_bits"));
+            User.getUser(player1.getUniqueId()).addBits(nmsStack.getTag().getLong("data_bits"));
         }
         for (ItemStack i : TradeGUI.itemOfferP2.get(this.tradeUUID)) {
-            nmsStack = CraftItemStack.asNMSCopy((ItemStack)i);
+            nmsStack = CraftItemStack.asNMSCopy(i);
             if (!nmsStack.getTag().hasKey("data_bits")) {
                 Sputnik.smartGiveItem(i, player2);
                 continue;
             }
-            econ = SkySimEngine.getEconomy();
-            econ.depositPlayer((OfflinePlayer)player2, (double)nmsStack.getTag().getLong("data_bits"));
+            User.getUser(player1.getUniqueId()).addBits(nmsStack.getTag().getLong("data_bits"));
         }
     }
 
-    public Player getP1() {
-        return this.p1;
-    }
-
-    public Player getP2() {
-        return this.p2;
-    }
 }
 

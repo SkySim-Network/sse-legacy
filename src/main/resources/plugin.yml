@@ -5,5 +5,5 @@ authors: [ GiaKhanhVN ]
 description: this is a description, what do you want from me
 
 softdepend: [PlaceholderAPI]
-depend: [LibsDisguises, Multiverse-Core, SputnikSkySim, ProtocolLib]
+depend: [LibsDisguises, Multiverse-Core, ProtocolLib]
 
