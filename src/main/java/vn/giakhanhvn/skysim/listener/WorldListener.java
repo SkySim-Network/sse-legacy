@@ -230,7 +230,7 @@ extends PListener {
         User user = User.getUser(player.getUniqueId());
         SMaterial equiv = SMaterial.getSpecEquivalent(block.getType(), block.getData());
         Region region = Region.getRegionOfBlock(block);
-        Collection drops = block.getDrops(e.getPlayer().getItemInHand());
+        Collection<ItemStack> drops = block.getDrops(e.getPlayer().getItemInHand());
         if (player.getGameMode() != GameMode.CREATIVE) {
             boolean allowBreak = false;
             if (region != null) {
@@ -404,7 +404,7 @@ extends PListener {
             new BukkitRunnable(){
 
                 public void run() {
-                    for (BlockState state : (List)RESTORER.get(player.getUniqueId())) {
+                    for (BlockState state : RESTORER.get(player.getUniqueId())) {
                         state.getBlock().setType(state.getType());
                         state.setRawData(state.getRawData());
                         state.update();

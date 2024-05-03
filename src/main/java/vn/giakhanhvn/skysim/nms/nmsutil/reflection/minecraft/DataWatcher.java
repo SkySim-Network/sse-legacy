@@ -200,8 +200,8 @@ public class DataWatcher {
 
         public static int getItemIndex(Object dataWatcher, Object item) throws ReflectiveOperationException {
             int index = -1;
-            Map map = (Map)DataWatcherFieldResolver.resolveByLastTypeSilent(Map.class).get(dataWatcher);
-            for (Map.Entry entry : map.entrySet()) {
+            Map<Object , Object> map = (Map)DataWatcherFieldResolver.resolveByLastTypeSilent(Map.class).get(dataWatcher);
+            for (Map.Entry<Object , Object> entry : map.entrySet()) {
                 if (!entry.getValue().equals(item)) continue;
                 index = (Integer)entry.getKey();
                 break;

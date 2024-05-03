@@ -55,7 +55,7 @@ implements ConfigurationSerializable {
                     if (!track.hasKey(dir[i])) {
                         track.set(dir[i], (NBTBase)new NBTTagCompound());
                     }
-                    track = track.getCompound(dir[i]);
+                    track = (SerialNBTTagCompound) track.getCompound(dir[i]);
                 }
                 track.set(key, SUtil.getBaseFromObject(entry.getValue()));
                 continue;

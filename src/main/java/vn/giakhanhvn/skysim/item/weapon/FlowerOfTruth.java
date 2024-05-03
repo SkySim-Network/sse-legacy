@@ -210,11 +210,7 @@ Ability {
                         break;
                     }
                 }
-                if (i % 2 == 0 && i < 13) {
-                    armorStand1.teleport(armorStand1.getLocation().add(teleportTo).multiply(1.0));
-                } else if (i % 2 == 0) {
-                    armorStand1.teleport(armorStand1.getLocation().subtract(loc.getDirection().normalize().multiply(1)));
-                }
+                
                 for (Entity e : armorStand1.getNearbyEntities(1.0, 1.0, 1.0)) {
                     if (!(e instanceof LivingEntity) || e == player1.getPlayer()) continue;
                     Damageable entity = (Damageable)e;

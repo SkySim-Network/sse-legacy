@@ -409,7 +409,7 @@ extends BaseZombie {
         if (rot < 0.0) {
             rot += 360.0;
         }
-        Object facingDirection = null;
+        BlockFace facingDirection;
         facingDirection = 0.0 <= rot && rot < 22.5 ? BlockFace.NORTH : (22.5 <= rot && rot < 67.5 ? BlockFace.NORTH_EAST : (67.5 <= rot && rot < 112.5 ? BlockFace.EAST : (112.5 <= rot && rot < 157.5 ? BlockFace.SOUTH_EAST : (157.5 <= rot && rot < 202.5 ? BlockFace.SOUTH : (202.5 <= rot && rot < 247.5 ? BlockFace.SOUTH_WEST : (247.5 <= rot && rot < 292.5 ? BlockFace.WEST : (292.5 <= rot && rot < 337.5 ? BlockFace.NORTH_WEST : (337.5 <= rot && rot < 360.0 ? BlockFace.NORTH : null))))))));
         Block b = loc.getBlock();
         b.setTypeIdAndData(Material.SKULL.getId(), (byte)1, true);
@@ -556,13 +556,7 @@ extends BaseZombie {
                     if (!(e2 instanceof Player) || ((Player)e2).getGameMode() == GameMode.CREATIVE || ((CraftPlayer)e2).getGameMode() == GameMode.SPECTATOR || e2.hasMetadata("NPC")) continue;
                     armorStand1.teleport(armorStand1.getLocation().setDirection(e2.getLocation().toVector().subtract(armorStand1.getLocation().toVector())));
                 }
-                if (i % 2 == 0 && i < 13) {
-                    armorStand1.teleport(armorStand1.getLocation().add(teleportTo).multiply(1.0));
-                    armorStand1.teleport(armorStand1.getLocation().add(teleportTo).multiply(1.0));
-                } else if (i % 2 == 0) {
-                    armorStand1.teleport(armorStand1.getLocation().subtract(loc.getDirection().normalize().multiply(1)));
-                    armorStand1.teleport(armorStand1.getLocation().subtract(loc.getDirection().normalize().multiply(1)));
-                }
+               
                 for (org.bukkit.entity.Entity e1 : armorStand1.getNearbyEntities(0.5, 0.5, 0.5)) {
                     if (!(e1 instanceof Player)) continue;
                     Player p = (Player)e1;

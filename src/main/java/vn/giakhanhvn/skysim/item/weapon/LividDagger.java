@@ -189,11 +189,7 @@ Ability {
                     this.cancel();
                     return;
                 }
-                if (i % 2 == 0 && i < 13) {
-                    armorStand1.teleport(armorStand1.getLocation().add(teleportTo).multiply(1.0));
-                } else if (i % 2 == 0) {
-                    armorStand1.teleport(armorStand1.getLocation().subtract(loc.getDirection().normalize().multiply(1)));
-                }
+                
                 for (Entity e : armorStand1.getNearbyEntities(0.7, 0.7, 0.7)) {
                     Damageable entity;
                     if (!(e instanceof LivingEntity) || e == player1.getPlayer() || (entity = (Damageable)e).isDead() || !(entity instanceof LivingEntity) || entity instanceof Player || entity instanceof EnderDragonPart || entity instanceof Villager || entity instanceof ArmorStand || entity instanceof Item || entity instanceof ItemFrame || entity.hasMetadata("GiantSword") || Groups.ENDERMAN.contains(entity.getType())) continue;

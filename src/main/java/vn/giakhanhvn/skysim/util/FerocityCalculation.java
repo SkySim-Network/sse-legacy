@@ -57,7 +57,7 @@ public class FerocityCalculation {
 
     public static Double ferocityPercentNext(int ferocity) {
         int feroMinus = Math.round(ferocity / 100) * 100;
-        int feroLater = ferocity - feroMinus;
+        double feroLater = ferocity - feroMinus;
         if (feroLater > 100) {
             feroLater = 0;
         }

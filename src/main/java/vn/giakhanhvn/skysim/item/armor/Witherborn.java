@@ -103,14 +103,14 @@ public class Witherborn {
                     return;
                 }
                 if (Witherborn.this.withersTarget == null) {
-                    List er = w.getNearbyEntities(10.0, 10.0, 10.0);
+                    List<Entity> er = w.getNearbyEntities(10.0, 10.0, 10.0);
                     er.removeIf(en -> en.hasMetadata("GiantSword") || en.hasMetadata("NPC"));
                     er.removeIf(en -> !(en instanceof LivingEntity));
                     er.removeIf(en -> en instanceof Player);
                     er.removeIf(en -> en instanceof ArmorStand);
                     er.removeIf(en -> en instanceof Villager);
-                    er.removeIf(en -> en.isDead());
-                    if (er.size() > 0) {
+                    er.removeIf(Entity::isDead);
+                    if (!er.isEmpty()) {
                         LivingEntity le = (LivingEntity)er.get(SUtil.random(0, er.size() - 1));
                         Witherborn.this.setWithersTarget((Entity)le);
                     }

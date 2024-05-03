@@ -57,7 +57,7 @@ EntityFunction {
     public void onTarget(SEntity sEntity, EntityTargetLivingEntityEvent e) {
         final LivingEntity entity = (LivingEntity)e.getEntity();
         LivingEntity found = e.getTarget();
-        new BukkitRunnable((Entity)found, sEntity){
+        new BukkitRunnable(){
             public void run() {
                 if (entity.isDead()) {
                     this.cancel();
@@ -69,14 +69,14 @@ EntityFunction {
                     return;
                 }
                 for (int i = 0; i < 3; ++i) {
-                    new BukkitRunnable((Entity)target){
+                    new BukkitRunnable(){
                         public void run() {
                             if (entity.isDead()) {
                                 this.cancel();
                                 return;
                             }
                             Fireball fireball = (Fireball)entity.getWorld().spawn(entity.getEyeLocation().add(entity.getEyeLocation().getDirection().multiply(3.0)), Fireball.class);
-                            fireball.setMetadata("magma", (MetadataValue)new FixedMetadataValue((Plugin)SkySimEngine.getPlugin(), (Object)val$sEntity));
+                            fireball.setMetadata("magma", (MetadataValue)new FixedMetadataValue((Plugin)SkySimEngine.getPlugin(), (Object)sEntity));
                             fireball.setDirection(target.getLocation().getDirection().multiply(-1.0).normalize());
                         }
                     }.runTaskLater((Plugin)SkySimEngine.getPlugin(), (long)((i + 1) * 10));

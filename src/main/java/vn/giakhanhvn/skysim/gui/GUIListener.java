@@ -102,7 +102,7 @@ extends PListener {
                     query = (GUISignItem)item;
                     player = (Player)e.getWhoClicked();
                     SignInput.SIGN_INPUT_QUERY.put(player.getUniqueId(), (GUISignItem)query);
-                    new SignInput(player, new String[]{"", "^^^^^^^", "Enter amount", "of Bits"}, 15, query.inti());
+                    new SignInput(player, new String[]{"", "^^^^^^^", "Enter amount", "of Bits"}, 15, ((GUISignItem) query).inti());
                 }
             }
         } else {

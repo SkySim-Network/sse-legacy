@@ -74,6 +74,7 @@ extends GUI {
                     lore.add(" ");
                 }
                 lore.add(ChatColor.YELLOW + "Click to view rewards!");
+                int finalT = t;
                 this.set(new GUIClickableItem(){
 
                     @Override
@@ -87,7 +88,7 @@ extends GUI {
 
                     @Override
                     public ItemStack getItem() {
-                        return SUtil.getStack(finalColor + ItemCollectionGUI.this.collection.getName() + " " + SUtil.toRomanNumeral(t), Material.STAINED_GLASS_PANE, finalData, t, lore);
+                        return SUtil.getStack(finalColor + ItemCollectionGUI.this.collection.getName() + " " + SUtil.toRomanNumeral(finalT), Material.STAINED_GLASS_PANE, finalData, finalT, lore);
                     }
                 });
             }

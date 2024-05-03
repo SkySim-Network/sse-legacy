@@ -50,7 +50,7 @@ extends EntityFireworks {
             if (this.players != null) {
                 if (this.players.length > 0) {
                     for (Player player : this.players) {
-                        ((CraftPlayer)player).getHandle().playerConnection.sendPacket((Packet)new PacketPlayOutEntityStatus((Entity)this, 17));
+                        ((CraftPlayer)player).getHandle().playerConnection.sendPacket(new PacketPlayOutEntityStatus((Entity)this, (byte) 17));
                     }
                 } else {
                     this.world.broadcastEntityEffect((Entity)this, (byte)17);

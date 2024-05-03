@@ -1,46 +1,4 @@
-/*
- * Decompiled with CFR 0.152.
- * 
- * Could not load the following classes:
- *  com.google.common.util.concurrent.AtomicDouble
- *  me.libraryaddict.disguise.disguisetypes.PlayerDisguise
- *  net.md_5.bungee.api.ChatColor
- *  net.minecraft.server.v1_8_R3.AttributeInstance
- *  net.minecraft.server.v1_8_R3.Entity
- *  net.minecraft.server.v1_8_R3.EntityLiving
- *  net.minecraft.server.v1_8_R3.GenericAttributes
- *  net.minecraft.server.v1_8_R3.Packet
- *  net.minecraft.server.v1_8_R3.PacketPlayOutAnimation
- *  org.bukkit.Bukkit
- *  org.bukkit.Color
- *  org.bukkit.Effect
- *  org.bukkit.GameMode
- *  org.bukkit.Location
- *  org.bukkit.Material
- *  org.bukkit.Sound
- *  org.bukkit.World
- *  org.bukkit.block.Block
- *  org.bukkit.craftbukkit.v1_8_R3.entity.CraftLivingEntity
- *  org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer
- *  org.bukkit.craftbukkit.v1_8_R3.entity.CraftZombie
- *  org.bukkit.entity.ArmorStand
- *  org.bukkit.entity.Entity
- *  org.bukkit.entity.EntityType
- *  org.bukkit.entity.LivingEntity
- *  org.bukkit.entity.Player
- *  org.bukkit.event.entity.EntityDamageByEntityEvent
- *  org.bukkit.event.entity.EntityDamageEvent$DamageCause
- *  org.bukkit.inventory.ItemStack
- *  org.bukkit.inventory.meta.ItemMeta
- *  org.bukkit.metadata.FixedMetadataValue
- *  org.bukkit.metadata.MetadataValue
- *  org.bukkit.plugin.Plugin
- *  org.bukkit.potion.PotionEffect
- *  org.bukkit.potion.PotionEffectType
- *  org.bukkit.scheduler.BukkitRunnable
- *  org.bukkit.util.EulerAngle
- *  org.bukkit.util.Vector
- */
+
 package vn.giakhanhvn.skysim.entity.end;
 
 import com.google.common.util.concurrent.AtomicDouble;
@@ -103,7 +61,7 @@ extends BaseZombie {
 
     @Override
     public String getEntityName() {
-        return Sputnik.trans("&5\u2620 &d&lVoidlings Warden");
+        return Sputnik.trans("&5☠ &d&lVoidlings Warden");
     }
 
     @Override
@@ -117,7 +75,7 @@ extends BaseZombie {
     }
 
     public static ItemStack b(int hexcolor, Material m) {
-        ItemStack stack = SUtil.applyColorToLeatherArmor(new ItemStack(m), Color.fromRGB((int)hexcolor));
+        ItemStack stack = SUtil.applyColorToLeatherArmor(new ItemStack(m), Color.fromRGB(hexcolor));
         ItemMeta itemMeta = stack.getItemMeta();
         itemMeta.spigot().setUnbreakable(true);
         stack.setItemMeta(itemMeta);
@@ -128,16 +86,16 @@ extends BaseZombie {
     public void onSpawn(final LivingEntity entity, SEntity sEntity) {
         this.end = System.currentTimeMillis() + 240000L;
         ((CraftZombie)entity).setBaby(false);
-        this.tb = Sputnik.spawnDialougeBox((org.bukkit.entity.Entity)entity, 2.1);
+        this.tb = Sputnik.spawnDialougeBox(entity, 2.1);
         AttributeInstance followRange = ((CraftLivingEntity)entity).getHandle().getAttributeInstance(GenericAttributes.FOLLOW_RANGE);
         followRange.setValue(40.0);
-        PlayerDisguise pl = Sputnik.applyPacketNPC((org.bukkit.entity.Entity)entity, "ewogICJ0aW1lc3RhbXAiIDogMTU5MzcxOTA2Njc2NSwKICAicHJvZmlsZUlkIiA6ICIyZGM3N2FlNzk0NjM0ODAyOTQyODBjODQyMjc0YjU2NyIsCiAgInByb2ZpbGVOYW1lIiA6ICJzYWR5MDYxMCIsCiAgInNpZ25hdHVyZVJlcXVpcmVkIiA6IHRydWUsCiAgInRleHR1cmVzIiA6IHsKICAgICJTS0lOIiA6IHsKICAgICAgInVybCIgOiAiaHR0cDovL3RleHR1cmVzLm1pbmVjcmFmdC5uZXQvdGV4dHVyZS81ZjI5NjU1YjE2ZjE1NTNjOTMzZDExMGNmOWM5Y2JmYjUxYzljY2IzMDZlZDZiYzI4NWNmZjI5ZjdmMDkyOTY3IgogICAgfQogIH0KfQ==", "shcQcCt+Scwb7+7jc3Ys2dRL6w+TTVCHhqV6d+oljDxD0FMZrUKZQ1IDIUF0dgptIjD3ptwVJ+2hzaiV7t1h28wNnv28KK1VbaLHOIi5CNTN/kKGFOEtrs2i3ycfG6L9jSSKx0HBMpmChoQo68JQ8LpKrL73x0z+1pHiIw5BFMnHWe3CrGR3QthwL1qvhtR+100sZTHHhziAJnhkiu4usPlxkWwfymw+HF9UQFDHTCMyn8aC/BfqdaCGw/fS5L+JHeiXa5yiscGwrcvnnNfg5A4o/U+W2NpoLWOxE7YVViV5NBXlFQtKzGW8XxxYvM7UkcxaLj9KheBm4RAyHX8Pzp5uc7lx06bexfrViVbnVcH3yUp+OXXuIGEoWT1lAbGreaWhQlN/gSwdAHc8nLI5R2Qt9ML3CxuMWbSv++/dw0S3CuyZ6ER0V1ckCp8ebuI6N3Lkgr1ef1jreRMz3uw/9tM5xa1CF4OCCIzDdZtgpuSLlkbBrPNvm7rwswxsQkr98GRlXZktFLaJCHIuzp4NZGmjTuuCu1r1yolqDKzso3y7edcCSa60WqyJwlqKO3viiRm5aZAWI1czPMeh4AiUyjEu5Yf2t3cyLTkbcScB0Zn6bmcAJ0PHi3Ik+wiH8SNFPrkJ//NW10YZwzmnz0j+Oi5AIHFF20Lm89Ka0OGb6wY=", true);
+        PlayerDisguise pl = Sputnik.applyPacketNPC(entity, "ewogICJ0aW1lc3RhbXAiIDogMTU5MzcxOTA2Njc2NSwKICAicHJvZmlsZUlkIiA6ICIyZGM3N2FlNzk0NjM0ODAyOTQyODBjODQyMjc0YjU2NyIsCiAgInByb2ZpbGVOYW1lIiA6ICJzYWR5MDYxMCIsCiAgInNpZ25hdHVyZVJlcXVpcmVkIiA6IHRydWUsCiAgInRleHR1cmVzIiA6IHsKICAgICJTS0lOIiA6IHsKICAgICAgInVybCIgOiAiaHR0cDovL3RleHR1cmVzLm1pbmVjcmFmdC5uZXQvdGV4dHVyZS81ZjI5NjU1YjE2ZjE1NTNjOTMzZDExMGNmOWM5Y2JmYjUxYzljY2IzMDZlZDZiYzI4NWNmZjI5ZjdmMDkyOTY3IgogICAgfQogIH0KfQ==", "shcQcCt+Scwb7+7jc3Ys2dRL6w+TTVCHhqV6d+oljDxD0FMZrUKZQ1IDIUF0dgptIjD3ptwVJ+2hzaiV7t1h28wNnv28KK1VbaLHOIi5CNTN/kKGFOEtrs2i3ycfG6L9jSSKx0HBMpmChoQo68JQ8LpKrL73x0z+1pHiIw5BFMnHWe3CrGR3QthwL1qvhtR+100sZTHHhziAJnhkiu4usPlxkWwfymw+HF9UQFDHTCMyn8aC/BfqdaCGw/fS5L+JHeiXa5yiscGwrcvnnNfg5A4o/U+W2NpoLWOxE7YVViV5NBXlFQtKzGW8XxxYvM7UkcxaLj9KheBm4RAyHX8Pzp5uc7lx06bexfrViVbnVcH3yUp+OXXuIGEoWT1lAbGreaWhQlN/gSwdAHc8nLI5R2Qt9ML3CxuMWbSv++/dw0S3CuyZ6ER0V1ckCp8ebuI6N3Lkgr1ef1jreRMz3uw/9tM5xa1CF4OCCIzDdZtgpuSLlkbBrPNvm7rwswxsQkr98GRlXZktFLaJCHIuzp4NZGmjTuuCu1r1yolqDKzso3y7edcCSa60WqyJwlqKO3viiRm5aZAWI1czPMeh4AiUyjEu5Yf2t3cyLTkbcScB0Zn6bmcAJ0PHi3Ik+wiH8SNFPrkJ//NW10YZwzmnz0j+Oi5AIHFF20Lm89Ka0OGb6wY=", true);
         pl.getWatcher().setRightClicking(false);
-        entity.setMetadata("NoAffect", (MetadataValue)new FixedMetadataValue((Plugin)SkySimEngine.getPlugin(), (Object)true));
-        entity.setMetadata("LD", (MetadataValue)new FixedMetadataValue((Plugin)SkySimEngine.getPlugin(), (Object)true));
-        entity.setMetadata("VWE", (MetadataValue)new FixedMetadataValue((Plugin)SkySimEngine.getPlugin(), (Object)true));
-        EntityManager.DEFENSE_PERCENTAGE.put((org.bukkit.entity.Entity)entity, 85);
-        entity.setMetadata("SlayerBoss", (MetadataValue)new FixedMetadataValue((Plugin)SkySimEngine.getPlugin(), (Object)true));
+        entity.setMetadata("NoAffect", new FixedMetadataValue(SkySimEngine.getPlugin(), true));
+        entity.setMetadata("LD", new FixedMetadataValue(SkySimEngine.getPlugin(), true));
+        entity.setMetadata("VWE", new FixedMetadataValue(SkySimEngine.getPlugin(), true));
+        EntityManager.DEFENSE_PERCENTAGE.put(entity, 85);
+        entity.setMetadata("SlayerBoss", new FixedMetadataValue(SkySimEngine.getPlugin(), true));
         new BukkitRunnable(){
 
             public void run() {
@@ -151,13 +109,13 @@ extends BaseZombie {
                     if (!(entities instanceof Player) || (target = (Player)entities).getGameMode() == GameMode.CREATIVE || target.getGameMode() == GameMode.SPECTATOR || target.hasMetadata("NPC") || target.getNoDamageTicks() == 7 || SUtil.random(0, 10) > 8) continue;
                     entity.teleport(entity.getLocation().setDirection(target.getLocation().subtract(entities.getLocation()).toVector()));
                     for (Player players : Bukkit.getOnlinePlayers()) {
-                        ((CraftPlayer)players).getHandle().playerConnection.sendPacket((Packet)new PacketPlayOutAnimation((Entity)((CraftLivingEntity)entity).getHandle(), 0));
+                        ((CraftPlayer)players).getHandle().playerConnection.sendPacket(new PacketPlayOutAnimation(((CraftLivingEntity)entity).getHandle(), 0));
                     }
-                    nms.r((Entity)((CraftPlayer)target).getHandle());
+                    nms.r(((CraftPlayer)target).getHandle());
                     break;
                 }
             }
-        }.runTaskTimer((Plugin)SkySimEngine.getPlugin(), 0L, 4L);
+        }.runTaskTimer(SkySimEngine.getPlugin(), 0L, 4L);
         LivingEntity e = entity;
         new BukkitRunnable(){
 
@@ -170,7 +128,7 @@ extends BaseZombie {
                     entity.getWorld().spigot().playEffect(entity.getLocation().clone().add(0.0, 0.25, 0.0), Effect.FLAME, 0, 1, (float)SUtil.random(-0.5, 0.5), (float)SUtil.random(0.0, 1.5), (float)SUtil.random(-0.5, 0.5), 0.0f, 1, 20);
                 }
             }
-        }.runTaskTimer((Plugin)SkySimEngine.getPlugin(), 0L, 30L);
+        }.runTaskTimer(SkySimEngine.getPlugin(), 0L, 30L);
         new BukkitRunnable(){
 
             public void run() {
@@ -179,7 +137,7 @@ extends BaseZombie {
                     return;
                 }
                 if (entity.hasMetadata("owner")) {
-                    if (Bukkit.getPlayer((UUID)UUID.fromString(((MetadataValue)entity.getMetadata("owner").get(0)).asString())) == null) {
+                    if (Bukkit.getPlayer(UUID.fromString(entity.getMetadata("owner").get(0).asString())) == null) {
                         this.cancel();
                         return;
                     }
@@ -187,9 +145,9 @@ extends BaseZombie {
                     this.cancel();
                     return;
                 }
-                Bukkit.getPlayer((UUID)UUID.fromString(((MetadataValue)entity.getMetadata("owner").get(0)).asString())).damage(VoidlingsWardenMob.this.getDamageDealt(), (org.bukkit.entity.Entity)entity);
+                Bukkit.getPlayer(UUID.fromString(entity.getMetadata("owner").get(0).asString())).damage(VoidlingsWardenMob.this.getDamageDealt(), entity);
             }
-        }.runTaskTimer((Plugin)SkySimEngine.getPlugin(), 20L, 20L);
+        }.runTaskTimer(SkySimEngine.getPlugin(), 20L, 20L);
         new BukkitRunnable(){
 
             public void run() {
@@ -202,7 +160,7 @@ extends BaseZombie {
                     entity.getWorld().spigot().playEffect(entity.getLocation().clone().add(0.0, 0.25, 0.0), Effect.MAGIC_CRIT, 0, 1, (float)SUtil.random(-0.5, 0.5), (float)SUtil.random(0.0, 1.5), (float)SUtil.random(-0.5, 0.5), 0.0f, 1, 20);
                 }
             }
-        }.runTaskTimer((Plugin)SkySimEngine.getPlugin(), 0L, 10L);
+        }.runTaskTimer(SkySimEngine.getPlugin(), 0L, 10L);
         new BukkitRunnable(){
 
             public void run() {
@@ -211,17 +169,17 @@ extends BaseZombie {
                     return;
                 }
                 if (((CraftZombie)entity).getTarget() != null) {
-                    VoidlingsWardenMob.this.throwAxe((org.bukkit.entity.Entity)entity);
-                    SUtil.delay(() -> VoidlingsWardenMob.this.throwAxe((org.bukkit.entity.Entity)entity), 20L);
-                    SUtil.delay(() -> VoidlingsWardenMob.this.throwAxe((org.bukkit.entity.Entity)entity), 40L);
-                    SUtil.delay(() -> VoidlingsWardenMob.this.throwAxe((org.bukkit.entity.Entity)entity), 60L);
-                    SUtil.delay(() -> VoidlingsWardenMob.this.throwAxe((org.bukkit.entity.Entity)entity), 80L);
-                    SUtil.delay(() -> VoidlingsWardenMob.this.throwAxe((org.bukkit.entity.Entity)entity), 100L);
-                    SUtil.delay(() -> VoidlingsWardenMob.this.throwAxe((org.bukkit.entity.Entity)entity), 120L);
-                    SUtil.delay(() -> VoidlingsWardenMob.this.throwAxe((org.bukkit.entity.Entity)entity), 140L);
+                    VoidlingsWardenMob.this.throwAxe(entity);
+                    SUtil.delay(() -> VoidlingsWardenMob.this.throwAxe(entity), 20L);
+                    SUtil.delay(() -> VoidlingsWardenMob.this.throwAxe(entity), 40L);
+                    SUtil.delay(() -> VoidlingsWardenMob.this.throwAxe(entity), 60L);
+                    SUtil.delay(() -> VoidlingsWardenMob.this.throwAxe(entity), 80L);
+                    SUtil.delay(() -> VoidlingsWardenMob.this.throwAxe(entity), 100L);
+                    SUtil.delay(() -> VoidlingsWardenMob.this.throwAxe(entity), 120L);
+                    SUtil.delay(() -> VoidlingsWardenMob.this.throwAxe(entity), 140L);
                 }
             }
-        }.runTaskTimer((Plugin)SkySimEngine.getPlugin(), 300L, 300L);
+        }.runTaskTimer(SkySimEngine.getPlugin(), 300L, 300L);
         new BukkitRunnable(){
 
             public void run() {
@@ -233,7 +191,7 @@ extends BaseZombie {
                 for (int i = 0; i < 100; ++i) {
                     entity.getWorld().playEffect(entity.getLocation(), Effect.FLYING_GLYPH, 0);
                 }
-                VoidlingsWardenMob.this.activeGyroAbi((org.bukkit.entity.Entity)entity);
+                VoidlingsWardenMob.this.activeGyroAbi(entity);
                 SUtil.delay(() -> {
                     for (org.bukkit.entity.Entity e : entity.getNearbyEntities(2.0, 2.0, 2.0)) {
                         if (!(e instanceof Player)) continue;
@@ -251,7 +209,7 @@ extends BaseZombie {
                     }
                 }, 35L);
             }
-        }.runTaskTimer((Plugin)SkySimEngine.getPlugin(), 400L, 400L);
+        }.runTaskTimer(SkySimEngine.getPlugin(), 400L, 400L);
         new BukkitRunnable(){
 
             public void run() {
@@ -269,15 +227,9 @@ extends BaseZombie {
                     }
                 }
             }
-        }.runTaskTimer((Plugin)SkySimEngine.getPlugin(), 150L, 150L);
-        new BukkitRunnable((org.bukkit.entity.Entity)e){
-            float cout;
-            final /* synthetic */ org.bukkit.entity.Entity val$e;
-            {
-                e = entity;
-                this.cout = e.getLocation().getYaw();
-            }
-
+        }.runTaskTimer(SkySimEngine.getPlugin(), 150L, 150L);
+        new BukkitRunnable(){
+            float cout = e.getLocation().getYaw();
             public void run() {
                 if (e.isDead()) {
                     VoidlingsWardenMob.this.tb.remove();
@@ -308,25 +260,17 @@ extends BaseZombie {
                 }
                 this.cout += 18.0f;
             }
-        }.runTaskTimer((Plugin)SkySimEngine.getPlugin(), 0L, 1L);
-        new BukkitRunnable((org.bukkit.entity.Entity)e, entity){
-            float cout;
-            final /* synthetic */ org.bukkit.entity.Entity val$e;
-            final /* synthetic */ LivingEntity val$entity;
-            {
-                e = entity;
-                entity = livingEntity;
-                this.cout = e.getLocation().getYaw();
-            }
-
+        }.runTaskTimer(SkySimEngine.getPlugin(), 0L, 1L);
+        new BukkitRunnable(){
+            float cout = e.getLocation().getYaw();
             public void run() {
                 if (e.isDead()) {
                     this.cancel();
                     return;
                 }
                 String playername = "&4&lUndefined!";
-                if (entity.hasMetadata("owner") && Bukkit.getPlayer((UUID)UUID.fromString(((MetadataValue)entity.getMetadata("owner").get(0)).asString())) != null) {
-                    playername = "&b&l" + Bukkit.getPlayer((UUID)UUID.fromString(((MetadataValue)entity.getMetadata("owner").get(0)).asString())).getName();
+                if (entity.hasMetadata("owner") && Bukkit.getPlayer(UUID.fromString(entity.getMetadata("owner").get(0).asString())) != null) {
+                    playername = "&b&l" + Bukkit.getPlayer(UUID.fromString(entity.getMetadata("owner").get(0).asString())).getName();
                 }
                 if (System.currentTimeMillis() > VoidlingsWardenMob.this.end) {
                     entity.remove();
@@ -351,7 +295,7 @@ extends BaseZombie {
                 e.getWorld().spigot().playEffect(loc.clone().add(0.0, 0.4, 0.0), Effect.FLYING_GLYPH, 0, 1, 1.0f, 1.0f, 1.0f, 0.0f, 0, 64);
                 this.cout += 8.0f;
             }
-        }.runTaskTimer((Plugin)SkySimEngine.getPlugin(), 1L, 1L);
+        }.runTaskTimer(SkySimEngine.getPlugin(), 1L, 1L);
     }
 
     public void cylinderReset(Location loc, int r) {
@@ -363,7 +307,7 @@ extends BaseZombie {
         for (int x = cx - r; x <= cx + r; ++x) {
             for (int z = cz - r; z <= cz + r; ++z) {
                 if ((cx - x) * (cx - x) + (cz - z) * (cz - z) > rSquared) continue;
-                Location l = new Location(w, (double)x, (double)cy, (double)z);
+                Location l = new Location(w, x, cy, z);
                 l.getBlock().getState().update();
             }
         }
@@ -380,7 +324,7 @@ extends BaseZombie {
         SUtil.delay(() -> this.gyroWand(loc, 1, 0), 30L);
         SUtil.delay(() -> this.cylinderReset(loc, 10), 32L);
         for (int i = 0; i < 40; ++i) {
-            this.a(loc.clone().add(0.0, 0.3, 0.0), 0 + i * 12);
+            this.a(loc.clone().add(0.0, 0.3, 0.0), i * 12);
         }
         this.pullingPlayersTo(loc.clone().add(0.0, 1.0, 0.0));
     }
@@ -406,7 +350,7 @@ extends BaseZombie {
                     }
                     ++this.t;
                 }
-            }.runTaskTimer((Plugin)SkySimEngine.getPlugin(), 0L, 1L);
+            }.runTaskTimer(SkySimEngine.getPlugin(), 0L, 1L);
         }
     }
 
@@ -479,7 +423,7 @@ extends BaseZombie {
                 location.getWorld().spigot().playEffect(loc, Effect.WITCH_MAGIC, 0, 1, 1.0f, 1.0f, 1.0f, 0.0f, 0, 64);
                 this.cout += 10.0f;
             }
-        }.runTaskTimer((Plugin)SkySimEngine.getPlugin(), 0L, 1L);
+        }.runTaskTimer(SkySimEngine.getPlugin(), 0L, 1L);
     }
 
     public List<Block> cylinder(Location loc, int r) {
@@ -492,7 +436,7 @@ extends BaseZombie {
         for (int x = cx - r; x <= cx + r; ++x) {
             for (int z = cz - r; z <= cz + r; ++z) {
                 if ((cx - x) * (cx - x) + (cz - z) * (cz - z) > rSquared) continue;
-                Location l = new Location(w, (double)x, (double)cy, (double)z);
+                Location l = new Location(w, x, cy, z);
                 bl.add(l.getBlock());
             }
         }
@@ -551,13 +495,7 @@ extends BaseZombie {
                     this.cancel();
                     return;
                 }
-                if (i % 2 == 0 && i < 13) {
-                    armorStand1.teleport(armorStand1.getLocation().add(teleportTo).multiply(1.0));
-                    armorStand1.teleport(armorStand1.getLocation().add(teleportTo).multiply(1.0));
-                } else if (i % 2 == 0) {
-                    armorStand1.teleport(armorStand1.getLocation().subtract(loc.getDirection().normalize().multiply(1)));
-                    armorStand1.teleport(armorStand1.getLocation().subtract(loc.getDirection().normalize().multiply(1)));
-                }
+               
                 for (org.bukkit.entity.Entity en : armorStand1.getNearbyEntities(1.0, 1.0, 1.0)) {
                     if (!(en instanceof Player)) continue;
                     Player p = (Player)en;
@@ -574,7 +512,7 @@ extends BaseZombie {
             public synchronized void cancel() throws IllegalStateException {
                 super.cancel();
             }
-        }.runTaskTimer((Plugin)SkySimEngine.getPlugin(), 0L, 2L);
+        }.runTaskTimer(SkySimEngine.getPlugin(), 0L, 2L);
     }
 
     @Override
@@ -601,7 +539,7 @@ extends BaseZombie {
     public void onDamage(SEntity sEntity, org.bukkit.entity.Entity damager, EntityDamageByEntityEvent e, AtomicDouble damage) {
         LivingEntity en = sEntity.getEntity();
         Vector v = new Vector(0, 0, 0);
-        SUtil.delay(() -> VoidlingsWardenMob.lambda$onDamage$7((org.bukkit.entity.Entity)en, v), 1L);
+        SUtil.delay(() -> VoidlingsWardenMob.lambda$onDamage$7(en, v), 1L);
     }
 
     @Override
@@ -626,8 +564,8 @@ extends BaseZombie {
     @Override
     public void onDeath(SEntity sEntity, org.bukkit.entity.Entity killed, org.bukkit.entity.Entity damager) {
         LivingEntity entity = sEntity.getEntity();
-        if (entity.hasMetadata("owner") && Bukkit.getPlayer((UUID)UUID.fromString(((MetadataValue)entity.getMetadata("owner").get(0)).asString())) != null) {
-            PacketInvoker.dropEye(Bukkit.getPlayer((UUID)UUID.fromString(((MetadataValue)entity.getMetadata("owner").get(0)).asString())), sEntity.getEntity().getLocation(), SUtil.random(1, 4));
+        if (entity.hasMetadata("owner") && Bukkit.getPlayer(UUID.fromString(entity.getMetadata("owner").get(0).asString())) != null) {
+            PacketInvoker.dropEye(Bukkit.getPlayer(UUID.fromString(entity.getMetadata("owner").get(0).asString())), sEntity.getEntity().getLocation(), SUtil.random(1, 4));
         }
     }
 

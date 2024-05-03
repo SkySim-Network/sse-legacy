@@ -9,6 +9,8 @@ package vn.giakhanhvn.skysim.dimoon;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import lombok.Getter;
 import org.bukkit.entity.Player;
 import vn.giakhanhvn.skysim.dimoon.DimoonLootItem;
 import vn.giakhanhvn.skysim.util.SUtil;
@@ -16,6 +18,7 @@ import vn.giakhanhvn.skysim.util.SUtil;
 public class DimoonLootTable {
     public static List<DimoonLootItem> lowQualitylootTable = null;
     public static List<DimoonLootItem> highQualitylootTable = null;
+    @Getter
     private int weight = 0;
     private Player p;
     private int cp;
@@ -60,9 +63,9 @@ public class DimoonLootTable {
         }
         ArrayList<DimoonLootItem> rolledHiItems = new ArrayList<DimoonLootItem>();
         ArrayList<DimoonLootItem> rolledLoItems = new ArrayList<DimoonLootItem>();
-        List highQualityLootable = (List)((ArrayList)highQualitylootTable).clone();
+        List<DimoonLootItem> highQualityLootable = new ArrayList<>(highQualitylootTable);
         highQualityLootable.removeIf(item -> item.getMinimumWeight() > this.weight);
-        List lowQualityLootable = (List)((ArrayList)lowQualitylootTable).clone();
+        List<DimoonLootItem> lowQualityLootable = new ArrayList<>(lowQualitylootTable);
         lowQualityLootable.removeIf(item -> item.getMinimumWeight() > this.weight);
         for (DimoonLootItem item2 : highQualityLootable) {
             r = SUtil.random(1, item2.getChance());
@@ -79,8 +82,5 @@ public class DimoonLootTable {
         return Arrays.asList(rolledHiItems, rolledLoItems);
     }
 
-    public int getWeight() {
-        return this.weight;
-    }
 }
 

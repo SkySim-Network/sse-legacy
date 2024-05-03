@@ -104,14 +104,14 @@ Ability {
     @Override
     public void onAbilityUse(final Player player, final SItem sItem) {
         boolean count1 = false;
-        List inRange = player.getNearbyEntities(12.0, 12.0, 12.0);
-        final ArrayList<Entity> filteredList = new ArrayList<Entity>();
+        List<Entity> inRange = player.getNearbyEntities(12.0, 12.0, 12.0);
+        List<Entity> filteredList = new ArrayList<Entity>();
         for (Entity e : inRange) {
             if (!(e instanceof Damageable) || e == player || e instanceof ArmorStand || e instanceof Player || e.hasMetadata("NPC") || e.hasMetadata("GiantSword")) continue;
-            if (filteredList.size() >= 5 || filteredList.size() < 0) break;
+            if (filteredList.size() >= 5) break;
             filteredList.add(e);
         }
-        if (inRange.size() != 0) {
+        if (!inRange.isEmpty()) {
             new BukkitRunnable(){
                 private int run = 0;
 
@@ -136,7 +136,7 @@ Ability {
                         this.cancel();
                     }
                 }
-            }.runTaskTimer((Plugin)SkySimEngine.getPlugin(), 1L, 5L);
+            }.runTaskTimer(SkySimEngine.getPlugin(), 1L, 5L);
         } else {
             player.sendMessage(ChatColor.RED + "No nearby target found.");
         }

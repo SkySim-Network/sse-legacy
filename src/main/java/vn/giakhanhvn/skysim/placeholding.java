@@ -216,10 +216,10 @@ extends PlaceholderExpansion {
     public String getEffectLoop(OfflinePlayer player) {
         String returnString = Sputnik.trans(" &7No active effects. Drink Potions or splash \nthem to the ground to buff yourself.");
         User user = User.getUser(player.getUniqueId());
-        ArrayList<ActivePotionEffect> pte = new ArrayList();
+        ArrayList<ActivePotionEffect> pte;
         if (user != null) {
-            pte = user.getEffects();
-            if (user.getEffects().size() > 0) {
+            pte = (ArrayList<ActivePotionEffect>) user.getEffects();
+            if (!user.getEffects().isEmpty()) {
                 returnString = Sputnik.trans(" &7You have &6" + user.getEffects().size() + " &7effects. Use \"&6/potions&7\" to see them ") + "\n" + Sputnik.trans(this.a(user, pte));
             }
         }

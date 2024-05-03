@@ -96,7 +96,7 @@ implements BlockBasedGUI {
                         stack = inventory.getItem(slot);
                         ind = CraftingTableGUI.indexOf(recipe, materials, MaterialQuantifiable.of(stack));
                         if (ind == -1) continue;
-                        material = (MaterialQuantifiable)materials.get(ind);
+                        material = materials.get(ind);
                         int m = stack.getAmount() / material.getAmount();
                         if (m >= max) continue;
                         max = m;
@@ -106,7 +106,7 @@ implements BlockBasedGUI {
                     stack = inventory.getItem(slot);
                     ind = CraftingTableGUI.indexOf(recipe, materials, MaterialQuantifiable.of(stack));
                     if (ind == -1) continue;
-                    material = (MaterialQuantifiable)materials.get(ind);
+                    material = materials.get(ind);
                     int remaining = stack.getAmount() - material.getAmount();
                     if (shift) {
                         remaining = stack.getAmount() - material.getAmount() * max;
@@ -120,7 +120,7 @@ implements BlockBasedGUI {
                     stack.setAmount(remaining);
                 }
                 if (shift) {
-                    HashMap hashMap = e.getWhoClicked().getInventory().addItem(new ItemStack[]{SUtil.setStackAmount(result, result.getAmount() * max)});
+                    HashMap<Integer , ItemStack> hashMap = e.getWhoClicked().getInventory().addItem(SUtil.setStackAmount(result, result.getAmount() * max));
                     for (ItemStack stack2 : hashMap.values()) {
                         e.getWhoClicked().getWorld().dropItem(e.getWhoClicked().getLocation(), stack2).setVelocity(e.getWhoClicked().getLocation().getDirection());
                     }
@@ -174,9 +174,9 @@ implements BlockBasedGUI {
                         SUtil.border(inventory, gui, SUtil.createColoredStainedGlassPane((short)5, ChatColor.RESET + " "), 45, 48, true, false);
                         SUtil.border(inventory, gui, SUtil.createColoredStainedGlassPane((short)5, ChatColor.RESET + " "), 50, 53, true, false);
                     }
-                }.runTaskLater((Plugin)SkySimEngine.getPlugin(), 1L);
+                }.runTaskLater(SkySimEngine.getPlugin(), 1L);
             }
-        }.runTaskTimer((Plugin)SkySimEngine.getPlugin(), 0L, 1L);
+        }.runTaskTimer(SkySimEngine.getPlugin(), 0L, 1L);
     }
 
     @Override
@@ -196,7 +196,7 @@ implements BlockBasedGUI {
         List<SMaterial> exchangeables = Recipe.getExchangeablesOf(search.getMaterial());
         for (int i = 0; i < ingredients.size(); ++i) {
             MaterialQuantifiable ingredient = ingredients.get(i);
-            if (recipe.isUseExchangeables() && exchangeables != null && exchangeables.contains((Object)ingredient.getMaterial()) && search.getAmount() >= ingredient.getAmount()) {
+            if (recipe.isUseExchangeables() && exchangeables != null && exchangeables.contains(ingredient.getMaterial()) && search.getAmount() >= ingredient.getAmount()) {
                 return i;
             }
             if (ingredient.getMaterial() != search.getMaterial() || search.getAmount() < ingredient.getAmount()) continue;

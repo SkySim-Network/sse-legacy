@@ -675,16 +675,14 @@ implements Listener {
         String stringUUID = UUID.randomUUID().toString();
         GameProfile profile = new GameProfile(UUID.fromString(stringUUID), null);
         byte[] ed = Base64.getEncoder().encode(String.format("{textures:{SKIN:{url:\"http://textures.minecraft.net/texture/%s\"}}}", texture).getBytes());
-        profile.getProperties().put((Object)"textures", (Object)new Property("textures", new String(ed)));
+        profile.getProperties().put("textures", new Property("textures", new String(ed)));
         try {
             Field f = meta.getClass().getDeclaredField("profile");
             f.setAccessible(true);
             f.set(meta, profile);
         }
-        catch (IllegalAccessException | IllegalArgumentException | NoSuchFieldException exception) {
-            // empty catch block
-        }
-        stack.setItemMeta((ItemMeta)meta);
+        catch (IllegalAccessException | IllegalArgumentException | NoSuchFieldException ignored) {}
+        stack.setItemMeta(meta);
         return stack;
     }
 
@@ -698,7 +696,7 @@ implements Listener {
     }
 
     public void playHeadSpawning(org.bukkit.entity.Entity e) {
-        String amd = ((MetadataValue)((ArmorStand)e).getMetadata("TYPE").get(0)).asString();
+        String amd = e.getMetadata("TYPE").get(0).asString();
         amd = amd.replace("WATCHER_", "");
         final HeadsOnWall h = new HeadsOnWall(EnumWatcherType.valueOf(amd));
         final Location target = this.watcher.clone().add(0.0, -3.5, 0.0);
