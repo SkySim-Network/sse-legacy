@@ -46,7 +46,7 @@
             <version>3.2.0</version>
             <configuration>
                 <finalName>SkyBlock</finalName>
-                <outputDirectory>C:\Users\Hamza\IdeaProjects\SkyBlock\server\plugins</outputDirectory>
+                <outputDirectory>${basedir}/server/plugins</outputDirectory>
             </configuration>
         </plugin>
     </plugins>
@@ -120,12 +120,6 @@
           <version>2.8.0</version>
       </dependency>
       <dependency>
-          <groupId>com.github.MilkBowl</groupId>
-          <artifactId>VaultAPI</artifactId>
-          <version>1.7</version>
-          <scope>provided</scope>
-      </dependency>
-      <dependency>
           <groupId>org.projectlombok</groupId>
           <artifactId>lombok</artifactId>
           <version>1.18.30</version>
@@ -139,8 +133,9 @@
       <dependency>
           <groupId>com.onarandombox.multiversecore</groupId>
           <artifactId>multiverse-core</artifactId>
-          <version>4.3.12</version>
-          <scope>provided</scope>
+          <version>4.3.1</version>
+          <scope>system</scope>
+          <systemPath>${basedir}/dependencies/Multiverse-Core-4.3.1.jar</systemPath>
       </dependency>
       <dependency>
           <groupId>com.sk89q.worldedit</groupId>

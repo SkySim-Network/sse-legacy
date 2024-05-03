@@ -42,12 +42,10 @@ import de.slikey.effectlib.EffectManager;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import net.milkbowl.vault.economy.Economy;
+import java.util.*;
+
+import lombok.Getter;
+import lombok.Setter;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -57,21 +55,14 @@ import org.bukkit.configuration.serialization.ConfigurationSerialization;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
-import org.bukkit.event.Event;
-import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.Recipe;
-import org.bukkit.plugin.Plugin;
-import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.plugin.messaging.PluginMessageListener;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
-import vn.giakhanhvn.skysim.Repeater;
-import vn.giakhanhvn.skysim.ServerVersion;
-import vn.giakhanhvn.skysim.SkyBlockCalendar;
 import vn.giakhanhvn.skysim.auction.AuctionBid;
 import vn.giakhanhvn.skysim.auction.AuctionEscrow;
 import vn.giakhanhvn.skysim.auction.AuctionItem;
@@ -176,9 +167,6 @@ import vn.giakhanhvn.skysim.nms.packetevents.PluginMessageReceived;
 import vn.giakhanhvn.skysim.nms.packetevents.SkySimServerPingEvent;
 import vn.giakhanhvn.skysim.nms.packetevents.WrappedPluginMessage;
 import vn.giakhanhvn.skysim.nms.pingrep.PingAPI;
-import vn.giakhanhvn.skysim.nms.pingrep.PingEvent;
-import vn.giakhanhvn.skysim.nms.pingrep.PingListener;
-import vn.giakhanhvn.skysim.placeholding;
 import vn.giakhanhvn.skysim.region.Region;
 import vn.giakhanhvn.skysim.region.RegionType;
 import vn.giakhanhvn.skysim.slayer.SlayerQuest;
@@ -187,10 +175,7 @@ import vn.giakhanhvn.skysim.sql.SQLRegionData;
 import vn.giakhanhvn.skysim.sql.SQLWorldData;
 import vn.giakhanhvn.skysim.user.AuctionSettings;
 import vn.giakhanhvn.skysim.user.User;
-import vn.giakhanhvn.skysim.util.BungeeChannel;
-import vn.giakhanhvn.skysim.util.Groups;
-import vn.giakhanhvn.skysim.util.SLog;
-import vn.giakhanhvn.skysim.util.SerialNBTTagCompound;
+import vn.giakhanhvn.skysim.util.*;
 
 public class SkySimEngine
         extends JavaPlugin
@@ -198,20 +183,24 @@ public class SkySimEngine
         BungeeChannel.ForwardConsumer {
     public static MultiverseCore core = (MultiverseCore)Bukkit.getServer().getPluginManager().getPlugin("Multiverse-Core");
     private static ProtocolManager protocolManager;
-    private static Economy econ;
+    @Getter
     private static SkySimEngine plugin;
-    private PacketHelper packetInj = new PacketHelper();
+    private final PacketHelper packetInj = new PacketHelper();
     public Arena arena = null;
     public Dimoon dimoon = null;
     public SummoningSequence sq = null;
     public boolean altarCooldown = false;
-    private ServerVersion serverVersion = new ServerVersion("beta", 0, 7, 2, 0);
+    @Getter
+    private final ServerVersion serverVersion = new ServerVersion("beta", 0, 7, 2, 0);
     public static EffectManager effectManager;
+    @Getter
     private static SkySimEngine instance;
     public Config config;
     public Config heads;
     public Config blocks;
     public Config spawners;
+    @Setter
+    @Getter
     private int onlinePlayerAcrossServers;
     public CommandMap commandMap;
     public SQLDatabase sql;
@@ -219,13 +208,12 @@ public class SkySimEngine
     public SQLWorldData worldData;
     public CommandLoader cl;
     public Repeater repeater;
+    @Getter
     private BungeeChannel bc;
+    @Setter
+    @Getter
     private String serverName = "Loading...";
-    public List<String> bannedUUID = Arrays.asList("");
-
-    public static SkySimEngine getPlugin() {
-        return plugin;
-    }
+    public List<String> bannedUUID = Collections.singletonList("");
 
     public void onLoad() {
         SLog.info("Loading Bukkit-serializable classes...");
@@ -233,11 +221,10 @@ public class SkySimEngine
     }
 
     public void onEnable() {
-        block21: {
-            this.getServer().getMessenger().registerOutgoingPluginChannel((Plugin)this, "BungeeCord");
-            this.getServer().getMessenger().registerIncomingPluginChannel((Plugin)this, "BungeeCord", (PluginMessageListener)this);
-            this.bc = new BungeeChannel((Plugin)this);
-            this.setupEconomy();
+        {
+            this.getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
+            this.getServer().getMessenger().registerIncomingPluginChannel(this, "BungeeCord", this);
+            this.bc = new BungeeChannel(this);
             SLog.info("===================================");
             SLog.info("SKYSIM ENGINE - MADE BY GIAKHANHVN");
             SLog.info("===================================");
@@ -254,9 +241,8 @@ public class SkySimEngine
             try {
                 Field f = Bukkit.getServer().getClass().getDeclaredField("commandMap");
                 f.setAccessible(true);
-                this.commandMap = (CommandMap)f.get(Bukkit.getServer());
-            }
-            catch (IllegalAccessException | NoSuchFieldException e) {
+                this.commandMap = (CommandMap) f.get(Bukkit.getServer());
+            } catch (IllegalAccessException | NoSuchFieldException e) {
                 SLog.severe("Couldn't load command map: ");
                 e.printStackTrace();
             }
@@ -266,10 +252,10 @@ public class SkySimEngine
             this.worldData = new SQLWorldData();
             this.cl = new CommandLoader();
             SLog.info("Begin Protocol injection... (SkySimProtocol v0.6.2)");
-            APIManager.registerAPI(this.packetInj, (Plugin)this);
+            APIManager.registerAPI(this.packetInj, this);
             if (!this.packetInj.injected) {
                 this.getLogger().warning("[FATAL ERROR] Protocol Injection failed. Disabling the plugin for safety...");
-                Bukkit.getPluginManager().disablePlugin((Plugin)this);
+                Bukkit.getPluginManager().disablePlugin(this);
                 return;
             }
             SLog.info("Injecting...");
@@ -291,7 +277,7 @@ public class SkySimEngine
             SLog.info("Establishing player regions...");
             Region.cacheRegions();
             SLog.info("Loading auction items from disk...");
-            effectManager = new EffectManager((Plugin)this);
+            effectManager = new EffectManager(this);
             AuctionItem.loadAuctionsFromDisk();
             SkyBlockCalendar.ELAPSED = SkySimEngine.plugin.config.getLong("timeElapsed");
             SLog.info("Synchronizing world time with calendar time and removing world entities...");
@@ -300,17 +286,16 @@ public class SkySimEngine
                     if (entity instanceof HumanEntity) continue;
                     entity.remove();
                 }
-                int time = (int)(SkyBlockCalendar.ELAPSED % 24000L - 6000L);
+                int time = (int) (SkyBlockCalendar.ELAPSED % 24000L - 6000L);
                 if (time < 0) {
                     time += 24000;
                 }
-                world.setTime((long)time);
+                world.setTime(time);
             }
             SLog.info("Loading items...");
             try {
                 Class.forName("vn.giakhanhvn.skysim.item.SMaterial");
-            }
-            catch (ClassNotFoundException e) {
+            } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             }
             for (SMaterial material : SMaterial.values()) {
@@ -318,22 +303,22 @@ public class SkySimEngine
                 material.getStatistics().load();
             }
             SLog.info("Converting CraftRecipes into custom recipes...");
-            Iterator iter = Bukkit.recipeIterator();
+            Iterator<Recipe> iter = Bukkit.recipeIterator();
             while (iter.hasNext()) {
-                Recipe recipe = (Recipe)iter.next();
+                Recipe recipe = (Recipe) iter.next();
                 if (recipe.getResult() == null) continue;
                 Material result = recipe.getResult().getType();
                 if (recipe instanceof org.bukkit.inventory.ShapedRecipe) {
-                    org.bukkit.inventory.ShapedRecipe shaped = (org.bukkit.inventory.ShapedRecipe)recipe;
+                    org.bukkit.inventory.ShapedRecipe shaped = (org.bukkit.inventory.ShapedRecipe) recipe;
                     ShapedRecipe specShaped = new ShapedRecipe(SItem.convert(shaped.getResult()), Groups.EXCHANGEABLE_RECIPE_RESULTS.contains(result)).shape(shaped.getShape());
                     for (Map.Entry entry : shaped.getIngredientMap().entrySet()) {
                         if (entry.getValue() == null) continue;
-                        ItemStack stack = (ItemStack)entry.getValue();
-                        specShaped.set(((Character)entry.getKey()).charValue(), SMaterial.getSpecEquivalent(stack.getType(), stack.getDurability()), stack.getAmount());
+                        ItemStack stack = (ItemStack) entry.getValue();
+                        specShaped.set(((Character) entry.getKey()).charValue(), SMaterial.getSpecEquivalent(stack.getType(), stack.getDurability()), stack.getAmount());
                     }
                 }
                 if (!(recipe instanceof org.bukkit.inventory.ShapelessRecipe)) continue;
-                org.bukkit.inventory.ShapelessRecipe shapeless = (org.bukkit.inventory.ShapelessRecipe)recipe;
+                org.bukkit.inventory.ShapelessRecipe shapeless = (org.bukkit.inventory.ShapelessRecipe) recipe;
                 ShapelessRecipe specShapeless = new ShapelessRecipe(SItem.convert(shapeless.getResult()), Groups.EXCHANGEABLE_RECIPE_RESULTS.contains(result));
                 for (ItemStack itemStack : shapeless.getIngredientList()) {
                     specShapeless.add(SMaterial.getSpecEquivalent(itemStack.getType(), itemStack.getDurability()), itemStack.getAmount());
@@ -359,18 +344,18 @@ public class SkySimEngine
             SLog.info("SKYSIM ENGINE - MADE BY GIAKHANHVN");
             SLog.info("PLUGIN ENABLED! HOOKED INTO SSS!");
             SLog.info("===================================");
-            this.sq = new SummoningSequence(Bukkit.getWorld((String)"arena"));
-            Bukkit.getWorld((String)"arena").setAutoSave(false);
-            this.getServer().getPluginManager().registerEvents((Listener)new PlayerListener(), (Plugin)this);
-            this.getServer().getPluginManager().registerEvents((Listener)new EntityListener(), (Plugin)this);
-            this.getServer().getPluginManager().registerEvents((Listener)new vn.giakhanhvn.skysim.dimoon.listeners.BlockListener(), (Plugin)this);
+            initDummyWorld(); // create dummy arena map
+            this.sq = new SummoningSequence(Bukkit.getWorld("arena"));
+            Bukkit.getWorld("arena").setAutoSave(false);
+            this.getServer().getPluginManager().registerEvents(new PlayerListener(), this);
+            this.getServer().getPluginManager().registerEvents(new EntityListener(), this);
+            this.getServer().getPluginManager().registerEvents(new vn.giakhanhvn.skysim.dimoon.listeners.BlockListener(), this);
             File file = new File(this.getDataFolder(), "parkours");
             if (!file.exists()) {
                 try {
-                    Files.createParentDirs((File)file);
+                    Files.createParentDirs(file);
                     file.mkdir();
-                }
-                catch (IOException e) {
+                } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
             }
@@ -413,8 +398,8 @@ public class SkySimEngine
                 if (stand == null || !VoidgloomSeraph.CACHED_BLOCK.containsKey(stand) || !VoidgloomSeraph.CACHED_BLOCK_ID.containsKey(stand) || !VoidgloomSeraph.CACHED_BLOCK_DATA.containsKey(stand)) continue;
                 VoidgloomSeraph.CACHED_BLOCK.get(stand).getLocation().getBlock().setTypeIdAndData(VoidgloomSeraph.CACHED_BLOCK_ID.get(stand).intValue(), VoidgloomSeraph.CACHED_BLOCK_DATA.get(stand).byteValue(), true);
             }
-            this.getServer().getMessenger().unregisterOutgoingPluginChannel((Plugin)this);
-            this.getServer().getMessenger().unregisterIncomingPluginChannel((Plugin)this);
+            this.getServer().getMessenger().unregisterOutgoingPluginChannel(this);
+            this.getServer().getMessenger().unregisterIncomingPluginChannel(this);
             SLog.info("Stopping entity spawners...");
             EntitySpawner.stopSpawnerTask();
             SLog.info("Ending Dragons fight... (If one is currently active)");
@@ -515,6 +500,10 @@ public class SkySimEngine
         this.cl.register(new StackMyDimoon());
     }
 
+    private void initDummyWorld(){
+        new BlankWorldCreator("arena").createWorld();
+    }
+
     private void loadListeners() {
         new BlockListener();
         new vn.giakhanhvn.skysim.listener.PlayerListener();
@@ -561,17 +550,13 @@ public class SkySimEngine
     }
 
     private void loadSerializableClasses() {
-        ConfigurationSerialization.registerClass(SlayerQuest.class, (String)"SlayerQuest");
-        ConfigurationSerialization.registerClass(Pet.PetItem.class, (String)"PetItem");
-        ConfigurationSerialization.registerClass(SItem.class, (String)"SItem");
-        ConfigurationSerialization.registerClass(AuctionSettings.class, (String)"AuctionSettings");
-        ConfigurationSerialization.registerClass(AuctionEscrow.class, (String)"AuctionEscrow");
-        ConfigurationSerialization.registerClass(SerialNBTTagCompound.class, (String)"SerialNBTTagCompound");
-        ConfigurationSerialization.registerClass(AuctionBid.class, (String)"AuctionBid");
-    }
-
-    public static SkySimEngine getInstance() {
-        return instance;
+        ConfigurationSerialization.registerClass(SlayerQuest.class, "SlayerQuest");
+        ConfigurationSerialization.registerClass(Pet.PetItem.class, "PetItem");
+        ConfigurationSerialization.registerClass(SItem.class, "SItem");
+        ConfigurationSerialization.registerClass(AuctionSettings.class, "AuctionSettings");
+        ConfigurationSerialization.registerClass(AuctionEscrow.class, "AuctionEscrow");
+        ConfigurationSerialization.registerClass(SerialNBTTagCompound.class, "SerialNBTTagCompound");
+        ConfigurationSerialization.registerClass(AuctionBid.class, "AuctionBid");
     }
 
     public void fixTheEnd() {
@@ -586,20 +571,9 @@ public class SkySimEngine
                     p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, 1000000, 255));
                 }
             }
-        }.runTaskTimer((Plugin)plugin, 0L, 1L);
+        }.runTaskTimer(plugin, 0L, 1L);
     }
 
-    private boolean setupEconomy() {
-        if (this.getServer().getPluginManager().getPlugin("Vault") == null) {
-            return false;
-        }
-        RegisteredServiceProvider rsp = this.getServer().getServicesManager().getRegistration(Economy.class);
-        if (rsp == null) {
-            return false;
-        }
-        econ = (Economy)rsp.getProvider();
-        return econ != null;
-    }
 
     private void registerPacketListener() {
         PacketHelper.addPacketHandler(new PacketHandler(){
@@ -607,25 +581,21 @@ public class SkySimEngine
             @Override
             public void onReceive(ReceivedPacket packet) {
                 PacketReceiveServerSideEvent ev = new PacketReceiveServerSideEvent(packet);
-                Bukkit.getPluginManager().callEvent((Event)ev);
+                Bukkit.getPluginManager().callEvent(ev);
             }
 
             @Override
             public void onSend(SentPacket packet) {
                 PacketSentServerSideEvent ev = new PacketSentServerSideEvent(packet);
-                Bukkit.getPluginManager().callEvent((Event)ev);
+                Bukkit.getPluginManager().callEvent(ev);
             }
         });
     }
 
     private void registerPingListener() {
-        PingAPI.registerListener(new PingListener(){
-
-            @Override
-            public void onPing(PingEvent event) {
-                SkySimServerPingEvent e = new SkySimServerPingEvent(event);
-                Bukkit.getPluginManager().callEvent((Event)e);
-            }
+        PingAPI.registerListener(event -> {
+            SkySimServerPingEvent e = new SkySimServerPingEvent(event);
+            Bukkit.getPluginManager().callEvent(e);
         });
     }
 
@@ -637,9 +607,6 @@ public class SkySimEngine
         return null;
     }
 
-    public static Economy getEconomy() {
-        return econ;
-    }
 
     public void async(final Runnable runnable) {
         new BukkitRunnable(){
@@ -647,7 +614,7 @@ public class SkySimEngine
             public void run() {
                 runnable.run();
             }
-        }.runTaskAsynchronously((Plugin)plugin);
+        }.runTaskAsynchronously(plugin);
     }
 
     public BukkitTask syncLoop(final Runnable runnable, int i0, int i1) {
@@ -656,7 +623,7 @@ public class SkySimEngine
             public void run() {
                 runnable.run();
             }
-        }.runTaskTimer((Plugin)plugin, (long)i0, (long)i1);
+        }.runTaskTimer(plugin, i0, i1);
     }
 
     public BukkitTask asyncLoop(final Runnable runnable, int i0, int i1) {
@@ -665,12 +632,12 @@ public class SkySimEngine
             public void run() {
                 runnable.run();
             }
-        }.runTaskTimerAsynchronously((Plugin)plugin, (long)i0, (long)i1);
+        }.runTaskTimerAsynchronously(plugin, i0, i1);
     }
 
     public void onPluginMessageReceived(String channel, Player player, byte[] message) {
         PluginMessageReceived e = new PluginMessageReceived(new WrappedPluginMessage(channel, player, message));
-        Bukkit.getPluginManager().callEvent((Event)e);
+        Bukkit.getPluginManager().callEvent(e);
     }
 
     public void updateServerName(Player player) {
@@ -678,47 +645,19 @@ public class SkySimEngine
     }
 
     public void updateServerPlayerCount() {
-        if (Bukkit.getOnlinePlayers().size() > 0) {
+        if (!Bukkit.getOnlinePlayers().isEmpty()) {
             SkySimBungee.getNewBungee().sendData(null, "PlayerCount", "ALL");
         }
     }
 
     @Override
     public void accept(String channel, Player player, byte[] data) {
-        if (channel == "savePlayerData") {
+        if (Objects.equals(channel, "savePlayerData")) {
             SLog.info("YES IT WORK");
             for (Player p : Bukkit.getOnlinePlayers()) {
                 User u = User.getUser(p.getUniqueId());
                 u.syncSavingData();
             }
         }
-    }
-
-    public ServerVersion getServerVersion() {
-        return this.serverVersion;
-    }
-
-    public int getOnlinePlayerAcrossServers() {
-        return this.onlinePlayerAcrossServers;
-    }
-
-    public void setOnlinePlayerAcrossServers(int onlinePlayerAcrossServers) {
-        this.onlinePlayerAcrossServers = onlinePlayerAcrossServers;
-    }
-
-    public BungeeChannel getBc() {
-        return this.bc;
-    }
-
-    public String getServerName() {
-        return this.serverName;
-    }
-
-    public void setServerName(String serverName) {
-        this.serverName = serverName;
-    }
-
-    static {
-        econ = null;
     }
 }

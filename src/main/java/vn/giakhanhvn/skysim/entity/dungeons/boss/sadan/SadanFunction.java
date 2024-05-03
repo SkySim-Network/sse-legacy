@@ -289,25 +289,25 @@ public class SadanFunction {
                 if (bitsReward <= 0) {
                     rew = "&cYou have no rewards!";
                 } else {
-                    w.getPlayers().forEach(p -> SkySimEngine.getEconomy().depositPlayer((OfflinePlayer)p, (double)bitsReward));
+                    w.getPlayers().forEach(p -> User.of(p).addBits(bitsReward));
                 }
-                SUtil.broadcastWorld(Sputnik.trans("&a\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac"), w);
+                SUtil.broadcastWorld(Sputnik.trans("&a▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬"), w);
                 SUtil.broadcastWorld(Sputnik.trans("        &cThe Catacombs Demo &8- &eFloor VI"), w);
                 SUtil.broadcastWorld(Sputnik.trans("&c"), w);
-                SUtil.broadcastWorld(Sputnik.trans("        &c\u2620&e Defeated &cSadan &ein &a" + Sputnik.formatTime(Repeater.FloorLivingSec.get(w.getUID()))), w);
+                SUtil.broadcastWorld(Sputnik.trans("        &c☠&e Defeated &cSadan &ein &a" + Sputnik.formatTime(Repeater.FloorLivingSec.get(w.getUID()))), w);
                 SUtil.broadcastWorld(Sputnik.trans("&c"), w);
                 SUtil.broadcastWorld(Sputnik.trans("            " + rew), w);
                 SUtil.broadcastWorld(Sputnik.trans("&c"), w);
-                SUtil.broadcastWorld(Sputnik.trans("&a\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac"), w);
+                SUtil.broadcastWorld(Sputnik.trans("&a▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬"), w);
             } else {
-                SUtil.broadcastWorld(Sputnik.trans("&a\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac"), w);
+                SUtil.broadcastWorld(Sputnik.trans("&a▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬"), w);
                 SUtil.broadcastWorld(Sputnik.trans("        &cThe Catacombs Demo &8- &eFloor VI"), w);
                 SUtil.broadcastWorld(Sputnik.trans("&c"), w);
-                SUtil.broadcastWorld(Sputnik.trans("        &c\u2620&e You died, but you can try again!"), w);
+                SUtil.broadcastWorld(Sputnik.trans("        &c☠&e You died, but you can try again!"), w);
                 SUtil.broadcastWorld(Sputnik.trans("&c"), w);
                 SUtil.broadcastWorld(Sputnik.trans("           &cYou have no rewards cause you died."), w);
                 SUtil.broadcastWorld(Sputnik.trans("&c"), w);
-                SUtil.broadcastWorld(Sputnik.trans("&a\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac\u25ac"), w);
+                SUtil.broadcastWorld(Sputnik.trans("&a▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬"), w);
             }
         }
     }

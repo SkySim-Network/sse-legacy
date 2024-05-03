@@ -61,11 +61,13 @@ import java.util.Map;
 import java.util.Random;
 import java.util.UUID;
 import java.util.stream.Collectors;
+
+import lombok.Getter;
+import lombok.Setter;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
-import net.milkbowl.vault.economy.Economy;
 import net.minecraft.server.v1_8_R3.EntityHuman;
 import net.minecraft.server.v1_8_R3.EntityPlayer;
 import org.bukkit.Bukkit;
@@ -154,50 +156,114 @@ public class User {
     private static final Map<UUID, User> USER_CACHE = new HashMap<UUID, User>();
     private static final SkySimEngine plugin = SkySimEngine.getPlugin();
     private static final File USER_FOLDER = new File(new File("/rootshare/skysim"), "./users");
+    @Getter
     private long sadancollections;
+    @Getter
     private long totalfloor6run;
+    @Getter
     private UUID uuid;
+    @Getter
     private final Config config;
     private final Map<ItemCollection, Integer> collections;
+    @Setter
+    @Getter
     private long coins;
+    @Setter
+    @Getter
+    private long bits;
+    @Setter
+    @Getter
     private long bankCoins;
+    @Setter
+    @Getter
     private List<ItemStack> stashedItems = new ArrayList<ItemStack>();
+    @Setter
+    @Getter
     private int cooldownAltar = 0;
+    @Setter
+    @Getter
     private boolean headShot = false;
+    @Setter
+    @Getter
     private boolean playingSong = false;
+    @Setter
+    @Getter
     private boolean inDanger = false;
+    @Getter
     private Double islandX;
+    @Getter
     private Double islandZ;
+    @Setter
+    @Getter
     private Region lastRegion;
+    @Getter
     private final Map<SMaterial, Integer> quiver;
+    @Getter
     private final List<ActivePotionEffect> effects;
+    @Getter
     private double farmingXP;
+    @Setter
+    @Getter
     private boolean boneToZeroDamage = false;
+    @Setter
+    @Getter
     private boolean cooldownAPI = false;
+    @Getter
     private double miningXP;
+    @Getter
     private double combatXP;
+    @Getter
     private double enchantXP;
+    @Getter
     private double archerXP;
+    @Getter
     private double cataXP;
+    @Getter
     private double berserkXP;
+    @Getter
     private double healerXP;
+    @Getter
     private double tankXP;
+    @Getter
     private double mageXP;
+    @Getter
     private double foragingXP;
     private final int[] highestSlayers;
     private final int[] slayerXP;
     private final int[] crystalLVL;
+    @Setter
+    @Getter
     private boolean saveable = true;
+    @Setter
+    @Getter
     private int bonusFerocity;
+    @Setter
+    @Getter
     private boolean fatalActive;
+    @Setter
+    @Getter
     private boolean permanentCoins;
+    @Setter
+    @Getter
     private SlayerQuest slayerQuest;
+    @Getter
     private List<Pet.PetItem> pets;
+    @Getter
     private AuctionSettings auctionSettings;
+    @Setter
+    @Getter
     private boolean auctionCreationBIN;
+    @Setter
+    @Getter
     private AuctionEscrow auctionEscrow;
+    @Setter
+    @Getter
     private boolean voidlingWardenActive;
+    @Setter
+    @Getter
     private boolean waitingForSign = false;
+    @Setter
+    @Getter
     private String signContent = null;
     private boolean isCompletedSign = false;
 
@@ -206,13 +272,14 @@ public class User {
         this.collections = ItemCollection.getDefaultCollections();
         this.totalfloor6run = 0L;
         this.coins = 0L;
+        this.bits = 0L;
         this.bankCoins = 0L;
         this.sadancollections = 0L;
         this.islandX = null;
         this.islandZ = null;
         this.lastRegion = null;
-        this.quiver = new HashMap<SMaterial, Integer>();
-        this.effects = new ArrayList<ActivePotionEffect>();
+        this.quiver = new HashMap<>();
+        this.effects = new ArrayList<>();
         this.farmingXP = 0.0;
         this.miningXP = 0.0;
         this.combatXP = 0.0;
@@ -222,7 +289,7 @@ public class User {
         this.slayerXP = new int[4];
         this.crystalLVL = new int[8];
         this.permanentCoins = false;
-        this.pets = new ArrayList<Pet.PetItem>();
+        this.pets = new ArrayList<>();
         this.auctionSettings = new AuctionSettings();
         this.auctionCreationBIN = false;
         this.auctionEscrow = new AuctionEscrow();
@@ -261,9 +328,10 @@ public class User {
             }
         }
         this.coins = this.config.getLong("coins");
+        this.bits = config.getLong("bits");
         this.bankCoins = this.config.getLong("bankCoins");
-        this.islandX = this.config.contains("island.x") ? Double.valueOf(this.config.getDouble("island.x")) : null;
-        this.islandZ = this.config.contains("island.z") ? Double.valueOf(this.config.getDouble("island.z")) : null;
+        this.islandX = this.config.contains("island.x") ? this.config.getDouble("island.x") : null;
+        this.islandZ = this.config.contains("island.z") ? this.config.getDouble("island.z") : null;
         Region region = this.lastRegion = this.config.getString("lastRegion") != null ? Region.get(this.config.getString("lastRegion")) : null;
         if (this.config.contains("quiver")) {
             for (String m : this.config.getConfigurationSection("quiver").getKeys(false)) {
@@ -328,7 +396,7 @@ public class User {
                 User.this.save();
                 User.this.saveAllVanillaInstances();
             }
-        }.runTaskAsynchronously((Plugin)plugin);
+        }.runTaskAsynchronously(plugin);
     }
 
     public void syncSavingData() {
@@ -339,11 +407,11 @@ public class User {
                 User.this.save();
                 User.this.saveAllVanillaInstances();
             }
-        }.runTask((Plugin)plugin);
+        }.runTask(plugin);
     }
 
     public void loadStatic() {
-        Player player = Bukkit.getPlayer((UUID)this.uuid);
+        Player player = Bukkit.getPlayer(this.uuid);
         User user = User.getUser(this.uuid);
         PlayerUtils.AUTO_SLAYER.put(player.getUniqueId(), this.config.getBoolean("configures.autoSlayer"));
         Repeater.SBA_MAP.put(player.getUniqueId(), this.config.getBoolean("configures.sbaToggle"));
@@ -351,22 +419,22 @@ public class User {
     }
 
     public void loadCookieStatus() {
-        Player player = Bukkit.getPlayer((UUID)this.uuid);
+        Player player = Bukkit.getPlayer(this.uuid);
         PlayerUtils.setCookieDurationTicks(player, this.config.getLong("user.cookieDuration"));
         PlayerUtils.loadCookieStatsBuff(player);
     }
 
     public void saveCookie() {
-        if (Bukkit.getPlayer((UUID)this.uuid) == null) {
+        if (Bukkit.getPlayer(this.uuid) == null) {
             return;
         }
-        if (!Bukkit.getPlayer((UUID)this.uuid).isOnline()) {
+        if (!Bukkit.getPlayer(this.uuid).isOnline()) {
             return;
         }
         if (!PlayerUtils.COOKIE_DURATION_CACHE.containsKey(this.uuid)) {
             return;
         }
-        this.config.set("user.cookieDuration", PlayerUtils.getCookieDurationTicks(Bukkit.getPlayer((UUID)this.uuid)));
+        this.config.set("user.cookieDuration", PlayerUtils.getCookieDurationTicks(Bukkit.getPlayer(this.uuid)));
         this.config.save();
     }
 
@@ -377,6 +445,7 @@ public class User {
             this.config.set("collections." + entry.getKey().getIdentifier(), entry.getValue());
         }
         this.config.set("coins", this.coins);
+        this.config.set("bits" , bits);
         this.config.set("bankCoins", this.bankCoins);
         this.config.set("island.x", this.islandX);
         this.config.set("island.z", this.islandZ);
@@ -385,7 +454,7 @@ public class User {
         }
         this.config.set("quiver", null);
         for (Map.Entry<SMaterial, Integer> entry : this.quiver.entrySet()) {
-            this.config.set("quiver." + ((SMaterial)((Object)entry.getKey())).name().toLowerCase(), entry.getValue());
+            this.config.set("quiver." + entry.getKey().name().toLowerCase(), entry.getValue());
         }
         this.config.set("effects", null);
         for (ActivePotionEffect activePotionEffect : this.effects) {
@@ -435,10 +504,10 @@ public class User {
         this.config.set("auction.settings", this.auctionSettings);
         this.config.set("auction.creationBIN", this.auctionCreationBIN);
         this.config.set("auction.escrow", this.auctionEscrow);
-        if (Bukkit.getPlayer((UUID)this.uuid) != null && Bukkit.getPlayer((UUID)this.uuid).isOnline()) {
-            this.config.set("configures.showPets", PetsGUI.getShowPet(Bukkit.getPlayer((UUID)this.uuid)));
-            this.config.set("configures.autoSlayer", PlayerUtils.isAutoSlayer(Bukkit.getPlayer((UUID)this.uuid)));
-            this.config.set("configures.sbaToggle", PlayerUtils.isSBAToggle(Bukkit.getPlayer((UUID)this.uuid)));
+        if (Bukkit.getPlayer(this.uuid) != null && Bukkit.getPlayer(this.uuid).isOnline()) {
+            this.config.set("configures.showPets", PetsGUI.getShowPet(Bukkit.getPlayer(this.uuid)));
+            this.config.set("configures.autoSlayer", PlayerUtils.isAutoSlayer(Bukkit.getPlayer(this.uuid)));
+            this.config.set("configures.sbaToggle", PlayerUtils.isSBAToggle(Bukkit.getPlayer(this.uuid)));
         }
         this.config.save();
     }
@@ -452,12 +521,12 @@ public class User {
     }
 
     public void saveInventory() {
-        if (Bukkit.getPlayer((UUID)this.uuid) == null) {
+        if (Bukkit.getPlayer(this.uuid) == null) {
             return;
         }
         String a = null;
-        PlayerInventory piv = Bukkit.getPlayer((UUID)this.uuid).getInventory();
-        a = this.getPureListFrom((Inventory)piv);
+        PlayerInventory piv = Bukkit.getPlayer(this.uuid).getInventory();
+        a = this.getPureListFrom(piv);
         this.config.set("database.inventory", a);
         this.config.save();
     }
@@ -468,7 +537,7 @@ public class User {
         for (int i = 0; i < ist.length; ++i) {
             NBTItem nbti;
             ItemStack stack = ist[i];
-            if (stack == null || !(nbti = new NBTItem(stack)).hasKey("dontSaveToProfile").booleanValue()) continue;
+            if (stack == null || !(nbti = new NBTItem(stack)).hasKey("dontSaveToProfile")) continue;
             arraylist.remove(i);
         }
         ItemStack[] arrl = (ItemStack[])arraylist.toArray();
@@ -476,36 +545,36 @@ public class User {
     }
 
     public void saveArmor() {
-        if (Bukkit.getPlayer((UUID)this.uuid) == null) {
+        if (Bukkit.getPlayer(this.uuid) == null) {
             return;
         }
         String a = null;
-        a = BukkitSerializeClass.itemStackArrayToBase64(Bukkit.getPlayer((UUID)this.uuid).getInventory().getArmorContents());
+        a = BukkitSerializeClass.itemStackArrayToBase64(Bukkit.getPlayer(this.uuid).getInventory().getArmorContents());
         this.config.set("database.armor", a);
         this.config.save();
     }
 
     public void saveEnderChest() {
-        if (Bukkit.getPlayer((UUID)this.uuid) == null) {
+        if (Bukkit.getPlayer(this.uuid) == null) {
             return;
         }
-        String a = null;
-        Inventory inv = Bukkit.getPlayer((UUID)this.uuid).getEnderChest();
+        String a;
+        Inventory inv = Bukkit.getPlayer(this.uuid).getEnderChest();
         a = this.getPureListFrom(inv);
         this.config.set("database.enderchest", a);
         this.config.save();
     }
 
     public void saveExp() {
-        if (Bukkit.getPlayer((UUID)this.uuid) == null) {
+        if (Bukkit.getPlayer(this.uuid) == null) {
             return;
         }
-        this.config.set("database.minecraft_xp", Sputnik.getTotalExperience(Bukkit.getPlayer((UUID)this.uuid)));
+        this.config.set("database.minecraft_xp", Sputnik.getTotalExperience(Bukkit.getPlayer(this.uuid)));
         this.config.save();
     }
 
     public void loadPlayerData() throws IllegalArgumentException, IOException {
-        Player player = Bukkit.getPlayer((UUID)this.uuid);
+        Player player = Bukkit.getPlayer(this.uuid);
         if (this.config.getString("database.inventory") != null) {
             player.getInventory().setContents(BukkitSerializeClass.itemStackArrayFromBase64(this.config.getString("database.inventory")));
         } else {
@@ -528,55 +597,37 @@ public class User {
             ItemStack[] arr = BukkitSerializeClass.itemStackArrayFromBase64(this.config.getString("database.stashed"));
             this.stashedItems = Arrays.asList(arr);
         } else {
-            this.stashedItems = new ArrayList<ItemStack>();
+            this.stashedItems = new ArrayList<>();
         }
-        this.loadEconomy();
         if (this.config.contains("configures.slot_selected")) {
             player.getInventory().setHeldItemSlot(this.config.getInt("configures.slot_selected"));
         }
     }
 
-    public void loadEconomy() {
-        Economy eco = SkySimEngine.getEconomy();
-        Player player = Bukkit.getPlayer((UUID)this.uuid);
-        if (this.config.contains("database.skysim_bits")) {
-            eco.withdrawPlayer((OfflinePlayer)player, eco.getBalance((OfflinePlayer)player));
-            eco.depositPlayer((OfflinePlayer)player, this.config.getDouble("database.skysim_bits"));
-        }
-    }
-
-    public void saveBitsAmount() {
-        if (Bukkit.getPlayer((UUID)this.uuid) == null) {
-            return;
-        }
-        this.config.set("database.skysim_bits", SkySimEngine.getEconomy().getBalance((OfflinePlayer)Bukkit.getPlayer((UUID)this.uuid)));
-        this.config.save();
-    }
 
     public void saveLastSlot() {
-        if (Bukkit.getPlayer((UUID)this.uuid) == null) {
+        if (Bukkit.getPlayer(this.uuid) == null) {
             return;
         }
-        this.config.set("configures.slot_selected", Bukkit.getPlayer((UUID)this.uuid).getInventory().getHeldItemSlot());
+        this.config.set("configures.slot_selected", Bukkit.getPlayer(this.uuid).getInventory().getHeldItemSlot());
         this.config.save();
     }
 
     public void saveAllVanillaInstances() {
-        if (Bukkit.getPlayer((UUID)this.uuid) == null) {
+        if (Bukkit.getPlayer(this.uuid) == null) {
             return;
         }
         this.saveArmor();
         this.saveEnderChest();
         this.saveInventory();
         this.saveExp();
-        this.saveBitsAmount();
         this.saveLastSlot();
         this.saveAttributesForAPI();
         this.saveStash();
     }
 
     public void saveStash() {
-        if (Bukkit.getPlayer((UUID)this.uuid) == null) {
+        if (Bukkit.getPlayer(this.uuid) == null) {
             return;
         }
         if (this.stashedItems == null) {
@@ -589,7 +640,7 @@ public class User {
     }
 
     public void saveAttributesForAPI() {
-        if (Bukkit.getPlayer((UUID)this.uuid) == null) {
+        if (Bukkit.getPlayer(this.uuid) == null) {
             return;
         }
         PlayerStatistics statistics = PlayerUtils.STATISTICS_CACHE.get(this.getUuid());
@@ -614,24 +665,12 @@ public class User {
         this.config.save();
     }
 
-    public Config getConfig() {
-        return this.config;
-    }
-
-    public void setLastRegion(Region lastRegion) {
-        this.lastRegion = lastRegion;
-    }
-
     public void addCoins(long coins) {
         this.coins += coins;
     }
 
     public void subCoins(long coins) {
         this.coins -= coins;
-    }
-
-    public void setCoins(long coins) {
-        this.coins = coins;
     }
 
     public void addBankCoins(long bankCoins) {
@@ -642,12 +681,26 @@ public class User {
         this.bankCoins -= bankCoins;
     }
 
-    public void setBankCoins(long bankCoins) {
-        this.bankCoins = bankCoins;
+
+    public boolean addBits(long value){
+        if (value > 0){
+            this.bits += value;
+            return true;
+        }
+        return false;
+    }
+    public boolean subBits(long value){
+        if (bits > value && value > 0){
+            bits -= value;
+            return true;
+        }
+        return false;
     }
 
+
+
     public void addBCollection(int a) {
-        this.sadancollections += (long)a;
+        this.sadancollections += a;
     }
 
     public void setBCollection(int a) {
@@ -655,7 +708,7 @@ public class User {
     }
 
     public void subBCollection(int a) {
-        this.sadancollections -= (long)a;
+        this.sadancollections -= a;
     }
 
     public long getBCollection() {
@@ -663,11 +716,11 @@ public class User {
     }
 
     public void addBRun6(int a) {
-        this.totalfloor6run += (long)a;
+        this.totalfloor6run += a;
     }
 
     public void subBRun6(int a) {
-        this.totalfloor6run -= (long)a;
+        this.totalfloor6run -= a;
     }
 
     public long getBRun6() {
@@ -700,7 +753,7 @@ public class User {
     private void updateCollection(ItemCollection collection, int prevTier) {
         int tier = collection.getTier(this.getCollection(collection));
         if (prevTier != tier) {
-            Player player = Bukkit.getPlayer((UUID)this.uuid);
+            Player player = Bukkit.getPlayer(this.uuid);
             if (player != null) {
                 player.playSound(player.getLocation(), Sound.LEVEL_UP, 1.0f, 2.0f);
             }
@@ -738,7 +791,7 @@ public class User {
     }
 
     public void addToQuiver(SMaterial material, int amount) {
-        int i = this.quiver.getOrDefault((Object)material, 0);
+        int i = this.quiver.getOrDefault(material, 0);
         this.setQuiver(material, i + amount);
     }
 
@@ -748,28 +801,28 @@ public class User {
 
     public void setQuiver(SMaterial material, int amount) {
         if (amount == 0) {
-            this.quiver.remove((Object)material);
+            this.quiver.remove(material);
             return;
         }
         this.quiver.put(material, amount);
     }
 
     public int getQuiver(SMaterial material) {
-        return this.quiver.get((Object)material);
+        return this.quiver.get(material);
     }
 
     public void subFromQuiver(SMaterial material, int amount) {
-        if (!this.quiver.containsKey((Object)material)) {
+        if (!this.quiver.containsKey(material)) {
             return;
         }
-        this.setQuiver(material, this.quiver.get((Object)material) - amount);
+        this.setQuiver(material, this.quiver.get(material) - amount);
     }
 
     public void addtoQuiver(SMaterial material, int amount) {
-        if (!this.quiver.containsKey((Object)material)) {
+        if (!this.quiver.containsKey(material)) {
             return;
         }
-        this.setQuiver(material, this.quiver.get((Object)material) + amount);
+        this.setQuiver(material, this.quiver.get(material) + amount);
     }
 
     public void subFromQuiver(SMaterial material) {
@@ -781,7 +834,7 @@ public class User {
     }
 
     public boolean hasQuiverItem(SMaterial material) {
-        return this.quiver.containsKey((Object)material);
+        return this.quiver.containsKey(material);
     }
 
     public void clearQuiver() {
@@ -1014,7 +1067,7 @@ public class User {
     }
 
     public void startSlayerQuest(SlayerBossType type) {
-        Player player = Bukkit.getPlayer((UUID)this.uuid);
+        Player player = Bukkit.getPlayer(this.uuid);
         if (player == null) {
             return;
         }
@@ -1031,14 +1084,14 @@ public class User {
         if (this.slayerQuest.getDied() != 0L) {
             return;
         }
-        Player player = Bukkit.getPlayer((UUID)this.uuid);
+        Player player = Bukkit.getPlayer(this.uuid);
         if (player == null) {
             return;
         }
         this.slayerQuest.setDied(System.currentTimeMillis());
         if (this.slayerQuest.getEntity() != null) {
             this.slayerQuest.getEntity().remove();
-            this.slayerQuest.getEntity().getFunction().onDeath(this.slayerQuest.getEntity(), (Entity)this.slayerQuest.getEntity().getEntity(), (Entity)player);
+            this.slayerQuest.getEntity().getFunction().onDeath(this.slayerQuest.getEntity(), this.slayerQuest.getEntity().getEntity(), player);
         }
         SUtil.delay(() -> {
             this.removeAllSlayerBosses();
@@ -1048,14 +1101,14 @@ public class User {
     }
 
     public void removeAllSlayerBosses() {
-        for (Entity e : Bukkit.getPlayer((UUID)this.uuid).getWorld().getEntities()) {
+        for (Entity e : Bukkit.getPlayer(this.uuid).getWorld().getEntities()) {
             if (!e.hasMetadata("BOSS_OWNER_" + this.uuid.toString()) || !e.hasMetadata("SlayerBoss")) continue;
             e.remove();
         }
     }
 
     public void send(String message) {
-        Player player = Bukkit.getPlayer((UUID)this.uuid);
+        Player player = Bukkit.getPlayer(this.uuid);
         if (player == null) {
             return;
         }
@@ -1076,11 +1129,11 @@ public class User {
         if (entity1.isDead()) {
             return;
         }
-        Player player = Bukkit.getPlayer((UUID)this.uuid);
+        Player player = Bukkit.getPlayer(this.uuid);
         double damage = damageBase;
         User.dmgDimon((LivingEntity)entity1, player);
         if (VoidgloomSeraph.HIT_SHIELD.containsKey(entity1)) {
-            VoidgloomSeraph.HIT_SHIELD.put((Entity)entity1, VoidgloomSeraph.HIT_SHIELD.get(entity1) - 1);
+            VoidgloomSeraph.HIT_SHIELD.put(entity1, VoidgloomSeraph.HIT_SHIELD.get(entity1) - 1);
             entity1.getWorld().playSound(entity1.getLocation(), Sound.ENDERMAN_TELEPORT, 1.0f, 2.0f);
         }
         if (entity1.getType() != EntityType.ENDER_DRAGON) {
@@ -1091,12 +1144,12 @@ public class User {
                 }
                 damage -= damage * (double)defensepercent / 100.0;
             }
-            PlayerUtils.handleSpecEntity((Entity)entity1, player, new AtomicDouble(damage));
+            PlayerUtils.handleSpecEntity(entity1, player, new AtomicDouble(damage));
             entity1.setHealth(Math.max(0.0, entity1.getHealth() - damage));
         } else {
-            double formula = damage / ((EnderDragon)entity1).getMaxHealth() * 100.0;
+            double formula = damage / entity1.getMaxHealth() * 100.0;
             damage = formula < 10.0 ? (damage *= 1.0) : (formula > 10.0 && formula < 15.0 ? (damage -= damage * 90.0 / 100.0) : (formula > 15.0 && formula < 20.0 ? (damage -= damage * 99.0 / 100.0) : (formula > 20.0 && formula <= 25.0 ? (damage -= damage * 99.9 / 100.0) : (formula > 25.0 ? (damage *= 0.0) : (damage *= 1.0)))));
-            PlayerUtils.handleSpecEntity((Entity)entity1, player, new AtomicDouble(damage));
+            PlayerUtils.handleSpecEntity(entity1, player, new AtomicDouble(damage));
             entity1.setHealth(Math.max(0.0, entity1.getHealth() - damage));
         }
         double health = entity1.getMaxHealth();
@@ -1120,19 +1173,19 @@ public class User {
         if (entity1.isDead()) {
             return;
         }
-        Player player = Bukkit.getPlayer((UUID)this.uuid);
+        Player player = Bukkit.getPlayer(this.uuid);
         double damage = damageBase;
         if (VoidgloomSeraph.HIT_SHIELD.containsKey(entity1)) {
-            VoidgloomSeraph.HIT_SHIELD.put((Entity)entity1, VoidgloomSeraph.HIT_SHIELD.get(entity1) - 1);
+            VoidgloomSeraph.HIT_SHIELD.put(entity1, VoidgloomSeraph.HIT_SHIELD.get(entity1) - 1);
             entity1.getWorld().playSound(entity1.getLocation(), Sound.ENDERMAN_TELEPORT, 1.0f, 2.0f);
         }
         if (entity1.getType() != EntityType.ENDER_DRAGON) {
-            PlayerUtils.handleSpecEntity((Entity)entity1, player, new AtomicDouble(damage));
+            PlayerUtils.handleSpecEntity(entity1, player, new AtomicDouble(damage));
             entity1.setHealth(Math.max(0.0, entity1.getHealth() - damage));
         } else {
-            double formula = damage / ((EnderDragon)entity1).getMaxHealth() * 100.0;
+            double formula = damage / entity1.getMaxHealth() * 100.0;
             damage = formula < 10.0 ? (damage *= 1.0) : (formula > 10.0 && formula < 15.0 ? (damage -= damage * 90.0 / 100.0) : (formula > 15.0 && formula < 20.0 ? (damage -= damage * 99.0 / 100.0) : (formula > 20.0 && formula <= 25.0 ? (damage -= damage * 99.9 / 100.0) : (formula > 25.0 ? (damage *= 0.0) : (damage *= 1.0)))));
-            PlayerUtils.handleSpecEntity((Entity)entity1, player, new AtomicDouble(damage));
+            PlayerUtils.handleSpecEntity(entity1, player, new AtomicDouble(damage));
             entity1.setHealth(Math.max(0.0, entity1.getHealth() - damage));
         }
         double health = entity1.getMaxHealth();
@@ -1153,7 +1206,7 @@ public class User {
 
     public void damageEntityBowEman(Damageable entity1, double damage, Player player, Arrow a) {
         if (VoidgloomSeraph.HIT_SHIELD.containsKey(entity1)) {
-            VoidgloomSeraph.HIT_SHIELD.put((Entity)entity1, VoidgloomSeraph.HIT_SHIELD.get(entity1) - 1);
+            VoidgloomSeraph.HIT_SHIELD.put(entity1, VoidgloomSeraph.HIT_SHIELD.get(entity1) - 1);
             entity1.getWorld().playSound(entity1.getLocation(), Sound.ENDERMAN_TELEPORT, 1.0f, 2.0f);
         }
         double health = entity1.getMaxHealth();
@@ -1170,24 +1223,24 @@ public class User {
             }
             entity1.setHealth(Math.max(0.0, entity1.getHealth() - damage));
         } else {
-            double formula = damage / ((EnderDragon)entity1).getMaxHealth() * 100.0;
+            double formula = damage / entity1.getMaxHealth() * 100.0;
             damage = formula < 10.0 ? (damage *= 1.0) : (formula > 10.0 && formula < 15.0 ? (damage -= damage * 90.0 / 100.0) : (formula > 15.0 && formula < 20.0 ? (damage -= damage * 99.0 / 100.0) : (formula > 20.0 && formula <= 25.0 ? (damage -= damage * 99.9 / 100.0) : (formula > 25.0 ? (damage *= 0.0) : (damage *= 1.0)))));
             entity1.setHealth(Math.max(0.0, entity1.getHealth() - damage));
         }
-        PlayerUtils.handleSpecEntity((Entity)entity1, player, new AtomicDouble(damage));
+        PlayerUtils.handleSpecEntity(entity1, player, new AtomicDouble(damage));
         a.remove();
     }
 
     public void damageEntity(LivingEntity entity) {
-        Player player = Bukkit.getPlayer((UUID)this.uuid);
+        Player player = Bukkit.getPlayer(this.uuid);
         if (player == null) {
             return;
         }
-        entity.damage(0.0, (Entity)player);
+        entity.damage(0.0, player);
     }
 
     public void damage(double d, EntityDamageEvent.DamageCause cause, Entity entity) {
-        Player player = Bukkit.getPlayer((UUID)this.uuid);
+        Player player = Bukkit.getPlayer(this.uuid);
         if (player == null) {
             return;
         }
@@ -1228,19 +1281,19 @@ public class User {
         }
         player.setHealth(Math.max(0.0, player.getHealth() - actual));
         if (cause == EntityDamageEvent.DamageCause.FIRE || cause == EntityDamageEvent.DamageCause.FIRE_TICK || cause == EntityDamageEvent.DamageCause.LAVA) {
-            PlayerListener.spawnSpecialDamageInd((Entity)player, actual, ChatColor.GOLD);
+            PlayerListener.spawnSpecialDamageInd(player, actual, ChatColor.GOLD);
         } else if (cause == EntityDamageEvent.DamageCause.FALL || cause == EntityDamageEvent.DamageCause.CONTACT || cause == EntityDamageEvent.DamageCause.SUFFOCATION) {
-            PlayerListener.spawnSpecialDamageInd((Entity)player, actual, ChatColor.GRAY);
+            PlayerListener.spawnSpecialDamageInd(player, actual, ChatColor.GRAY);
         } else if (cause == EntityDamageEvent.DamageCause.DROWNING) {
-            PlayerListener.spawnSpecialDamageInd((Entity)player, actual, ChatColor.DARK_AQUA);
+            PlayerListener.spawnSpecialDamageInd(player, actual, ChatColor.DARK_AQUA);
         } else if (cause == EntityDamageEvent.DamageCause.LIGHTNING) {
-            PlayerListener.spawnSpecialDamageInd((Entity)player, actual, ChatColor.RED);
+            PlayerListener.spawnSpecialDamageInd(player, actual, ChatColor.RED);
         } else if (cause == EntityDamageEvent.DamageCause.POISON) {
-            PlayerListener.spawnSpecialDamageInd((Entity)player, actual, ChatColor.DARK_GREEN);
+            PlayerListener.spawnSpecialDamageInd(player, actual, ChatColor.DARK_GREEN);
         } else if (cause == EntityDamageEvent.DamageCause.WITHER) {
-            PlayerListener.spawnSpecialDamageInd((Entity)player, actual, ChatColor.BLACK);
+            PlayerListener.spawnSpecialDamageInd(player, actual, ChatColor.BLACK);
         } else {
-            PlayerListener.spawnSpecialDamageInd((Entity)player, actual, ChatColor.WHITE);
+            PlayerListener.spawnSpecialDamageInd(player, actual, ChatColor.WHITE);
         }
         if (player.getHealth() <= 0.0) {
             player.setFireTicks(0);
@@ -1255,7 +1308,7 @@ public class User {
     public void kill(EntityDamageEvent.DamageCause cause, Entity entity) {
         Object user;
         SlayerQuest quest;
-        Player player = Bukkit.getPlayer((UUID)this.uuid);
+        Player player = Bukkit.getPlayer(this.uuid);
         if (player == null) {
             return;
         }
@@ -1291,10 +1344,9 @@ public class User {
                     if (w == null || w.getPlayers().size() == 0) {
                         bkt.cancel();
                         this.cancel();
-                        return;
                     }
                 }
-            }.runTaskTimer((Plugin)SkySimEngine.getPlugin(), 0L, 1L);
+            }.runTaskTimer(SkySimEngine.getPlugin(), 0L, 1L);
             SUtil.sendTitle(player, ChatColor.YELLOW + "You became a ghost!");
             SUtil.sendSubtitle(player, ChatColor.GRAY + "Hopefully your teammates can revive you.");
             if (cause == EntityDamageEvent.DamageCause.VOID) {
@@ -1320,8 +1372,8 @@ public class User {
                 break;
             }
             case ENTITY_ATTACK: {
-                message = "You were killed by " + name + ChatColor.GRAY + "";
-                out = "%s was killed by " + name + ChatColor.GRAY + "";
+                message = "You were killed by " + name + ChatColor.GRAY;
+                out = "%s was killed by " + name + ChatColor.GRAY;
                 break;
             }
             case ENTITY_EXPLOSION: {
@@ -1375,7 +1427,7 @@ public class User {
             SUtil.broadcastExcept(ChatColor.RED + " \u2620 " + ChatColor.GRAY + String.format(out, player.getName()) + ChatColor.GRAY + " and became a ghost.", player);
         }
         for (Entity e : player.getWorld().getEntities()) {
-            if (!e.hasMetadata("owner") || !((MetadataValue)e.getMetadata("owner").get(0)).asString().equals(player.getUniqueId().toString())) continue;
+            if (!e.hasMetadata("owner") || !e.getMetadata("owner").get(0).asString().equals(player.getUniqueId().toString())) continue;
             e.remove();
             player.sendMessage(ChatColor.RED + "\u2620 Your Voidling's Warden Boss has been despawned since you died!");
         }
@@ -1442,7 +1494,7 @@ public class User {
     }
 
     public void clearPotionEffects() {
-        Player player = Bukkit.getPlayer((UUID)this.uuid);
+        Player player = Bukkit.getPlayer(this.uuid);
         if (player != null) {
             for (org.bukkit.potion.PotionEffect potionEffect : player.getActivePotionEffects()) {
                 player.removePotionEffect(potionEffect.getType());
@@ -1454,7 +1506,7 @@ public class User {
     }
 
     public boolean isOnIsland() {
-        Player player = Bukkit.getPlayer((UUID)this.uuid);
+        Player player = Bukkit.getPlayer(this.uuid);
         if (player == null) {
             return false;
         }
@@ -1466,7 +1518,7 @@ public class User {
     }
 
     public boolean isOnIsland(Location location) {
-        World world = Bukkit.getWorld((String)"islands");
+        World world = Bukkit.getWorld("islands");
         if (world == null) {
             return false;
         }
@@ -1476,11 +1528,11 @@ public class User {
     }
 
     public boolean isOnUserIsland() {
-        Player player = Bukkit.getPlayer((UUID)this.uuid);
+        Player player = Bukkit.getPlayer(this.uuid);
         if (player == null) {
             return false;
         }
-        World world = Bukkit.getWorld((String)"islands");
+        World world = Bukkit.getWorld("islands");
         if (world == null) {
             return false;
         }
@@ -1504,20 +1556,20 @@ public class User {
     }
 
     public Player toBukkitPlayer() {
-        return Bukkit.getPlayer((UUID)this.uuid);
+        return Bukkit.getPlayer(this.uuid);
     }
 
     public EntityPlayer toNMSPlayer() {
-        return ((CraftPlayer)Bukkit.getPlayer((UUID)this.uuid)).getHandle();
+        return ((CraftPlayer)Bukkit.getPlayer(this.uuid)).getHandle();
     }
 
     public void sendToSpawn() {
-        Player player = Bukkit.getPlayer((UUID)this.uuid);
+        Player player = Bukkit.getPlayer(this.uuid);
         if (player == null) {
             return;
         }
         if (this.isOnIsland()) {
-            World world = Bukkit.getWorld((String)"islands");
+            World world = Bukkit.getWorld("islands");
             player.teleport(world.getHighestBlockAt(SUtil.blackMagic(this.islandX), SUtil.blackMagic(this.islandZ)).getLocation().add(0.5, 1.0, 0.5));
         } else if (this.lastRegion != null) {
             switch (this.lastRegion.getType()) {
@@ -1552,46 +1604,10 @@ public class User {
                     player.teleport(player.getWorld().getSpawnLocation());
                     break;
                 }
-                case GOLD_MINE: {
-                    player.teleport(player.getWorld().getSpawnLocation());
-                    break;
-                }
-                case DEEP_CAVERN: 
-                case GUNPOWDER_MINES: 
-                case LAPIS_QUARRY: 
-                case PIGMENS_DEN: 
-                case SLIMEHILL: 
-                case DIAMOND_RESERVE: 
-                case OBSIDIAN_SANCTUARY: {
-                    player.teleport(player.getWorld().getSpawnLocation());
-                    break;
-                }
-                case THE_END: 
-                case THE_END_NEST: 
-                case DRAGONS_NEST: {
-                    player.teleport(player.getWorld().getSpawnLocation());
-                    break;
-                }
                 case SPIDERS_DEN: {
                     player.teleport(player.getWorld().getSpawnLocation());
                 }
                 case SPIDERS_DEN_HIVE: {
-                    player.teleport(player.getWorld().getSpawnLocation());
-                    break;
-                }
-                case BIRCH_PARK: 
-                case SPRUCE_WOODS: 
-                case DARK_THICKET: 
-                case SAVANNA_WOODLAND: 
-                case JUNGLE_ISLAND: {
-                    player.teleport(player.getWorld().getSpawnLocation());
-                    break;
-                }
-                case HOWLING_CAVE: {
-                    player.teleport(player.getWorld().getSpawnLocation());
-                    break;
-                }
-                case BLAZING_FORTRESS: {
                     player.teleport(player.getWorld().getSpawnLocation());
                     break;
                 }
@@ -1617,13 +1633,13 @@ public class User {
     public static void wipeUser(UUID uuid) {
         String wipeID = User.generateRandom();
         SLog.info("Wiping with " + wipeID);
-        if (Bukkit.getPlayer((UUID)uuid).isOnline()) {
-            Player p = Bukkit.getPlayer((UUID)uuid);
+        if (Bukkit.getPlayer(uuid).isOnline()) {
+            Player p = Bukkit.getPlayer(uuid);
             p.kickPlayer(ChatColor.RED + "You have been disconnected");
         }
-        Path source = Paths.get(USER_FOLDER + "/" + uuid.toString() + ".yml", new String[0]);
+        Path source = Paths.get(USER_FOLDER + "/" + uuid.toString() + ".yml");
         try {
-            Files.move(source, source.resolveSibling("WIPED_" + wipeID + "_" + uuid.toString() + ".yml"), new CopyOption[0]);
+            Files.move(source, source.resolveSibling("WIPED_" + wipeID + "_" + uuid + ".yml"));
         }
         catch (IOException e) {
             e.printStackTrace();
@@ -1640,6 +1656,10 @@ public class User {
         return new User(uuid);
     }
 
+    public static User of(Player player){
+        return getUser(player.getUniqueId());
+    }
+
     public static Collection<User> getCachedUsers() {
         return USER_CACHE.values();
     }
@@ -1653,7 +1673,7 @@ public class User {
     }
 
     public void updateArmorInventory() {
-        Player player = Bukkit.getPlayer((UUID)this.uuid);
+        Player player = Bukkit.getPlayer(this.uuid);
         if (player != null) {
             this.updateHelmet();
             this.updateChestplate();
@@ -1663,7 +1683,7 @@ public class User {
     }
 
     public void updateEnderChest() {
-        Player player = Bukkit.getPlayer((UUID)this.uuid);
+        Player player = Bukkit.getPlayer(this.uuid);
         if (player != null) {
             for (int i = 0; i < player.getEnderChest().getContents().length; ++i) {
                 SItem sitem;
@@ -1700,7 +1720,7 @@ public class User {
     }
 
     public void updateInventory() {
-        Player player = Bukkit.getPlayer((UUID)this.uuid);
+        Player player = Bukkit.getPlayer(this.uuid);
         if (player != null) {
             this.updateHelmet();
             this.updateChestplate();
@@ -1747,7 +1767,7 @@ public class User {
 
     public void updateHelmet() {
         SItem sitem;
-        Player player = Bukkit.getPlayer((UUID)this.uuid);
+        Player player = Bukkit.getPlayer(this.uuid);
         ItemStack is = player.getInventory().getHelmet();
         if (is != null && (sitem = SItem.find(is)) != null) {
             if (sitem.getReforge() != null && !player.isOp() && sitem.getReforge().toString().toUpperCase().contains("OVERPOWERED") | sitem.getReforge().toString().toUpperCase().contains("SUPERGENIUS")) {
@@ -1771,7 +1791,7 @@ public class User {
 
     public void updateChestplate() {
         SItem sitem;
-        Player player = Bukkit.getPlayer((UUID)this.uuid);
+        Player player = Bukkit.getPlayer(this.uuid);
         ItemStack is = player.getInventory().getChestplate();
         if (is != null && (sitem = SItem.find(is)) != null) {
             if (sitem.getReforge() != null && !player.isOp() && sitem.getReforge().toString().toUpperCase().contains("OVERPOWERED") | sitem.getReforge().toString().toUpperCase().contains("SUPERGENIUS")) {
@@ -1795,7 +1815,7 @@ public class User {
 
     public void updateLeggings() {
         SItem sitem;
-        Player player = Bukkit.getPlayer((UUID)this.uuid);
+        Player player = Bukkit.getPlayer(this.uuid);
         ItemStack is = player.getInventory().getLeggings();
         if (is != null && (sitem = SItem.find(is)) != null) {
             if (sitem.getReforge() != null && !player.isOp() && sitem.getReforge().toString().toUpperCase().contains("OVERPOWERED") | sitem.getReforge().toString().toUpperCase().contains("SUPERGENIUS")) {
@@ -1819,7 +1839,7 @@ public class User {
 
     public void updateBoots() {
         SItem sitem;
-        Player player = Bukkit.getPlayer((UUID)this.uuid);
+        Player player = Bukkit.getPlayer(this.uuid);
         ItemStack is = player.getInventory().getBoots();
         if (is != null && (sitem = SItem.find(is)) != null) {
             if (sitem.getReforge() != null && !player.isOp() && sitem.getReforge().toString().toUpperCase().contains("OVERPOWERED") | sitem.getReforge().toString().toUpperCase().contains("SUPERGENIUS")) {
@@ -1903,240 +1923,12 @@ public class User {
     public void sendClickableMessage(String message, TextComponent[] hover, String commandToRun) {
         TextComponent tcp = new TextComponent(Sputnik.trans(message));
         if (hover != null) {
-            tcp.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, (BaseComponent[])hover));
+            tcp.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, hover));
         }
         if (commandToRun != null) {
             tcp.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, commandToRun));
         }
-        this.toBukkitPlayer().spigot().sendMessage((BaseComponent)tcp);
-    }
-
-    public long getSadancollections() {
-        return this.sadancollections;
-    }
-
-    public long getTotalfloor6run() {
-        return this.totalfloor6run;
-    }
-
-    public UUID getUuid() {
-        return this.uuid;
-    }
-
-    public long getCoins() {
-        return this.coins;
-    }
-
-    public long getBankCoins() {
-        return this.bankCoins;
-    }
-
-    public List<ItemStack> getStashedItems() {
-        return this.stashedItems;
-    }
-
-    public void setStashedItems(List<ItemStack> stashedItems) {
-        this.stashedItems = stashedItems;
-    }
-
-    public int getCooldownAltar() {
-        return this.cooldownAltar;
-    }
-
-    public void setCooldownAltar(int cooldownAltar) {
-        this.cooldownAltar = cooldownAltar;
-    }
-
-    public boolean isHeadShot() {
-        return this.headShot;
-    }
-
-    public void setHeadShot(boolean headShot) {
-        this.headShot = headShot;
-    }
-
-    public boolean isPlayingSong() {
-        return this.playingSong;
-    }
-
-    public void setPlayingSong(boolean playingSong) {
-        this.playingSong = playingSong;
-    }
-
-    public boolean isInDanger() {
-        return this.inDanger;
-    }
-
-    public void setInDanger(boolean inDanger) {
-        this.inDanger = inDanger;
-    }
-
-    public Double getIslandX() {
-        return this.islandX;
-    }
-
-    public Double getIslandZ() {
-        return this.islandZ;
-    }
-
-    public Region getLastRegion() {
-        return this.lastRegion;
-    }
-
-    public Map<SMaterial, Integer> getQuiver() {
-        return this.quiver;
-    }
-
-    public List<ActivePotionEffect> getEffects() {
-        return this.effects;
-    }
-
-    public double getFarmingXP() {
-        return this.farmingXP;
-    }
-
-    public boolean isBoneToZeroDamage() {
-        return this.boneToZeroDamage;
-    }
-
-    public void setBoneToZeroDamage(boolean boneToZeroDamage) {
-        this.boneToZeroDamage = boneToZeroDamage;
-    }
-
-    public boolean isCooldownAPI() {
-        return this.cooldownAPI;
-    }
-
-    public void setCooldownAPI(boolean cooldownAPI) {
-        this.cooldownAPI = cooldownAPI;
-    }
-
-    public double getMiningXP() {
-        return this.miningXP;
-    }
-
-    public double getCombatXP() {
-        return this.combatXP;
-    }
-
-    public double getEnchantXP() {
-        return this.enchantXP;
-    }
-
-    public double getArcherXP() {
-        return this.archerXP;
-    }
-
-    public double getCataXP() {
-        return this.cataXP;
-    }
-
-    public double getBerserkXP() {
-        return this.berserkXP;
-    }
-
-    public double getHealerXP() {
-        return this.healerXP;
-    }
-
-    public double getTankXP() {
-        return this.tankXP;
-    }
-
-    public double getMageXP() {
-        return this.mageXP;
-    }
-
-    public double getForagingXP() {
-        return this.foragingXP;
-    }
-
-    public boolean isSaveable() {
-        return this.saveable;
-    }
-
-    public void setSaveable(boolean saveable) {
-        this.saveable = saveable;
-    }
-
-    public int getBonusFerocity() {
-        return this.bonusFerocity;
-    }
-
-    public void setBonusFerocity(int bonusFerocity) {
-        this.bonusFerocity = bonusFerocity;
-    }
-
-    public boolean isFatalActive() {
-        return this.fatalActive;
-    }
-
-    public void setFatalActive(boolean fatalActive) {
-        this.fatalActive = fatalActive;
-    }
-
-    public boolean isPermanentCoins() {
-        return this.permanentCoins;
-    }
-
-    public void setPermanentCoins(boolean permanentCoins) {
-        this.permanentCoins = permanentCoins;
-    }
-
-    public SlayerQuest getSlayerQuest() {
-        return this.slayerQuest;
-    }
-
-    public void setSlayerQuest(SlayerQuest slayerQuest) {
-        this.slayerQuest = slayerQuest;
-    }
-
-    public List<Pet.PetItem> getPets() {
-        return this.pets;
-    }
-
-    public AuctionSettings getAuctionSettings() {
-        return this.auctionSettings;
-    }
-
-    public boolean isAuctionCreationBIN() {
-        return this.auctionCreationBIN;
-    }
-
-    public void setAuctionCreationBIN(boolean auctionCreationBIN) {
-        this.auctionCreationBIN = auctionCreationBIN;
-    }
-
-    public AuctionEscrow getAuctionEscrow() {
-        return this.auctionEscrow;
-    }
-
-    public void setAuctionEscrow(AuctionEscrow auctionEscrow) {
-        this.auctionEscrow = auctionEscrow;
-    }
-
-    public boolean isVoidlingWardenActive() {
-        return this.voidlingWardenActive;
-    }
-
-    public void setVoidlingWardenActive(boolean voidlingWardenActive) {
-        this.voidlingWardenActive = voidlingWardenActive;
-    }
-
-    public boolean isWaitingForSign() {
-        return this.waitingForSign;
-    }
-
-    public void setWaitingForSign(boolean waitingForSign) {
-        this.waitingForSign = waitingForSign;
-    }
-
-    public String getSignContent() {
-        return this.signContent;
-    }
-
-    public void setSignContent(String signContent) {
-        this.signContent = signContent;
+        this.toBukkitPlayer().spigot().sendMessage(tcp);
     }
 
     public boolean isCompletedSign() {

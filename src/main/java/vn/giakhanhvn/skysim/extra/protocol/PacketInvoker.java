@@ -143,7 +143,7 @@ public class PacketInvoker {
                             item.setCustomName(Sputnik.trans("&e&ka&r &f1x &7[Lvl 1] &6Enderman &e&ka"));
                         } else {
                             int pk = SUtil.random(80, 400);
-                            SkySimEngine.getEconomy().depositPlayer((OfflinePlayer)owner, (double)pk);
+                            User.of(owner).addBits(pk);
                             owner.sendMessage(Sputnik.trans("&b&lBITS! &fYou found &b" + SUtil.commaify(pk) + " Bits&f inside the loot chest!"));
                         }
                     } else {

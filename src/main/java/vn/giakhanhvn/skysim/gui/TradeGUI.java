@@ -22,12 +22,8 @@
  */
 package vn.giakhanhvn.skysim.gui;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
-import net.milkbowl.vault.economy.Economy;
+import java.util.*;
+
 import net.minecraft.server.v1_8_R3.NBTBase;
 import net.minecraft.server.v1_8_R3.NBTTagCompound;
 import net.minecraft.server.v1_8_R3.NBTTagLong;
@@ -44,12 +40,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 import vn.giakhanhvn.skysim.SkySimEngine;
-import vn.giakhanhvn.skysim.gui.GUI;
-import vn.giakhanhvn.skysim.gui.GUIClickableItem;
-import vn.giakhanhvn.skysim.gui.GUIListener;
-import vn.giakhanhvn.skysim.gui.GUIOpenEvent;
-import vn.giakhanhvn.skysim.gui.GUISignItem;
-import vn.giakhanhvn.skysim.gui.TradeMenu;
 import vn.giakhanhvn.skysim.item.SItem;
 import vn.giakhanhvn.skysim.item.Untradeable;
 import vn.giakhanhvn.skysim.user.User;
@@ -58,14 +48,14 @@ import vn.giakhanhvn.skysim.util.Sputnik;
 
 public class TradeGUI
 extends GUI {
-    private UUID tradeUUID;
+    private final UUID tradeUUID;
     public static final Map<UUID, List<ItemStack>> itemOfferP1 = new HashMap<UUID, List<ItemStack>>();
     public static final Map<UUID, List<ItemStack>> itemOfferP2 = new HashMap<UUID, List<ItemStack>>();
     public static final Map<UUID, Player> player1 = new HashMap<UUID, Player>();
     public static final Map<UUID, Player> player2 = new HashMap<UUID, Player>();
     public static final Map<UUID, Integer> tradeCountdown = new HashMap<UUID, Integer>();
-    private int[] ls = new int[]{0, 1, 2, 3, 9, 10, 11, 12, 18, 19, 20, 21, 27, 28, 29, 30};
-    private int[] rs = new int[]{5, 6, 7, 8, 14, 15, 16, 17, 23, 24, 25, 26, 32, 33, 34, 35};
+    private final int[] ls = new int[]{0, 1, 2, 3, 9, 10, 11, 12, 18, 19, 20, 21, 27, 28, 29, 30};
+    private final int[] rs = new int[]{5, 6, 7, 8, 14, 15, 16, 17, 23, 24, 25, 26, 32, 33, 34, 35};
 
     public void fillFrom(Inventory i, int startFromSlot, int height, ItemStack stacc) {
         i.setItem(startFromSlot, stacc);
@@ -148,7 +138,7 @@ extends GUI {
                     TradeMenu.tradeP1Countdown.put(TradeGUI.this.tradeUUID, TradeMenu.tradeP1Countdown.get(TradeGUI.this.tradeUUID) - 1);
                 }
             }
-        }.runTaskTimer((Plugin)SkySimEngine.getPlugin(), 0L, 20L);
+        }.runTaskTimer(SkySimEngine.getPlugin(), 0L, 20L);
         new BukkitRunnable(){
 
             public void run() {
@@ -169,7 +159,7 @@ extends GUI {
                 }
                 if (TradeMenu.tradeP1Countdown.containsKey(TradeGUI.this.tradeUUID)) {
                     if (TradeMenu.tradeP1Countdown.get(TradeGUI.this.tradeUUID) > 0) {
-                        i.setItem(39, SUtil.getStack(Sputnik.trans("&eDeal timer! &7(&e" + TradeMenu.tradeP1Countdown.get(TradeGUI.this.tradeUUID) + "&7)"), Material.STAINED_CLAY, (short)4, (int)TradeMenu.tradeP1Countdown.get(TradeGUI.this.tradeUUID), ChatColor.GRAY + "The trade recently changed.", ChatColor.GRAY + "Please review it before", ChatColor.GRAY + "accepting."));
+                        i.setItem(39, SUtil.getStack(Sputnik.trans("&eDeal timer! &7(&e" + TradeMenu.tradeP1Countdown.get(TradeGUI.this.tradeUUID) + "&7)"), Material.STAINED_CLAY, (short)4, TradeMenu.tradeP1Countdown.get(TradeGUI.this.tradeUUID), ChatColor.GRAY + "The trade recently changed.", ChatColor.GRAY + "Please review it before", ChatColor.GRAY + "accepting."));
                         TradeMenu.tradeP1Ready.put(TradeGUI.this.tradeUUID, false);
                     } else if (TradeMenu.tradeP1Ready.get(TradeGUI.this.tradeUUID).booleanValue()) {
                         i.setItem(39, SUtil.getStack(Sputnik.trans("&aDeal accepted!"), Material.STAINED_CLAY, (short)13, 1, ChatColor.GRAY + "You accepted the trade.", ChatColor.GRAY + "wait for the other party to", ChatColor.GRAY + "accept."));
@@ -218,7 +208,7 @@ extends GUI {
                     i.setItem(slot, null);
                 }
             }
-        }.runTaskTimer((Plugin)SkySimEngine.getPlugin(), 0L, 1L);
+        }.runTaskTimer(SkySimEngine.getPlugin(), 0L, 1L);
         new BukkitRunnable(){
 
             public void run() {
@@ -230,7 +220,7 @@ extends GUI {
                     TradeMenu.triggerCloseEvent(TradeGUI.this.tradeUUID, false, player2.get(TradeGUI.this.tradeUUID));
                 }
             }
-        }.runTaskTimer((Plugin)SkySimEngine.getPlugin(), 0L, 1L);
+        }.runTaskTimer(SkySimEngine.getPlugin(), 0L, 1L);
         this.set(new GUISignItem(){
 
             @Override
@@ -238,13 +228,12 @@ extends GUI {
                 if (target != player1.get(TradeGUI.this.tradeUUID)) {
                     return null;
                 }
-                if (query == "$canc") {
+                if (Objects.equals(query, "$canc")) {
                     return new TradeGUI(TradeGUI.this.tradeUUID);
                 }
                 try {
-                    Economy econ = SkySimEngine.getEconomy();
                     long add = Long.parseLong(query);
-                    double cur = econ.getBalance((OfflinePlayer)player1.get(TradeGUI.this.tradeUUID));
+                    double cur = User.getUser(player1.get(tradeUUID).getUniqueId()).getBits();
                     if (add <= 0L) {
                         player1.get(TradeGUI.this.tradeUUID).playSound(player1.get(TradeGUI.this.tradeUUID).getLocation(), Sound.ENDERMAN_TELEPORT, 1.0f, -4.0f);
                         player.sendMessage(ChatColor.RED + "Couldn't validate this Bits amount!");
@@ -261,16 +250,16 @@ extends GUI {
                         return new TradeGUI(TradeGUI.this.tradeUUID);
                     }
                     if (itemOfferP1.get(TradeGUI.this.tradeUUID).size() < 16) {
-                        if (econ.withdrawPlayer((OfflinePlayer)player1.get(TradeGUI.this.tradeUUID), (double)add).transactionSuccess()) {
+                        if (User.getUser(player1.get(tradeUUID).getUniqueId()).subBits(add)){
                             player1.get(TradeGUI.this.tradeUUID).playSound(player1.get(TradeGUI.this.tradeUUID).getLocation(), Sound.VILLAGER_HAGGLE, 1.0f, 1.0f);
                             player2.get(TradeGUI.this.tradeUUID).playSound(player2.get(TradeGUI.this.tradeUUID).getLocation(), Sound.VILLAGER_HAGGLE, 1.0f, 1.0f);
                             long stackamount = Math.min(64L, Math.max(10000L, add) / 10000L);
                             ItemStack coinsStack = SUtil.getSkullURLStack(ChatColor.AQUA + Sputnik.formatFull(add) + " Bits", "7b951fed6a7b2cbc2036916dec7a46c4a56481564d14f945b6ebc03382766d3b", (int)stackamount, ChatColor.GRAY + "Lump-sum amount");
-                            net.minecraft.server.v1_8_R3.ItemStack tagStack = CraftItemStack.asNMSCopy((ItemStack)coinsStack);
+                            net.minecraft.server.v1_8_R3.ItemStack tagStack = CraftItemStack.asNMSCopy(coinsStack);
                             NBTTagCompound tagCompound = tagStack.hasTag() ? tagStack.getTag() : new NBTTagCompound();
-                            tagCompound.set("data_bits", (NBTBase)new NBTTagLong(add));
+                            tagCompound.set("data_bits", new NBTTagLong(add));
                             tagStack.setTag(tagCompound);
-                            coinsStack = CraftItemStack.asBukkitCopy((net.minecraft.server.v1_8_R3.ItemStack)tagStack);
+                            coinsStack = CraftItemStack.asBukkitCopy(tagStack);
                             itemOfferP1.get(TradeGUI.this.tradeUUID).add(coinsStack);
                             TradeMenu.tradeP1Countdown.put(TradeGUI.this.tradeUUID, 3);
                             TradeMenu.tradeP2Countdown.put(TradeGUI.this.tradeUUID, 3);
@@ -352,12 +341,11 @@ extends GUI {
             itemOfferP1.get(this.tradeUUID).remove(e.getInventory().getItem(e.getSlot()));
             ItemStack stack = e.getInventory().getItem(e.getSlot());
             player1.get(this.tradeUUID).playSound(player1.get(this.tradeUUID).getLocation(), Sound.VILLAGER_HAGGLE, 1.0f, 1.0f);
-            net.minecraft.server.v1_8_R3.ItemStack nmsStack = CraftItemStack.asNMSCopy((ItemStack)stack);
+            net.minecraft.server.v1_8_R3.ItemStack nmsStack = CraftItemStack.asNMSCopy(stack);
             if (!nmsStack.getTag().hasKey("data_bits")) {
                 Sputnik.smartGiveItem(stack, player1.get(this.tradeUUID));
             } else {
-                Economy econ = SkySimEngine.getEconomy();
-                econ.depositPlayer((OfflinePlayer)player1.get(this.tradeUUID), (double)nmsStack.getTag().getLong("data_bits"));
+                User.getUser(player1.get(tradeUUID).getUniqueId()).addBits(nmsStack.getTag().getLong("data_bits"));
             }
             TradeMenu.tradeP1Countdown.put(this.tradeUUID, 3);
             TradeMenu.tradeP2Countdown.put(this.tradeUUID, 3);
@@ -367,36 +355,11 @@ extends GUI {
     @Override
     public void onClose(InventoryCloseEvent e) {
         TradeMenu.triggerCloseEvent(this.tradeUUID, false, (Player)e.getPlayer());
-        ((Player)e.getPlayer()).playSound(((Player)e.getPlayer()).getLocation(), Sound.VILLAGER_IDLE, 1.0f, 1.0f);
+        ((Player)e.getPlayer()).playSound(e.getPlayer().getLocation(), Sound.VILLAGER_IDLE, 1.0f, 1.0f);
         GUIListener.QUERY_MAP.remove(e.getPlayer().getUniqueId());
         GUIListener.QUERY_MAPPING.remove(e.getPlayer().getUniqueId());
     }
 
-    public void aRm(Player p) {
-        TradeMenu.triggerCloseEvent(this.tradeUUID, false, p);
-        for (ItemStack i : itemOfferP1.get(this.tradeUUID)) {
-            net.minecraft.server.v1_8_R3.ItemStack nmsStack = CraftItemStack.asNMSCopy((ItemStack)i);
-            if (!nmsStack.getTag().hasKey("data_bits")) {
-                Sputnik.smartGiveItem(i, p);
-                continue;
-            }
-            Economy econ = SkySimEngine.getEconomy();
-            econ.depositPlayer((OfflinePlayer)p, (double)nmsStack.getTag().getLong("data_bits"));
-        }
-    }
-
-    public void aRmP(Player p) {
-        TradeMenu.triggerCloseEvent(this.tradeUUID, false, p);
-        for (ItemStack i : itemOfferP2.get(this.tradeUUID)) {
-            net.minecraft.server.v1_8_R3.ItemStack nmsStack = CraftItemStack.asNMSCopy((ItemStack)i);
-            if (!nmsStack.getTag().hasKey("data_bits")) {
-                Sputnik.smartGiveItem(i, p);
-                continue;
-            }
-            Economy econ = SkySimEngine.getEconomy();
-            econ.depositPlayer((OfflinePlayer)p, (double)nmsStack.getTag().getLong("data_bits"));
-        }
-    }
 
     public static boolean isContain(int[] array, int key) {
         for (int i : array) {

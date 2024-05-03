@@ -17,14 +17,14 @@ public class SkyEncryption {
     private SecretKeyFactory skf;
     private Cipher cipher;
     byte[] arrayBytes = this.myEncryptionKey.getBytes("UTF8");
-    private String myEncryptionKey = "ThisIsSpartaThisIsSparta";
-    private String myEncryptionScheme = "DESede";
+    private final String myEncryptionKey = "ThisIsSpartaThisIsSparta";
     SecretKey key;
 
     public SkyEncryption() throws Exception {
         this.ks = new DESedeKeySpec(this.arrayBytes);
-        this.skf = SecretKeyFactory.getInstance(this.myEncryptionScheme);
-        this.cipher = Cipher.getInstance(this.myEncryptionScheme);
+        String myEncryptionScheme = "DESede";
+        this.skf = SecretKeyFactory.getInstance(myEncryptionScheme);
+        this.cipher = Cipher.getInstance(myEncryptionScheme);
         this.key = this.skf.generateSecret(this.ks);
     }
 

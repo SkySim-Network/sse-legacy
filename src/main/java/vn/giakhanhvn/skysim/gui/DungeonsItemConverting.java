@@ -25,7 +25,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
-import net.milkbowl.vault.economy.Economy;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
@@ -41,9 +40,6 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 import vn.giakhanhvn.skysim.SkySimEngine;
-import vn.giakhanhvn.skysim.gui.GUI;
-import vn.giakhanhvn.skysim.gui.GUIClickableItem;
-import vn.giakhanhvn.skysim.gui.GUIOpenEvent;
 import vn.giakhanhvn.skysim.item.Rarity;
 import vn.giakhanhvn.skysim.item.SItem;
 import vn.giakhanhvn.skysim.user.User;
@@ -106,9 +102,8 @@ extends GUI {
                     return;
                 }
                 if (e.getClickedInventory().getItem(31) != null && e.getClickedInventory().getItem(31).getType() != Material.BARRIER) {
-                    Economy econ = SkySimEngine.getEconomy();
                     long add = (Integer)COST_MAP.get((Object)sItem.getRarity()) * (sItem.getStar() + 1);
-                    double cur = econ.getBalance((OfflinePlayer)player);
+                    double cur = User.getUser(player.getUniqueId()).getBits();
                     if (sItem.isStarrable() && sItem.getStar() < 5) {
                         if ((double)add > cur) {
                             player.sendMessage(ChatColor.RED + "You cannot afford to upgrade this.");
@@ -116,7 +111,7 @@ extends GUI {
                             return;
                         }
                         player.playSound(player.getLocation(), Sound.ANVIL_USE, 1.0f, 1.0f);
-                        econ.withdrawPlayer((OfflinePlayer)player, (double)add);
+                        User.getUser(player.getUniqueId()).subBits(add);
                         e.getClickedInventory().setItem(13, null);
                         SItem build = sItem;
                         if (build.isDungeonsItem()) {
@@ -130,7 +125,6 @@ extends GUI {
                         e.getClickedInventory().setItem(31, st);
                     } else {
                         player.sendMessage(ChatColor.RED + "You cannot upgrade this item.");
-                        return;
                     }
                 }
             }
@@ -182,7 +176,7 @@ extends GUI {
                         build.setDataString("owner", ((HumanEntity)inventory.getViewers().get(0)).getUniqueId().toString());
                     }
                     ItemMeta mt = build.getStack().getItemMeta();
-                    List s = mt.getLore();
+                    List<String> s = mt.getLore();
                     s.add(" ");
                     s.add(ChatColor.GRAY + "Cost");
                     s.add(ChatColor.AQUA + SUtil.commaify((Integer)COST_MAP.get((Object)sItem.getRarity()) * (sItem.getStar() + 1)) + " Bits");
